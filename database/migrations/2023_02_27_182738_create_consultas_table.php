@@ -1,7 +1,8 @@
 <?php
 
-use App\Models\Produto;
-use App\Models\User;
+use App\Models\Paciente;
+use App\Models\Problema;
+use App\Models\Psicologo;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,14 +16,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vendas', function (Blueprint $table) {
+        Schema::create('consultas', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->nullable();
-            $table->string('nomeDoCliente')->nullable();
-            $table->string('valorPago');
-            $table->foreignIdFor(Produto::class);
-            $table->string('quantidade');
-            $table->string('estado')->default('concluida');
+            $table->foreignIdFor(Psicologo::class);
+            $table->foreignIdFor(Paciente::class);
+            $table->foreignIdFor(Problema::class);
+            $table->text('descricaoProblema');
+            $table->string('estado_id');
+            $table->date('data');
             $table->timestamps();
         });
     }
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendas');
+        Schema::dropIfExists('consultas');
     }
 };

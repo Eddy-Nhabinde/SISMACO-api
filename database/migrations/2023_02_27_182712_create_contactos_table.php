@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Produto;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,13 +14,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('encomendas', function (Blueprint $table) {
+        Schema::create('contactos', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->string('valor_pago');
-            $table->foreignIdFor(Produto::class);
-            $table->string('quantidade');
-            $table->string('estado')->default('Espera');
+            $table->string('contacto');
+            $table->boolean('principal');
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('encomendas');
+        Schema::dropIfExists('contactos');
     }
 };
