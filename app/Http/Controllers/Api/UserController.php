@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\ContactosController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PsicologoController;
@@ -41,6 +42,9 @@ class UserController extends Controller
                     'acesso' => $request->paciente == true ? 'paciente' : 'psicologo',
                     'password' => Hash::make($request->senha)
                 ]);
+                
+                $cont = new ContactosController();
+                $cont->store($request->contactos, $user->id);
 
                 if ($request->paciente) {
                     $paciente = new PacienteController();
@@ -91,7 +95,7 @@ class UserController extends Controller
     {
         try {
             $request->validate([
-                'email' => 'email|max:50|unique:users,email',
+                'email' => 'email|max:50|'/*unique:users,email,*/,
                 'nome' => 'string|required',
                 'senha' => 'required',
                 'especialidade' => 'exclude_if:paciente,true|required',

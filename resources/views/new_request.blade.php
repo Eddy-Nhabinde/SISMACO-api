@@ -20,18 +20,6 @@
     <!--<![endif]-->
     <title></title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/fontawesome.min.css"
-        integrity="sha512-cHxvm20nkjOUySu7jdwiUxgGy11vuVPE9YeK89geLMLMMEOcKFyS2i+8wo0FOwyQO/bL8Bvq1KMsqK4bbOsPnA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/brands.min.css"
-        integrity="sha512-L+sMmtHht2t5phORf0xXFdTC0rSlML1XcraLTrABli/0MMMylsJi3XA23ReVQkZ7jLkOEIMicWGItyK4CAt2Xw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <style type="text/css">
         @media only screen and (min-width: 620px) {
             .u-row {
@@ -253,8 +241,13 @@
                                                                     <td style="padding-right: 0px;padding-left: 0px;"
                                                                         align="center">
 
-                                                                        <i class="fa-regular fa-circle-check"
-                                                                            style="color:#000; font-size: 70px;"></i>
+                                                                        <img align="center" border="0"
+                                                                            src="images/image-5.png" alt="Tick Icon"
+                                                                            title="Tick Icon"
+                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 14%;max-width: 81.2px;"
+                                                                            width="81.2"
+                                                                            class="v-src-width v-src-max-width" />
+
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -498,8 +491,15 @@
                                                                             <tr style="vertical-align: top">
                                                                                 <td align="left" valign="middle"
                                                                                     style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                                                                    <i style="color:#fff; font-size: 25px;"
-                                                                                        class="fa-brands fa-instagram"></i>
+                                                                                    <a href="https://facebook.com/"
+                                                                                        title="Facebook"
+                                                                                        target="_blank">
+                                                                                        <img src="images/image-1.png"
+                                                                                            alt="Facebook"
+                                                                                            title="Facebook"
+                                                                                            width="32"
+                                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+                                                                                    </a>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -515,8 +515,15 @@
                                                                             <tr style="vertical-align: top">
                                                                                 <td align="left" valign="middle"
                                                                                     style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                                                                    <i style="color:#fff; font-size: 25px;"
-                                                                                        class="fa-brands fa-linkedin-in"></i>
+                                                                                    <a href="https://twitter.com/"
+                                                                                        title="Twitter"
+                                                                                        target="_blank">
+                                                                                        <img src="images/image-3.png"
+                                                                                            alt="Twitter"
+                                                                                            title="Twitter"
+                                                                                            width="32"
+                                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+                                                                                    </a>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -532,8 +539,15 @@
                                                                             <tr style="vertical-align: top">
                                                                                 <td align="left" valign="middle"
                                                                                     style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                                                                    <i style="color:#fff; font-size: 25px;"
-                                                                                        class="fa-brands fa-twitter"></i>
+                                                                                    <a href="https://instagram.com/"
+                                                                                        title="Instagram"
+                                                                                        target="_blank">
+                                                                                        <img src="images/image-2.png"
+                                                                                            alt="Instagram"
+                                                                                            title="Instagram"
+                                                                                            width="32"
+                                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+                                                                                    </a>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -549,8 +563,15 @@
                                                                             <tr style="vertical-align: top">
                                                                                 <td align="left" valign="middle"
                                                                                     style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                                                                    <i style="color:#fff; font-size: 25px;"
-                                                                                        class="fa-brands fa-facebook"></i>
+                                                                                    <a href="https://linkedin.com/"
+                                                                                        title="LinkedIn"
+                                                                                        target="_blank">
+                                                                                        <img src="images/image-4.png"
+                                                                                            alt="LinkedIn"
+                                                                                            title="LinkedIn"
+                                                                                            width="32"
+                                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+                                                                                    </a>
                                                                                 </td>
                                                                             </tr>
                                                                         </tbody>
@@ -567,8 +588,34 @@
                                                 </tbody>
                                             </table>
 
-                                            <table style="font-family:'Montserrat',sans-serif; margin-top: 20px;" role="presentation"
-                                                cellpadding="0" cellspacing="0" width="100%," border="0">
+                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation"
+                                                cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
+
+                                                            <table height="0px" align="center" border="0"
+                                                                cellpadding="0" cellspacing="0" width="82%"
+                                                                style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #9495a7;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+                                                                <tbody>
+                                                                    <tr style="vertical-align: top">
+                                                                        <td
+                                                                            style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+                                                                            <span>&#160;</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation"
+                                                cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                     <tr>
                                                         <td class="v-container-padding-padding"
