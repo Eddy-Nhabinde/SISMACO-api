@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Paciente;
-use App\Models\Psicologo;
+use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\PsicologoController;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -43,11 +43,11 @@ class UserController extends Controller
                 ]);
 
                 if ($request->paciente) {
-                    $paciente = new Paciente();
+                    $paciente = new PacienteController();
                     $response = $paciente->store($request->ocupacao, $request->estadoCivil, $user->id, $request->dataNasc);
                 } else {
-                    $psicologo = new Psicologo();
-                    $response = $psicologo->store($user->id, $request->especialidade);
+                    $psicologo = new PsicologoController();
+                    $response = $psicologo->store($user->id, $request->especialidade, $request->email, $request->nome);
                 }
 
                 if ($response == 1) {

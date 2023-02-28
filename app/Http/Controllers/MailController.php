@@ -7,31 +7,16 @@ use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
-    function encomendas($data)
+    function newPsicologo($email, $nome)
     {
-        // if(){
-        $object = [];
-        $recipient = [];
-        foreach ($data['users'] as $user) {
-            if ($user->acesso == 'admin') {
-                $recipient[] = [$user->email];
-            } else {
-                $object[] = ['key' => 'nome', 'value' => $user->name . " " . $user->apelido];
-            }
-        }
-        $object[] = ['key' => 'subject', 'value' => "Nova Encomenda"];
-        $object[] = ['key' => 'produto', 'value' => $data['prod']];
+        $object[] = ['key' => 'subject', 'value' => "Wellcome"];
+        $object[] = ['key' => 'recipient', 'value' => $email];
+        $object[] = ['key' => 'nome', 'value' => $nome];
 
-        foreach ($recipient as $key) {
-            $object[] = ['key' => 'recipient', 'value' => $key[0]];
-            if (!$this->sendEmail($this->getMailData($object))) {
-                return 0;
-            }
+        if (!$this->sendEmail($this->getMailData($object))) {
+            return 0;
         }
         return 1;
-        // }else{
-
-        // }
     }
 
     function sendPassword($email, $cod)
@@ -49,12 +34,13 @@ class MailController extends Controller
     {
         $mailData = [
             'from' => 'dlabteamsd@gmail.com',
-            'fromname' => 'Imperio',
+            'fromname' => 'SISMACO',
         ];
 
         foreach ($data as $key) {
             $mailData[$key['key']] = $key['value'];
         }
+
         return $mailData;
     }
 
