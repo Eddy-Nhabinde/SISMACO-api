@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('ocupacao');
             $table->string('estadoCivil');
             $table->date('dataNasc');
-            $table->char('sexo');
             $table->timestamps();
         });
     }

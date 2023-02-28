@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Paciente;
+use App\Models\Psicologo;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -28,7 +31,37 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-       
+        if ($this->validating($request)) {
+            try {
+                $response = null;
+                $user = User::create([
+                    'nome' => $request->nome,
+                    'sexo' => $request->sexo,
+                    'email' => $request->email,
+                    'acesso' => $request->paciente == true ? 'paciente' : 'psicologo',
+                    'password' => Hash::make($request->senha)
+                ]);
+
+                if ($request->paciente) {
+                    $paciente = new Paciente();
+                    $response = $paciente->store($request->ocupacao, $request->estadoCivil, $user->id, $request->dataNasc);
+                } else {
+                    $psicologo = new Psicologo();
+                    $response = $psicologo->store($user->id, $request->especialidade);
+                }
+
+                if ($response == 1) {
+                    return response(['success' =>  $request->paciente == true ? 'Paciente' : 'Psicologo' . ' ' . 'Registado com sucesso']);
+                } else {
+                    return response(['error' => 'Ocorreu um erro no registo!']);
+                }
+            } catch (Exception $th) {
+                dd($th);
+                return response(['error' => 'Erro inesperado!']);
+            }
+        } else {
+            return response(['warning' => 'Preencha os dados correctamente!']);
+        }
     }
 
     /**
@@ -59,6 +92,15 @@ class UserController extends Controller
         try {
             $request->validate([
                 'email' => 'email|max:50|unique:users,email',
+                'nome' => 'string|required',
+                'senha' => 'required',
+                'especialidade' => 'exclude_if:paciente,true|required',
+                'ocupacao' => 'exclude_if:paciente,false|required',
+                'estadoCivil' => 'exclude_if:paciente,false|required',
+                'dataNasc' => 'exclude_if:paciente,false|required',
+                'sexo' => 'required',
+                'paciente' => 'required|boolean',
+                'contactos' => 'required'
             ]);
             return true;
         } catch (\Illuminate\Validation\ValidationException $th) {
