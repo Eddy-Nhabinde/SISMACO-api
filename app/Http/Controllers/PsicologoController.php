@@ -16,7 +16,10 @@ class PsicologoController extends Controller
                     'user_id' => $userid,
                     'especialidade' => $request->especialidade
                 ]);
-                
+
+                $contacts = new ContactosController();
+                $contacts->store($request, $userid);
+
                 $mail = new MailController();
                 if (!$mail->newPsicologo($request->email, $request->nome)) {
                     return 0;
@@ -32,12 +35,13 @@ class PsicologoController extends Controller
         }
     }
 
+
     function validating($request)
     {
         try {
             $request->validate([
-                'especialidade' => 'exclude_if:paciente,true|required',
-                'contactos' => 'required'
+                'especialidade' => 'required',
+                'contacto1' => 'required'
             ]);
             return true;
         } catch (\Illuminate\Validation\ValidationException $th) {

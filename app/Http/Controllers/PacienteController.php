@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paciente;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -16,9 +17,12 @@ class PacienteController extends Controller
                     'user_id' => $userID,
                     'ocupacao' => $request->ocupacao,
                     'estadoCivil' => $request->estadoCivil,
-                    'dataNasc' => $request->dataNasc,
+                    'dataNasc' => Carbon::parse($request->dataNasc)->format('Y-m-d'),
                     'sexo' => $request->sexo
                 ]);
+
+                $contacts = new ContactosController();
+                $contacts->store($request, $userID);
                 return 1;
             } else {
                 return 0;
@@ -36,10 +40,11 @@ class PacienteController extends Controller
                 'estadoCivil' => 'exclude_if:paciente,false|required',
                 'dataNasc' => 'exclude_if:paciente,false|required',
                 'sexo' => 'required',
-                'contactos' => 'required'
+                'contacto1' => 'required',
             ]);
             return true;
         } catch (\Illuminate\Validation\ValidationException $th) {
+            dd($th->getMessage());
             return false;
         }
     }

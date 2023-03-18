@@ -36,7 +36,7 @@ class UserController extends Controller
             try {
                 $response = null;
                 $user = User::create([
-                    'nome' => $request->nome,
+                    'nome' => $request->nome . ' ' . $request->apelido,
                     'email' => $request->email,
                     'acesso' => $request->paciente == true ? 'paciente' : 'psicologo',
                     'password' => Hash::make($request->senha)
@@ -44,19 +44,18 @@ class UserController extends Controller
 
                 if ($request->paciente) {
                     $paciente = new PacienteController();
-                    $response = $paciente->store($request->ocupacao, $user->id);
+                    $response = $paciente->store($request, $user->id);
                 } else {
                     $psicologo = new PsicologoController();
                     $response = $psicologo->store($user->id, $request);
                 }
 
                 if ($response == 1) {
-                    return response(['success' =>  $request->paciente == true ? 'Paciente' : 'Psicologo' . ' ' . 'registado com sucesso']);
+                    return response(['success' =>  'Registo feito com sucesso']);
                 } else {
                     return response(['error' => 'Ocorreu um erro no registo!']);
                 }
             } catch (Exception $th) {
-                dd($th);
                 return response(['error' => 'Erro inesperado!']);
             }
         } else {
@@ -96,8 +95,9 @@ class UserController extends Controller
     {
         try {
             $request->validate([
-                'email' => 'email|max:50|unique:users,email,',
+                'email' => 'email|max:50|'/*unique:users,email,*/,
                 'nome' => 'string|required',
+                'apelido' => 'string|required',
                 'senha' => 'required',
                 'paciente' => 'required|boolean',
             ]);
