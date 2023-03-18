@@ -37,25 +37,21 @@ class UserController extends Controller
                 $response = null;
                 $user = User::create([
                     'nome' => $request->nome,
-                    'sexo' => $request->sexo,
                     'email' => $request->email,
                     'acesso' => $request->paciente == true ? 'paciente' : 'psicologo',
                     'password' => Hash::make($request->senha)
                 ]);
-                
-                $cont = new ContactosController();
-                $cont->store($request->contactos, $user->id);
 
                 if ($request->paciente) {
                     $paciente = new PacienteController();
-                    $response = $paciente->store($request->ocupacao, $request->estadoCivil, $user->id, $request->dataNasc);
+                    $response = $paciente->store($request->ocupacao, $user->id);
                 } else {
                     $psicologo = new PsicologoController();
-                    $response = $psicologo->store($user->id, $request->especialidade, $request->email, $request->nome);
+                    $response = $psicologo->store($user->id, $request);
                 }
 
                 if ($response == 1) {
-                    return response(['success' =>  $request->paciente == true ? 'Paciente' : 'Psicologo' . ' ' . 'Registado com sucesso']);
+                    return response(['success' =>  $request->paciente == true ? 'Paciente' : 'Psicologo' . ' ' . 'registado com sucesso']);
                 } else {
                     return response(['error' => 'Ocorreu um erro no registo!']);
                 }
@@ -66,6 +62,11 @@ class UserController extends Controller
         } else {
             return response(['warning' => 'Preencha os dados correctamente!']);
         }
+    }
+
+
+    function insertUser()
+    {
     }
 
     /**
@@ -95,16 +96,10 @@ class UserController extends Controller
     {
         try {
             $request->validate([
-                'email' => 'email|max:50|'/*unique:users,email,*/,
+                'email' => 'email|max:50|unique:users,email,',
                 'nome' => 'string|required',
                 'senha' => 'required',
-                'especialidade' => 'exclude_if:paciente,true|required',
-                'ocupacao' => 'exclude_if:paciente,false|required',
-                'estadoCivil' => 'exclude_if:paciente,false|required',
-                'dataNasc' => 'exclude_if:paciente,false|required',
-                'sexo' => 'required',
                 'paciente' => 'required|boolean',
-                'contactos' => 'required'
             ]);
             return true;
         } catch (\Illuminate\Validation\ValidationException $th) {

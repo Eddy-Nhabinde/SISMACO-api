@@ -14,9 +14,9 @@ class MailController extends Controller
         $object[] = ['key' => 'nome', 'value' => $nome];
 
         if (!$this->sendEmail($this->getMailData($object))) {
-            return 0;
+            return false;
         }
-        return 1;
+        return true;
     }
 
     function sendPassword($email, $cod)

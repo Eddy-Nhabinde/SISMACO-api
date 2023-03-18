@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::create('pacientes', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
+            $table->char('sexo');
             $table->string('ocupacao');
             $table->string('estadoCivil');
             $table->date('dataNasc');
