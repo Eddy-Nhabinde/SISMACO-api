@@ -38,7 +38,7 @@ class PacienteController extends Controller
             $request->validate([
                 'ocupacao' => 'exclude_if:paciente,false|required',
                 'estadoCivil' => 'exclude_if:paciente,false|required',
-                'dataNasc' => 'exclude_if:paciente,false|required',
+                // 'dataNasc' => 'exclude_if:paciente,false|required',
                 'sexo' => 'required',
                 'contacto1' => 'required',
             ]);

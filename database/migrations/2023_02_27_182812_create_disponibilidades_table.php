@@ -17,7 +17,8 @@ return new class extends Migration
         Schema::create('disponibilidades', function (Blueprint $table) {
             $table->id();
             $table->string('diaDaSemana');
-            $table->string('intervaloHoras');
+            $table->string('inicio');
+            $table->string('fim');
             $table->foreignIdFor(Psicologo::class);
             $table->timestamps();
         });

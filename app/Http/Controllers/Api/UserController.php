@@ -34,27 +34,20 @@ class UserController extends Controller
     {
         if ($this->validating($request)) {
             try {
-                $response = null;
                 $user = User::create([
                     'nome' => $request->nome . ' ' . $request->apelido,
                     'email' => $request->email,
-                    'acesso' => $request->paciente == true ? 'paciente' : 'psicologo',
-                    'password' => Hash::make($request->senha)
+                    'acesso' => $this->getAcesso($request),
+                    'password' => Hash::make($request->password),
+                    'novo' => $request->paciente == true ? 0 : 1
                 ]);
 
-                if ($request->paciente) {
-                    $paciente = new PacienteController();
-                    $response = $paciente->store($request, $user->id);
-                } else {
-                    $psicologo = new PsicologoController();
-                    $response = $psicologo->store($user->id, $request);
-                }
-
-                if ($response == 1) {
+                if ($this->insertUserOrPsi($request, $user->id) == 1) {
                     return response(['success' =>  'Registo feito com sucesso']);
                 } else {
                     return response(['error' => 'Ocorreu um erro no registo!']);
                 }
+
             } catch (Exception $th) {
                 return response(['error' => 'Erro inesperado!']);
             }
@@ -63,9 +56,26 @@ class UserController extends Controller
         }
     }
 
-
-    function insertUser()
+    
+    function insertUserOrPsi($request, $user_id)
     {
+        if ($request->paciente) {
+            $paciente = new PacienteController();
+            return $paciente->store($request, $user_id);
+        } else {
+            $psicologo = new PsicologoController();
+            return $psicologo->store($user_id, $request);
+        }
+    }
+
+
+    function getAcesso($request)
+    {
+        if (gettype($request->paciente) == 'boolean') {
+            return $request->paciente == true ? 'paciente' : 'psicologo';
+        } else {
+            return 'admin';
+        }
     }
 
     /**
@@ -98,8 +108,8 @@ class UserController extends Controller
                 'email' => 'email|max:50|'/*unique:users,email,*/,
                 'nome' => 'string|required',
                 'apelido' => 'string|required',
-                'senha' => 'required',
-                'paciente' => 'required|boolean',
+                'password' => 'exclude_if:paciente,false|required',
+                'paciente' => 'required',
             ]);
             return true;
         } catch (\Illuminate\Validation\ValidationException $th) {
