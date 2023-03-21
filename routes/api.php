@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\EncomendasController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\PsicologoController;
 use App\Http\Controllers\VendasController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 route::post('saveuser', UserController::class . '@store');
+
+route::post('newAppointment', ConsultaController::class . '@novaConsulta');
+
+route::get('getPsychologist', PsicologoController::class . '@getPsicologos');
 
 route::group(['middleware' => ['apijwt']], function () {
     
