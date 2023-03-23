@@ -13,7 +13,7 @@ class MailController extends Controller
         $object[] = ['key' => 'recipient', 'value' => $email];
         $object[] = ['key' => 'nome', 'value' => $nome];
 
-        if (!$this->sendEmail($this->getMailData($object))) {
+        if (!$this->sendEmail($this->getMailData($object), 'new_request')) {
             return false;
         }
         return true;
@@ -23,21 +23,22 @@ class MailController extends Controller
     {
         $object[] = ['key' => 'cod', 'value' => $cod];
         $object[] = ['key' => 'recipient', 'value' => $email];
-        if ($this->sendEmail($this->getMailData($object)) == 1) {
+        if ($this->sendEmail($this->getMailData($object), 'new_request') == 1) {
             return 1;
         } else {
             return 0;
         }
     }
 
-    function newAppointment($email, $data, $hora)
+    function newAppointment($email, $data, $hora, $nome)
     {
         $object[] = ['key' => 'subject', 'value' => "Nova Consulta"];
         $object[] = ['key' => 'recipient', 'value' => $email];
         $object[] = ['key' => 'data', 'value' => $data];
         $object[] = ['key' => 'hora', 'value' => $hora];
+        $object[] = ['key' => 'nome', 'value' => $nome];
 
-        if ($this->sendEmail($this->getMailData($object)) == 1) {
+        if ($this->sendEmail($this->getMailData($object), 'newAppointment') == 1) {
             return 1;
         } else {
             return 0;
@@ -58,10 +59,10 @@ class MailController extends Controller
         return $mailData;
     }
 
-    function sendEmail($email_data)
+    function sendEmail($email_data, $component)
     {
         try {
-            Mail::send('new_request', $email_data, function ($message) use ($email_data) {
+            Mail::send($component, $email_data, function ($message) use ($email_data) {
                 $message->to($email_data['recipient'])
                     ->from($email_data['from'], $email_data['fromname'])
                     ->subject($email_data['subject']);

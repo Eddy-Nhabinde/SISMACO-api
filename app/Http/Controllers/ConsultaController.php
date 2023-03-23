@@ -39,16 +39,15 @@ class ConsultaController extends Controller
 
     function sendMail($request, $data)
     {
-        dd($data);
         try {
             $email = DB::table('users')
                 ->join('psicologos', 'psicologos.user_id', '=', 'users.id')
                 ->where('psicologos.id', $request->psicologo)
-                ->select('email')
+                ->select('email', 'nome')
                 ->get();
 
             $mail = new MailController();
-            return $mail->newAppointment($email[0]->email, $data, $request->hora);
+            return $mail->newAppointment($email[0]->email, $data, $request->hora, $email[0]->nome);
         } catch (\Throwable $th) {
             dd($th);
             return 0;
