@@ -30,6 +30,20 @@ class MailController extends Controller
         }
     }
 
+    function newAppointment($email, $data, $hora)
+    {
+        $object[] = ['key' => 'subject', 'value' => "Nova Consulta"];
+        $object[] = ['key' => 'recipient', 'value' => $email];
+        $object[] = ['key' => 'data', 'value' => $data];
+        $object[] = ['key' => 'hora', 'value' => $hora];
+
+        if ($this->sendEmail($this->getMailData($object)) == 1) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     function getMailData($data)
     {
         $mailData = [
