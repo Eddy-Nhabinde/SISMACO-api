@@ -151,18 +151,6 @@
 
                                                             <table width="100%" cellpadding="0" cellspacing="0"
                                                                 border="0">
-                                                                <tr>
-                                                                    <td style="padding-right: 0px;padding-left: 0px;"
-                                                                        align="center">
-                                                                        <a href="https://unlayer.com" target="_blank">
-                                                                            <img align="center" border="0"
-                                                                                src="images/image-5.png" alt="Logo"
-                                                                                title="Logo"
-                                                                                style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 35%;max-width: 185.5px;"
-                                                                                width="185.5" />
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
                                                             </table>
 
                                                         </td>
@@ -351,7 +339,7 @@
                                                             <div
                                                                 style="color: #293c4b; line-height: 140%; text-align: center; word-wrap: break-word;">
                                                                 <p style="font-size: 14px; line-height: 140%;"><span
-                                                                        style="font-family: Montserrat, sans-serif; font-size: 16px; line-height: 22.4px; color: #7db00e;"><strong>June,
+                                                                        style="font-family: Montserrat, sans-serif; font-size: 16px; line-height: 22.4px; color: #7db00e;"><strong>
                                                                             {{ $data }} as {{ $hora }}
                                                                         </strong></span></p>
                                                             </div>

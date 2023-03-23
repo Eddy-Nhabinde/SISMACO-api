@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Consulta;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -37,6 +38,26 @@ class ConsultaController extends Controller
         }
     }
 
+    function getPacienteAppointments()
+    {
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+
+            $appointments = DB::table('consultas')
+                ->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id')
+                ->join('users', 'users.id', '=', 'psicologos.user_id')
+                ->join('estados', 'estados.id', '=', 'consultas.estado_id')
+                ->where('paciente_id', $user->id)
+                ->select('users.nome as psiNome', 'hora', 'data', 'estados.nome')
+                ->get();
+
+            return response(["consultas" => $appointments]);
+        } catch (Exception $th) {
+            dd($th);
+            return response(["error" => "Erro inesperado!"]);
+        }
+    }
+
     function sendMail($request, $data)
     {
         try {
@@ -48,8 +69,7 @@ class ConsultaController extends Controller
 
             $mail = new MailController();
             return $mail->newAppointment($email[0]->email, $data, $request->hora, $email[0]->nome);
-        } catch (\Throwable $th) {
-            dd($th);
+        } catch (Exception $th) {
             return 0;
         }
     }

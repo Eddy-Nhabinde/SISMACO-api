@@ -24,6 +24,8 @@ route::post('saveuser', UserController::class . '@store');
 
 route::post('newAppointment', ConsultaController::class . '@novaConsulta');
 
+route::get('getPacienteAppointments', ConsultaController::class . '@getPacienteAppointments');
+
 route::get('getPsychologist', PsicologoController::class . '@getPsicologos');
 
 route::group(['middleware' => ['apijwt']], function () {
