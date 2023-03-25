@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MailController;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -108,6 +109,38 @@ class AuthController extends Controller
             }
         } catch (\Illuminate\Validation\ValidationException $th) {
             return response(['error' => 'Email invalido']);
+        }
+    }
+
+    function passwordUpdate(Request $request)
+    {
+        try {
+            $request->validate([
+                'password' => 'required',
+                'ConfPassword' => 'required'
+            ]);
+
+            if ($request->password != $request->ConfPassword) {
+                return response(['error' => 'Erro! As senhas nao conferem.']);
+            } else if (strlen($request->password) < 8) {
+                return response(['warning' => 'A sua e senha muito curta!']);
+            } else {
+                try {
+                    $user = auth('api')->user();
+
+                    User::where('id', $user->id)
+                        ->update([
+                            'password' => Hash::make($request->password),
+                            'novo' => '0'
+                        ]);
+
+                    return response(['success' => 'Atualizacao feita com sucesso!']);
+                } catch (Exception $th) {
+                    return response(['error' => 'Erro inesperado']);
+                }
+            }
+        } catch (\Illuminate\Validation\ValidationException $th) {
+            return response(['error' => 'Preencha todos os campos!']);
         }
     }
 }

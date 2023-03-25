@@ -35,6 +35,8 @@ Route::post('passwordRequest', AuthController::class . '@requestPassword');
 
 Route::post('login', AuthController::class . '@login');
 
+Route::post('passwordUpdate', AuthController::class . '@passwordUpdate');
+
 Route::post('refresh', AuthController::class . '@refresh');
 
 Route::post('me', AuthController::class . '@me');

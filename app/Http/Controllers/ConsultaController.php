@@ -53,7 +53,6 @@ class ConsultaController extends Controller
 
             return response(["consultas" => $appointments]);
         } catch (Exception $th) {
-            dd($th);
             return response(["error" => "Erro inesperado!"]);
         }
     }
