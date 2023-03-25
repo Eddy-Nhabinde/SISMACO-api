@@ -9,6 +9,7 @@ use App\Http\Controllers\PsicologoController;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -47,7 +48,6 @@ class UserController extends Controller
                 } else {
                     return response(['error' => 'Ocorreu um erro no registo!']);
                 }
-
             } catch (Exception $th) {
                 return response(['error' => 'Erro inesperado!']);
             }
@@ -56,7 +56,7 @@ class UserController extends Controller
         }
     }
 
-    
+
     function insertUserOrPsi($request, $user_id)
     {
         if ($request->paciente) {
@@ -75,6 +75,20 @@ class UserController extends Controller
             return $request->paciente == true ? 'paciente' : 'psicologo';
         } else {
             return 'admin';
+        }
+    }
+
+    function getPacientesCount()
+    {
+        try {
+            $count = DB::table('users')
+                ->select(array('id', DB::raw('COUNT(id) as total')))
+                ->where('acesso', 'paciente')
+                ->get();
+                
+            return $count;
+        } catch (Exception $th) {
+            return 0;
         }
     }
 
