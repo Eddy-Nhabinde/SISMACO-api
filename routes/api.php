@@ -30,6 +30,8 @@ route::get('getDashBoardData', ConsultaController::class . '@getDashBoardData');
 
 route::get('getPsychologist', PsicologoController::class . '@getPsicologos');
 
+route::get('getSchedule', PsicologoController::class . '@getSchedule');
+
 route::group(['middleware' => ['apijwt']], function () {
     
 });

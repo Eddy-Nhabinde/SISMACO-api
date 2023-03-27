@@ -7,6 +7,7 @@ use App\Models\Psicologo;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PsicologoController extends Controller
 {
@@ -64,6 +65,29 @@ class PsicologoController extends Controller
             ->get();
 
         return  $psicologos;
+    }
+
+    function getSchedule()
+    {
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+            
+            $psiID =  DB::table('users')
+                ->join('psicologos', 'psicologos.user_id', '=', 'users.id')
+                ->select('psicologos.id as psiId')
+                ->where('users.id', $user->id)
+                ->get();
+
+            $schedule = DB::table('consultas')
+                ->leftJoin('users', 'users.id', '=', 'consultas.paciente_id')
+                ->select('users.nome', 'data', 'hora')
+                ->where('psicologo_id', $psiID[0]->psiId)
+                ->get();
+
+            return response(["schedule" => $schedule]);
+        } catch (Exception $th) {
+            return response(["error" => "Erro inesperado!"]);
+        }
     }
 
     function validating($request)
