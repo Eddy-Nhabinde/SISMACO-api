@@ -17,7 +17,7 @@ class PsicologoController extends Controller
             if ($this->validating($request)) {
                 $psicologo = Psicologo::create([
                     'user_id' => $userid,
-                    'especialidade' => $request->especialidade
+                    'especialidade_id' => $request->especialidade
                 ]);
 
                 $contacts = new ContactosController();
@@ -71,7 +71,7 @@ class PsicologoController extends Controller
     {
         try {
             $user = JWTAuth::parseToken()->authenticate();
-            
+
             $psiID =  DB::table('users')
                 ->join('psicologos', 'psicologos.user_id', '=', 'users.id')
                 ->select('psicologos.id as psiId')
@@ -80,13 +80,14 @@ class PsicologoController extends Controller
 
             $schedule = DB::table('consultas')
                 ->leftJoin('users', 'users.id', '=', 'consultas.paciente_id')
-                ->select('users.nome', 'data', 'hora')
+                ->join('problemas', 'problemas.id', '=', 'consultas.problema_id')
+                ->select('users.nome', 'data', 'hora', 'problemas.nome as problema')
                 ->where('psicologo_id', $psiID[0]->psiId)
                 ->get();
 
             return response(["schedule" => $schedule]);
         } catch (Exception $th) {
-            return response(["error" => "Erro inesperado!"]);
+            return response(["error" => $th->getMessage()]);
         }
     }
 

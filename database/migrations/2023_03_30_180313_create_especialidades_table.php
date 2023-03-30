@@ -14,25 +14,31 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('problemas', function (Blueprint $table) {
+        Schema::create('especialidades', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->timestamps();
         });
 
-        DB::table('problemas')->insert(
+        DB::table('especialidades')->insert(
             array(
                 [
-                    'nome' => 'Pessoal',
+                    'nome' => 'Clinica (Adulto)',
                 ],
                 [
-                    'nome' => 'Familiar',
+                    'nome' => 'Clinica (Crianca)',
                 ],
                 [
-                    'nome' => 'Laboral',
+                    'nome' => 'Clinica (Laboral)',
                 ],
                 [
-                    'nome' => 'Outro',
+                    'nome' => 'Familia',
+                ],
+                [
+                    'nome' => 'Trabalho',
+                ],
+                [
+                    'nome' => 'Outra',
                 ]
             )
         );
@@ -45,6 +51,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('problemas');
+        Schema::dropIfExists('especialidades');
     }
 };
