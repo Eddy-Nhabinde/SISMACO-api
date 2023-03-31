@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Utils\ConsultasUtils;
 use App\Models\Consulta;
 use Carbon\Carbon;
 use Exception;
@@ -72,53 +73,11 @@ class ConsultaController extends Controller
                 return response(["dashData" => $data, "users" => $user->getPacientesCount()]);
             }
 
-            return response(["dashData" => ['consultas' => $data, "chartData" => $this->organizeChartDataByEstado($chartData)]]);
+            $utils = new ConsultasUtils();
+            return response(["dashData" => ['consultas' => $data, "chartData" => $utils->organizeChartDataByEstado($chartData)]]);
         } catch (Exception $th) {
             return response(["error" => "Erro inesperado!"]);
         }
-    }
-
-
-    function organizeChartDataByEstado($chartData)
-    {
-        $cancelada = [];
-        $pendente = [];
-        $realizada = [];
-
-        foreach ($chartData as $key) {
-            switch ($key->estado) {
-                case 'Pendente':
-                    array_push($pendente, $key);
-                    break;
-                case 'Cancelada':
-                    array_push($cancelada, $key);
-                    break;
-                case 'Realizada':
-                    array_push($realizada, $key);
-                    break;
-            }
-        }
-
-        return [
-            "canceladas" => $this->organizeDataByMonth($cancelada),
-            "pendentes" => $this->organizeDataByMonth($pendente),
-            "realizadas" => $this->organizeDataByMonth($realizada),
-        ];
-    }
-
-    function organizeDataByMonth($arrayData)
-    {
-        $data = [];
-        for ($i = 0; $i < 12; $i++) {
-            $monthData = 0;
-            for ($index = 0; $index < sizeof($arrayData); $index++) {
-                if ($arrayData[$index]->month == $i) {
-                    $monthData = $arrayData[$index]->data;
-                }
-            }
-            array_push($data, $monthData);
-        }
-        return $data;
     }
 
     function getPacienteAppointments()

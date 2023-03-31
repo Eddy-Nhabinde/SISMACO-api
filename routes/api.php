@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\EncomendasController;
+use App\Http\Controllers\EspecialidadeController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\PsicologoController;
 use App\Http\Controllers\VendasController;
@@ -32,9 +33,11 @@ route::get('getPsychologist', PsicologoController::class . '@getPsicologos');
 
 route::get('getSchedule', PsicologoController::class . '@getSchedule');
 
+route::get('getEspecialidade', EspecialidadeController::class . '@getEspecialidade');
+
 route::group(['middleware' => ['apijwt']], function () {
-    
 });
+
 Route::post('passwordRequest', AuthController::class . '@requestPassword');
 
 Route::post('login', AuthController::class . '@login');
