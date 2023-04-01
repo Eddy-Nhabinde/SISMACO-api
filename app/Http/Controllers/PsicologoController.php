@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Disponibilidade;
+use App\Http\Controllers\Utils\Common;
 use App\Models\Psicologo;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PsicologoController extends Controller
 {
+    private $userId = 0;
+
+    public function __construct()
+    {
+        $user = new Common();
+        $this->userId = $user->getUserId();
+    }
+
     function store($userid, $request)
     {
         try {
@@ -70,12 +77,10 @@ class PsicologoController extends Controller
     function getSchedule()
     {
         try {
-            $user = JWTAuth::parseToken()->authenticate();
-
             $psiID =  DB::table('users')
                 ->join('psicologos', 'psicologos.user_id', '=', 'users.id')
                 ->select('psicologos.id as psiId')
-                ->where('users.id', $user->id)
+                ->where('users.id', $this->userId)
                 ->get();
 
             $schedule = DB::table('consultas')

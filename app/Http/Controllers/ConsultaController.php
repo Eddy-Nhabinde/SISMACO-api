@@ -3,24 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Utils\Common;
 use App\Http\Controllers\Utils\ConsultasUtils;
 use App\Models\Consulta;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ConsultaController extends Controller
 {
+    private $userId = 0;
+    private $acesso = 0;
+
+    public function __construct()
+    {
+        $user = new Common();
+        $this->userId = $user->getUserId();
+        $this->acesso = $user->getAcesso();
+    }
+
     function novaConsulta(Request $request)
     {
         if ($this->validating($request)) {
-            $user = JWTAuth::parseToken()->authenticate();
-
             $cons = Consulta::create([
                 "psicologo_id" => $request->psicologo,
-                "paciente_id" => $user->id,
+                "paciente_id" =>  $this->userId,
                 "problema_id" => 1,
                 "descricaoProblema" => "testando",
                 "estado_id" => 1,
@@ -40,15 +48,31 @@ class ConsultaController extends Controller
         }
     }
 
+    function getAppointments($estado)
+    {
+        try {
+            $data = DB::table('consultas')
+                ->join('estados', 'estados.id', '=', 'consultas.estado_id')
+                ->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id')
+                ->join('users', 'users.id', '=', 'psicologos.user_id')
+                ->select('users.nome as paciente', 'hora', 'data', 'estados.nome as estado')
+                ->where('users.id', $this->userId)
+                ->where('estados.id', $estado)
+                ->get();
+
+            return response(['consultas' => $data]);
+        } catch (Exception $th) {
+            return response(["error" => "Erro inesperado!"]);
+        }
+    }
+
     function getDashBoardData()
     {
         try {
-            $user = JWTAuth::parseToken()->authenticate();
-
             $data = DB::table('consultas')
                 ->join('estados', 'estados.id', '=', 'consultas.estado_id')
-                ->when($user, function ($query, $user) {
-                    if ($user->acesso == 'psicologo') {
+                ->when(function ($query) {
+                    if ($this->acesso == 'psicologo') {
                         return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
                     }
                 })
@@ -58,8 +82,8 @@ class ConsultaController extends Controller
 
             $chartData = DB::table('consultas')
                 ->join('estados', 'estados.id', '=', 'consultas.estado_id')
-                ->when($user, function ($query, $user) {
-                    if ($user->acesso == 'psicologo') {
+                ->when(function ($query) {
+                    if ($this->acesso == 'psicologo') {
                         return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
                     }
                 })
@@ -68,7 +92,7 @@ class ConsultaController extends Controller
                 ->groupBy('estado')
                 ->get();
 
-            if ($user->acesso != 'psicologo') {
+            if ($this->acesso != 'psicologo') {
                 $user = new UserController();
                 return response(["dashData" => $data, "users" => $user->getPacientesCount()]);
             }
@@ -83,13 +107,11 @@ class ConsultaController extends Controller
     function getPacienteAppointments()
     {
         try {
-            $user = JWTAuth::parseToken()->authenticate();
-
             $appointments = DB::table('consultas')
                 ->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id')
                 ->join('users', 'users.id', '=', 'psicologos.user_id')
                 ->join('estados', 'estados.id', '=', 'consultas.estado_id')
-                ->where('paciente_id', $user->id)
+                ->where('paciente_id', $this->userId)
                 ->select('users.nome as psiNome', 'hora', 'data', 'estados.nome')
                 ->get();
 

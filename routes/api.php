@@ -25,6 +25,8 @@ route::post('saveuser', UserController::class . '@store');
 
 route::post('newAppointment', ConsultaController::class . '@novaConsulta');
 
+route::get('getAppointments/{estado}', ConsultaController::class . '@getAppointments');
+
 route::get('getPacienteAppointments', ConsultaController::class . '@getPacienteAppointments');
 
 route::get('getDashBoardData', ConsultaController::class . '@getDashBoardData');
