@@ -60,8 +60,8 @@ class ConsultaController extends Controller
                 ->where('estados.id', $estado)
                 ->get();
 
-            return response(['consultas' => $data]);
-        } catch (Exception $th) {
+                return response(['consultas' => $data]);
+            } catch (Exception $th) {
             return response(["error" => "Erro inesperado!"]);
         }
     }

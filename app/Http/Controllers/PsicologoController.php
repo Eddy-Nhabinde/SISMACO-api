@@ -54,7 +54,8 @@ class PsicologoController extends Controller
         try {
             $psicologos = DB::table('psicologos')
                 ->join('users', 'users.id', '=', 'psicologos.user_id')
-                ->select('psicologos.id', 'nome as label', 'especialidade')
+                ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
+                ->select('psicologos.id', 'users.nome as label', 'especialidades.nome as especialidade')
                 ->get();
 
             return response(['psicologos' => $this->getDisponibilidade($psicologos)]);
