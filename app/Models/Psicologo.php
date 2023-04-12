@@ -11,6 +11,6 @@ class Psicologo extends Model
 
     protected $fillable = [
         'user_id',
-        'especialidade'
+        'especialidade_id'
     ];
 }

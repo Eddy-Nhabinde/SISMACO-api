@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\ContactosController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\PsicologoController;
+use App\Http\Controllers\Utils\Common;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -35,15 +35,16 @@ class UserController extends Controller
     {
         if ($this->validating($request)) {
             try {
+                $password = $this->getOrGenetatePAssword($request->password);
                 $user = User::create([
                     'nome' => $request->nome . ' ' . $request->apelido,
                     'email' => $request->email,
                     'acesso' => $this->getAcesso($request),
-                    'password' => Hash::make($request->password),
+                    'password' =>  $password,
                     'novo' => $request->paciente == true ? 0 : 1
                 ]);
 
-                if ($this->insertUserOrPsi($request, $user->id) == 1) {
+                if ($this->insertUserOrPsi($request, $user->id, $password) == 1) {
                     return response(['success' =>  'Registo feito com sucesso']);
                 } else {
                     return response(['error' => 'Ocorreu um erro no registo!']);
@@ -57,14 +58,14 @@ class UserController extends Controller
     }
 
 
-    function insertUserOrPsi($request, $user_id)
+    function insertUserOrPsi($request, $user_id, $password)
     {
         if ($request->paciente) {
             $paciente = new PacienteController();
             return $paciente->store($request, $user_id);
         } else {
             $psicologo = new PsicologoController();
-            return $psicologo->store($user_id, $request);
+            return $psicologo->store($user_id, $request, $password);
         }
     }
 
@@ -78,6 +79,16 @@ class UserController extends Controller
         }
     }
 
+    function getOrGenetatePAssword($password)
+    {
+        if (isset($password)) {
+            return Hash::make($password);
+        } else {
+            $utils = new Common();
+            return $utils->returnRandomString();
+        }
+    }
+
     function getPacientesCount()
     {
         try {
@@ -85,7 +96,7 @@ class UserController extends Controller
                 ->select(array('id', DB::raw('COUNT(id) as total')))
                 ->where('acesso', 'paciente')
                 ->get();
-                
+
             return $count;
         } catch (Exception $th) {
             return 0;

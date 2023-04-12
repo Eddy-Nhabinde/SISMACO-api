@@ -18,7 +18,7 @@ class PsicologoController extends Controller
         $this->userId = $user->getUserId();
     }
 
-    function store($userid, $request)
+    function store($userid, $request, $password)
     {
         try {
             if ($this->validating($request)) {
@@ -34,7 +34,7 @@ class PsicologoController extends Controller
                 $dispo->store($request->disponibilidade,  $psicologo->id);
 
                 $mail = new MailController();
-                if (!$mail->newPsicologo($request->email, $request->nome)) {
+                if (!$mail->newPsicologo($request->email, $request->nome, $password)) {
                     return 0;
                 } else {
                     return 1;
@@ -58,21 +58,25 @@ class PsicologoController extends Controller
                 ->select('psicologos.id', 'users.nome as label', 'especialidades.nome as especialidade')
                 ->get();
 
-            return response(['psicologos' => $this->getDisponibilidade($psicologos)]);
+            return response($this->getDisponibilidade($psicologos));
         } catch (Exception $th) {
-            return response(['error' => $th], 200);
+            return response(['error' => "Erro Inesperado"], 200);
         }
     }
 
 
     function getDisponibilidade($psicologos)
     {
-        $psicologos[0]->disponibilidade =  DB::table('disponibilidades')
-            ->select('diaDaSemana', 'inicio', 'fim')
-            ->where('psicologo_id', $psicologos[0]->id)
-            ->get();
+        if (isset($psicologos[0])) {
+            $psicologos[0]->disponibilidade =  DB::table('disponibilidades')
+                ->select('diaDaSemana', 'inicio', 'fim')
+                ->where('psicologo_id', $psicologos[0]->id)
+                ->get();
 
-        return  $psicologos;
+            return ['psicologos' => $psicologos];
+        } else {
+            return ['warning' => "Nao ha psicologos registados!"];
+        }
     }
 
     function getSchedule()

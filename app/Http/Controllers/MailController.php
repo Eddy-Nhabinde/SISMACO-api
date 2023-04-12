@@ -7,11 +7,12 @@ use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
-    function newPsicologo($email, $nome)
+    function newPsicologo($email, $nome, $password)
     {
         $object[] = ['key' => 'subject', 'value' => "Wellcome"];
         $object[] = ['key' => 'recipient', 'value' => $email];
         $object[] = ['key' => 'nome', 'value' => $nome];
+        $object[] = ['key' => 'password', 'value' => $password];
 
         if (!$this->sendEmail($this->getMailData($object), 'new_request')) {
             return false;
