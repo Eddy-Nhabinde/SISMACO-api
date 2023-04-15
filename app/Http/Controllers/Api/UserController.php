@@ -35,12 +35,12 @@ class UserController extends Controller
     {
         if ($this->validating($request)) {
             try {
-                $password = $this->getOrGenetatePAssword($request->password);
+                $password = $this->getOrGenetatePAssword($request);
                 $user = User::create([
                     'nome' => $request->nome . ' ' . $request->apelido,
                     'email' => $request->email,
                     'acesso' => $this->getAcesso($request),
-                    'password' =>  $password,
+                    'password' => Hash::make($password),
                     'novo' => $request->paciente == true ? 0 : 1
                 ]);
 
@@ -79,10 +79,10 @@ class UserController extends Controller
         }
     }
 
-    function getOrGenetatePAssword($password)
+    function getOrGenetatePAssword($request)
     {
-        if (isset($password)) {
-            return Hash::make($password);
+        if (isset($request->password) && $request->paciente == true) {
+            return $request->password;
         } else {
             $utils = new Common();
             return $utils->returnRandomString();

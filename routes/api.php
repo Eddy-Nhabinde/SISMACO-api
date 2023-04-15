@@ -29,6 +29,10 @@ route::get('getAppointments/{estado}', ConsultaController::class . '@getAppointm
 
 route::get('getPacienteAppointments', ConsultaController::class . '@getPacienteAppointments');
 
+route::put('closeAppointment/{id}', ConsultaController::class . '@CloseAppointment');
+
+route::put('cancelAppointment/{id}', ConsultaController::class . '@cancelAppointment');
+
 route::get('getDashBoardData', ConsultaController::class . '@getDashBoardData');
 
 route::get('getPsychologist', PsicologoController::class . '@getPsicologos');

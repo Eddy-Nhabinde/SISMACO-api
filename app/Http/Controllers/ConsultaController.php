@@ -48,20 +48,57 @@ class ConsultaController extends Controller
         }
     }
 
+    function CloseAppointment($id)
+    {
+        try {
+            Consulta::where('id', $id)
+                ->update([
+                    'estado_id' => 3,
+                ]);
+        } catch (Exception $th) {
+            return response(["error" => "Erro inesperado"]);
+        }
+    }
+
+
+    function cancelAppointment($id)
+    {
+        try {
+            $appointmentData = DB::table('consultas')
+                ->join('users', 'users.id', '=', 'consultas.paciente_id')
+                ->select('users.nome', 'hora', 'data', 'users.email')
+                ->where('consultas.id', $id)
+                ->get();
+            $mail = new MailController();
+
+            if ($mail->cancelAppointment($appointmentData) == 1) {
+                Consulta::where('id', $id)
+                    ->update([
+                        'estado_id' => 2,
+                    ]);
+            }else{
+                return response(["error" => "Erro inesperado"]);
+            }
+            return response(["success" => "Consulta cancelada com sucesso!"]);
+        } catch (Exception $th) {
+            return response(["error" => "Erro inesperado"]);
+        }
+    }
+
     function getAppointments($estado)
     {
         try {
             $data = DB::table('consultas')
                 ->join('estados', 'estados.id', '=', 'consultas.estado_id')
                 ->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id')
-                ->join('users', 'users.id', '=', 'psicologos.user_id')
-                ->select('users.nome as paciente', 'hora', 'data', 'estados.nome as estado')
-                ->where('users.id', $this->userId)
+                ->join('users', 'users.id', '=', 'consultas.paciente_id')
+                ->select('consultas.id', 'users.nome as paciente', 'hora', 'data', 'estados.nome as estado')
+                ->where('psicologos.user_id', $this->userId)
                 ->where('estados.id', $estado)
                 ->get();
 
-                return response(['consultas' => $data]);
-            } catch (Exception $th) {
+            return response(['consultas' => $data]);
+        } catch (Exception $th) {
             return response(["error" => "Erro inesperado!"]);
         }
     }

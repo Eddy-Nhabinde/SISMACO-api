@@ -299,7 +299,7 @@
 
                                                             <h3
                                                                 style="margin: 0px; color: #293c4b; line-height: 140%; text-align: left; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 18px; ">
-                                                                <strong>Dr. {{ $nome }},</strong>
+                                                                <strong>{{ $nome }},</strong>
                                                             </h3>
 
                                                         </td>
@@ -320,7 +320,11 @@
                                                                         style="font-size: 16px; line-height: 22.4px; font-family: Lato, sans-serif;">
                                                                         Saudacoes, esperamos que este email o encontre a
                                                                         gozar de boa saude.
-                                                                        Tem uma consulta marcada para dia
+                                                                        @if (isset($cancel))
+                                                                            A consulta maracada para o dia
+                                                                        @else
+                                                                            Tem uma consulta marcada para dia
+                                                                        @endif
                                                                     </span></p>
                                                             </div>
 
@@ -349,6 +353,30 @@
                                                 </tbody>
                                             </table>
 
+                                            @if (isset($cancel))
+                                                <table style="font-family:arial,helvetica,sans-serif;"
+                                                    role="presentation" cellpadding="0" cellspacing="0"
+                                                    width="100%" border="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;"
+                                                                align="left">
+
+                                                                <div
+                                                                    style="color: #656e72; line-height: 140%; text-align: left; word-wrap: break-word;">
+                                                                    <p style="font-size: 14px; line-height: 140%;">
+                                                                        <span
+                                                                            style="font-size: 16px; line-height: 22.4px; font-family: Lato, sans-serif;">
+                                                                            Foi cancelada pelo psicologo responsavel, sinceras desculpas!
+                                                                    </p>
+                                                                </div>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            @endif
+
                                             <table style="font-family:arial,helvetica,sans-serif;" role="presentation"
                                                 cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
@@ -359,7 +387,7 @@
                                                             <div
                                                                 style="color: #656e72; line-height: 140%; text-align: left; word-wrap: break-word;">
                                                                 <p style="font-size: 14px; line-height: 140%;"><span
-                                                                        style="font-size: 16px; line-height: 22.4px; font-family: Lato, sans-serif;">If
+                                                                        style="font-size: 16px; line-height: 22.4px; font-family: Lato, sans-serif;">
                                                                         Qualquer duvida ou inquietacao sobre o presente
                                                                         email, por favor contacte nos:
                                                                         <a href="" rel="noopener">
