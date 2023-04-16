@@ -55,6 +55,7 @@ class ConsultaController extends Controller
                 ->update([
                     'estado_id' => 3,
                 ]);
+            return response(["success" => "Consulta concluida com sucesso!"]);
         } catch (Exception $th) {
             return response(["error" => "Erro inesperado"]);
         }
@@ -76,7 +77,7 @@ class ConsultaController extends Controller
                     ->update([
                         'estado_id' => 2,
                     ]);
-            }else{
+            } else {
                 return response(["error" => "Erro inesperado"]);
             }
             return response(["success" => "Consulta cancelada com sucesso!"]);
@@ -124,7 +125,7 @@ class ConsultaController extends Controller
                         return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
                     }
                 })
-                ->select('estados.nome as estado', DB::raw('count(consultas.id) as `data`'),  DB::raw('MONTH(data) month'),)
+                ->select('estados.nome as estado', DB::raw('count(consultas.id) as `data`'),  DB::raw('MONTH(data) month'))
                 ->groupby('month')
                 ->groupBy('estado')
                 ->get();

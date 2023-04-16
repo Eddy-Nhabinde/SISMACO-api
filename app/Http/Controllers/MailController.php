@@ -37,7 +37,7 @@ class MailController extends Controller
         $object[] = ['key' => 'recipient', 'value' => $email];
         $object[] = ['key' => 'data', 'value' => $data];
         $object[] = ['key' => 'hora', 'value' => $hora];
-        $object[] = ['key' => 'nome', 'value' => 'Dr.' . $nome];
+        $object[] = ['key' => 'nome', 'value' => 'Dr.'  . $nome];
 
         if ($this->sendEmail($this->getMailData($object), 'newAppointment') == 1) {
             return 1;
@@ -52,7 +52,7 @@ class MailController extends Controller
         $object[] = ['key' => 'recipient', 'value' => $data[0]->email];
         $object[] = ['key' => 'data', 'value' => $data[0]->data];
         $object[] = ['key' => 'hora', 'value' => $data[0]->hora];
-        $object[] = ['key' => 'nome', 'value' => 'Sr(a).' . $data[0]->nome];
+        $object[] = ['key' => 'nome', 'value' => 'Sr(a). ' . $data[0]->nome];
         $object[] = ['key' => 'cancel', 'value' => true];
 
         if ($this->sendEmail($this->getMailData($object), 'newAppointment') == 1) {
