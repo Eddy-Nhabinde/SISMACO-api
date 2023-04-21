@@ -94,7 +94,11 @@ class ConsultaController extends Controller
                 ->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id')
                 ->join('users', 'users.id', '=', 'consultas.paciente_id')
                 ->select('consultas.id', 'users.nome as paciente', 'hora', 'data', 'estados.nome as estado')
-                ->where('psicologos.user_id', $this->userId)
+                ->when($this->acesso, function ($query) {
+                    if ($this->acesso == 'psicologo') {
+                        return $query->where('psicologos.user_id', $this->userId);
+                    }
+                })
                 ->where('estados.id', $estado)
                 ->get();
 
@@ -109,18 +113,18 @@ class ConsultaController extends Controller
         try {
             $data = DB::table('consultas')
                 ->join('estados', 'estados.id', '=', 'consultas.estado_id')
-                ->when(function ($query) {
+                ->when($this->acesso, function ($query) {
                     if ($this->acesso == 'psicologo') {
                         return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
                     }
                 })
-                ->select(array('estados.nome as estado', DB::raw('COUNT(estado_id) as total')))
+                ->select('estados.nome as estado', DB::raw('COUNT(estado_id) as total'))
                 ->groupBy('estado')
                 ->get();
 
             $chartData = DB::table('consultas')
                 ->join('estados', 'estados.id', '=', 'consultas.estado_id')
-                ->when(function ($query) {
+                ->when($this->acesso, function ($query) {
                     if ($this->acesso == 'psicologo') {
                         return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
                     }
@@ -130,15 +134,16 @@ class ConsultaController extends Controller
                 ->groupBy('estado')
                 ->get();
 
+            $utils = new ConsultasUtils();
+
             if ($this->acesso != 'psicologo') {
                 $user = new UserController();
-                return response(["dashData" => $data, "users" => $user->getPacientesCount()]);
+                return response(["dashData" => ['consultas' => $data, "users" => $user->getPacientesCount(), "chartData" => $utils->organizeChartDataByEstado($chartData)]]);
             }
 
-            $utils = new ConsultasUtils();
             return response(["dashData" => ['consultas' => $data, "chartData" => $utils->organizeChartDataByEstado($chartData)]]);
         } catch (Exception $th) {
-            return response(["error" => "Erro inesperado!"]);
+            return response(["error" => "Erro inesperado!" . $th]);
         }
     }
 
