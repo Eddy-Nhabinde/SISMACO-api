@@ -30,7 +30,7 @@ class ConsultasUtils
             "realizadas" => $this->organizeDataByMonth($realizada),
         ];
     }
-    
+
     function organizeDataByMonth($arrayData)
     {
         $data = [];
@@ -44,5 +44,18 @@ class ConsultasUtils
             array_push($data, $monthData);
         }
         return $data;
+    }
+
+    function organizeAppointmentsArray($arrayData)
+    {
+        $filtered = collect(json_decode($arrayData, true))->map(function ($array) {
+            if (!$array['paciente']) {
+                $array['paciente'] = $array['nome'];
+            }
+            unset($array['nome']);
+            return $array;
+        });
+
+        return $filtered;
     }
 }

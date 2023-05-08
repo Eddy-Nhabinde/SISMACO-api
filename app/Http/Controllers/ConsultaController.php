@@ -25,7 +25,7 @@ class ConsultaController extends Controller
 
     function novaConsulta(Request $request)
     {
-        if ($this->validating($request)) {
+        if (!$request->admin) {
             $cons = Consulta::create([
                 "psicologo_id" => $request->psicologo,
                 "paciente_id" =>  $this->userId,
@@ -35,16 +35,26 @@ class ConsultaController extends Controller
                 "data" => Carbon::parse($request->data)->format('Y-m-d'),
                 "hora" => $request->hora
             ]);
-
-            if ($this->sendMail($request, Carbon::parse($request->data)->format('Y-m-d')) == 0) {
-                Consulta::where('id', $cons->id)->delete();
-
-                return response(["error" => "Erro inesperado!"]);
-            } else {
-                return response(["success" => "Consulta marcada com sucesso!"]);
-            }
         } else {
-            return response(["warning" => "Por favor preencha todos os campos!"]);
+            $cons = Consulta::create([
+                "psicologo_id" => $request->psicologo,
+                "problema_id" => 1,
+                "descricaoProblema" => "testando",
+                "estado_id" => 1,
+                "data" => Carbon::parse($request->data)->format('Y-m-d'),
+                "hora" => $request->hora,
+                "nome" => $request->nome,
+                "apelido" => $request->apelido,
+                "email" => $request->email,
+                "contacto1" => $request->contacto1,
+                "contacto2" => $request->contacto2
+            ]);
+        }
+        if ($this->sendMail($request, Carbon::parse($request->data)->format('Y-m-d')) == 0) {
+            Consulta::where('id', $cons->id)->delete();
+            return response(["error" => "Erro inesperado!"]);
+        } else {
+            return response(["success" => "Consulta marcada com sucesso!"]);
         }
     }
 
@@ -119,8 +129,8 @@ class ConsultaController extends Controller
             $data = DB::table('consultas')
                 ->join('estados', 'estados.id', '=', 'consultas.estado_id')
                 ->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id')
-                ->join('users', 'users.id', '=', 'consultas.paciente_id')
-                ->select('consultas.id', 'users.nome as paciente', 'hora', 'data', 'estados.nome as estado')
+                ->leftJoin('users', 'users.id', '=', 'consultas.paciente_id')
+                ->select('consultas.id', 'users.nome as paciente', 'hora', 'data', 'estados.nome as estado', DB::raw("CONCAT(consultas.nome,' ',consultas.apelido) AS nome"))
                 ->when($this->acesso, function ($query) {
                     if ($this->acesso == 'psicologo') {
                         return $query->where('psicologos.user_id', $this->userId);
@@ -129,7 +139,8 @@ class ConsultaController extends Controller
                 ->where('estados.id', $estado)
                 ->get();
 
-            return response(['consultas' => $data]);
+            $utils = new ConsultasUtils();
+            return response(['consultas' => $utils->organizeAppointmentsArray($data)]);
         } catch (Exception $th) {
             return response(["error" => "Erro inesperado!"]);
         }
@@ -204,24 +215,6 @@ class ConsultaController extends Controller
             return $mail->newAppointment($email[0]->email, $data, $request->hora, $email[0]->nome);
         } catch (Exception $th) {
             return 0;
-        }
-    }
-
-    function validating($request)
-    {
-        try {
-            $request->validate([
-                'hora' => 'required',
-                'nome' => 'required',
-                'apelido' => 'required',
-                'email' => 'required',
-                'contacto1' => 'required',
-                'psicologo' => 'required',
-                'data' => 'required'
-            ]);
-            return true;
-        } catch (\Illuminate\Validation\ValidationException $th) {
-            return false;
         }
     }
 }
