@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 
@@ -20,10 +21,28 @@ class MailController extends Controller
         return true;
     }
 
+    function RescheduleAppointment($data, $request)
+    {
+        $object[] = ['key' => 'subject', 'value' => "Consulta Remarcada"];
+        $object[] = ['key' => 'recipient', 'value' => $data[0]->email];
+        $object[] = ['key' => 'dataNova', 'value' => Carbon::parse($request->data)->format('Y-m-d')];
+        $object[] = ['key' => 'data', 'value' => $request->prevDate];
+        $object[] = ['key' => 'hora', 'value' => $request->prevTime];
+        $object[] = ['key' => 'horaNova', 'value' => $request->hora];
+        $object[] = ['key' => 'nome', 'value' => 'Sr(a). ' . $data[0]->nome];
+        $object[] = ['key' => 'reschedule', 'value' => true];
+
+        if (!$this->sendEmail($this->getMailData($object), 'newAppointment')) {
+            return false;
+        }
+        return true;
+    }
+
     function sendPassword($email, $cod)
     {
         $object[] = ['key' => 'cod', 'value' => $cod];
         $object[] = ['key' => 'recipient', 'value' => $email];
+
         if ($this->sendEmail($this->getMailData($object), 'new_request') == 1) {
             return 1;
         } else {

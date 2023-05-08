@@ -35,6 +35,8 @@ route::put('cancelAppointment/{id}', ConsultaController::class . '@cancelAppoint
 
 route::get('getDashBoardData', ConsultaController::class . '@getDashBoardData');
 
+route::post('Reschedule', ConsultaController::class . '@Reschedule');
+
 route::get('getPsychologist', PsicologoController::class . '@getPsicologos');
 
 route::get('getSchedule', PsicologoController::class . '@getSchedule');
