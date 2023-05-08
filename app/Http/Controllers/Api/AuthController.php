@@ -117,12 +117,9 @@ class AuthController extends Controller
         try {
             $request->validate([
                 'password' => 'required',
-                'ConfPassword' => 'required'
             ]);
 
-            if ($request->password != $request->ConfPassword) {
-                return response(['error' => 'Erro! As senhas nao conferem.']);
-            } else if (strlen($request->password) < 8) {
+            if (strlen($request->password) < 8) {
                 return response(['warning' => 'A sua e senha muito curta!']);
             } else {
                 try {
