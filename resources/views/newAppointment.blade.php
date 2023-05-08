@@ -401,26 +401,28 @@
                                                     </tbody>
                                                 </table>
 
-                                                <table style="font-family:arial,helvetica,sans-serif;" role="presentation"
-                                                cellpadding="0" cellspacing="0" width="100%" border="0">
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="overflow-wrap:break-word;word-break:break-word;padding:5px;font-family:arial,helvetica,sans-serif;"
-                                                            align="left">
+                                                <table style="font-family:arial,helvetica,sans-serif;"
+                                                    role="presentation" cellpadding="0" cellspacing="0"
+                                                    width="100%" border="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="overflow-wrap:break-word;word-break:break-word;padding:5px;font-family:arial,helvetica,sans-serif;"
+                                                                align="left">
 
-                                                            <div
-                                                                style="color: #293c4b; line-height: 100%; text-align: center; word-wrap: break-word;">
-                                                                <p style="font-size: 14px; line-height: 100%;"><span
-                                                                        style="font-family: Montserrat, sans-serif; font-size: 16px; line-height: 22.4px; color: #7db00e;"><strong>
-                                                                            {{ $dataNova }} as {{ $horaNova }}
-                                                                        </strong></span></p>
-                                                            </div>
+                                                                <div
+                                                                    style="color: #293c4b; line-height: 100%; text-align: center; word-wrap: break-word;">
+                                                                    <p style="font-size: 14px; line-height: 100%;">
+                                                                        <span
+                                                                            style="font-family: Montserrat, sans-serif; font-size: 16px; line-height: 22.4px; color: #7db00e;"><strong>
+                                                                                {{ $dataNova }} as
+                                                                                {{ $horaNova }}
+                                                                            </strong></span></p>
+                                                                </div>
 
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             @endif
 
 
@@ -432,10 +434,10 @@
                                                             align="left">
 
                                                             <div
-                                                                style="color: #656e72; line-height: 140%; text-align: left; word-wrap: break-word;">
+                                                                style="color: #656e72; line-height: 140%; text-align: center; word-wrap: break-word;">
                                                                 <p style="font-size: 14px; line-height: 140%;"><span
                                                                         style="font-size: 16px; line-height: 22.4px; font-family: Lato, sans-serif;">
-                                                                        Qualquer duvida ou inquietacao sobre o presente
+                                                                        Qualquer duvida ou inquietacao sobre o este
                                                                         email, por favor contacte nos:
                                                                         <a href="" rel="noopener">
                                                                             <strong>
