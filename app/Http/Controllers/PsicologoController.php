@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Utils\Common;
+use App\Http\Controllers\Utils\PsicologosUtils;
 use App\Models\Psicologo;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PsicologoController extends Controller
 {
@@ -55,11 +56,13 @@ class PsicologoController extends Controller
             $psicologos = DB::table('psicologos')
                 ->join('users', 'users.id', '=', 'psicologos.user_id')
                 ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
-                ->select('psicologos.id', 'users.nome as label', 'especialidades.nome as especialidade')
+                ->select('psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'estado')
                 ->get();
 
-            return response($this->getDisponibilidade($psicologos));
+            $utils = new PsicologosUtils();
+            return response($this->getDisponibilidade($utils->renameStatus($psicologos)));
         } catch (Exception $th) {
+            dd($th);
             return response(['error' => "Erro Inesperado"], 200);
         }
     }
@@ -76,6 +79,19 @@ class PsicologoController extends Controller
             return ['psicologos' => $psicologos];
         } else {
             return ['warning' => "Nao ha psicologos registados!"];
+        }
+    }
+
+    function AlterarEstado(Request $request)
+    {
+        try {
+            Psicologo::where('id', $request->idd)
+                ->update([
+                    'estado' => $request->estado
+                ]);
+            return ['success' => "Psicologo " . $request->estado == 1 ? 'activado com sucesso' : 'desativado com sucesso!'];
+        } catch (Exception $th) {
+            return ['error' => "Erro inesperado!"];
         }
     }
 

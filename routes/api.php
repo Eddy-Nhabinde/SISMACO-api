@@ -41,6 +41,8 @@ route::get('getPsychologist', PsicologoController::class . '@getPsicologos');
 
 route::get('getSchedule', PsicologoController::class . '@getSchedule');
 
+route::post('AlterarEstado', PsicologoController::class . '@AlterarEstado');
+
 route::get('getEspecialidade', EspecialidadeController::class . '@getEspecialidade');
 
 route::group(['middleware' => ['apijwt']], function () {
