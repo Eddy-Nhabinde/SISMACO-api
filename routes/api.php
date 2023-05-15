@@ -41,7 +41,9 @@ route::get('getPsychologist', PsicologoController::class . '@getPsicologos');
 
 route::get('getSchedule', PsicologoController::class . '@getSchedule');
 
-route::post('AlterarEstado', PsicologoController::class . '@AlterarEstado');
+route::put('AlterarEstado/{id}/{estadoId}', PsicologoController::class . '@AlterarEstado');
+
+route::get('getPsiDetails/{id}', PsicologoController::class . '@getPsychologistDetails');
 
 route::get('getEspecialidade', EspecialidadeController::class . '@getEspecialidade');
 

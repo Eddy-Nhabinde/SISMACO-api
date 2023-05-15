@@ -49,6 +49,27 @@ class PsicologoController extends Controller
         }
     }
 
+    function getPsychologistDetails($id)
+    {
+        try {
+            $psicologo = DB::table('psicologos')
+                ->join('users', 'users.id', '=', 'psicologos.user_id')
+                ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
+                ->select('users.id as user', 'psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'email', 'estado')
+                ->where('psicologos.id', $id)
+                ->get();
+
+            $cont = DB::table('contactos')
+                ->select('contacto', 'principal')
+                ->where('user_id', $psicologo[0]->user)
+                ->get();
+
+            $consCont = new ConsultaController();
+            return response(["psicologo" => $psicologo, "contactos" => $cont, "consultas" => $consCont->getDashBoardData($psicologo[0]->id)->original]);
+        } catch (Exception $th) {
+            return response(['error' => "Erro Inesperado"], 200);
+        }
+    }
 
     function getPsicologos()
     {
@@ -62,7 +83,6 @@ class PsicologoController extends Controller
             $utils = new PsicologosUtils();
             return response($this->getDisponibilidade($utils->renameStatus($psicologos)));
         } catch (Exception $th) {
-            dd($th);
             return response(['error' => "Erro Inesperado"], 200);
         }
     }
@@ -82,14 +102,14 @@ class PsicologoController extends Controller
         }
     }
 
-    function AlterarEstado(Request $request)
+    function AlterarEstado($id, $estadoId)
     {
         try {
-            Psicologo::where('id', $request->idd)
+            Psicologo::where('id', $id)
                 ->update([
-                    'estado' => $request->estado
+                    'estado' => $estadoId
                 ]);
-            return ['success' => "Psicologo " . $request->estado == 1 ? 'activado com sucesso' : 'desativado com sucesso!'];
+            return ['success' => $estadoId == 1 ? 'Psicologo activado com sucesso' : 'Psicologo desativado com sucesso!'];
         } catch (Exception $th) {
             return ['error' => "Erro inesperado!"];
         }

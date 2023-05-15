@@ -23,6 +23,20 @@ class ConsultaController extends Controller
         $this->acesso = $user->getAcesso();
     }
 
+    function getPsicologId()
+    {
+        try {
+            $id = DB::table('psicologos')
+                ->where('psicologos.user_id', $this->userId)
+                ->select('id')
+                ->get();
+
+            return $id[0]->id;
+        } catch (Exception $th) {
+            return 0;
+        }
+    }
+
     function novaConsulta(Request $request)
     {
         if (!$request->admin) {
@@ -146,30 +160,52 @@ class ConsultaController extends Controller
         }
     }
 
-    function getDashBoardData()
+    function getDashBoardData($id = null)
     {
         try {
             $data = DB::table('consultas')
                 ->join('estados', 'estados.id', '=', 'consultas.estado_id')
-                ->when($this->acesso, function ($query) {
-                    if ($this->acesso == 'psicologo') {
+                ->when($this->acesso || $id, function ($query, $id) {
+                    if ($this->acesso == 'psicologo' || $id != null) {
                         return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
                     }
                 })
                 ->select('estados.nome as estado', DB::raw('COUNT(estado_id) as total'))
+                ->when($this->acesso, function ($query) {
+                    if ($this->acesso == 'psicologo') {
+                        return $query->where('psicologos.id', $this->getPsicologId());
+                    }
+                })
+                ->when($id, function ($query, $id) {
+                    if ($id != null) {
+                        return $query->where('psicologos.id', $id);
+                    }
+                })
                 ->groupBy('estado')
+                ->groupBy('estados.nome')
                 ->get();
 
             $chartData = DB::table('consultas')
                 ->join('estados', 'estados.id', '=', 'consultas.estado_id')
-                ->when($this->acesso, function ($query) {
-                    if ($this->acesso == 'psicologo') {
+                ->when($this->acesso || $id, function ($query, $id) {
+                    if ($this->acesso == 'psicologo' || $id != null) {
                         return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
                     }
                 })
                 ->select('estados.nome as estado', DB::raw('count(consultas.id) as `data`'),  DB::raw('MONTH(data) month'))
+                ->when($this->acesso, function ($query) {
+                    if ($this->acesso == 'psicologo') {
+                        return $query->where('psicologos.id', $this->getPsicologId());
+                    }
+                })
+                ->when($id, function ($query, $id) {
+                    if ($id != null) {
+                        return $query->where('psicologos.id', $id);
+                    }
+                })
                 ->groupby('month')
                 ->groupBy('estado')
+                ->groupBy('estados.nome')
                 ->get();
 
             $utils = new ConsultasUtils();
