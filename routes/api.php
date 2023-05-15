@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\EncomendasController;
 use App\Http\Controllers\EspecialidadeController;
+use App\Http\Controllers\ProblemaController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\PsicologoController;
 use App\Http\Controllers\VendasController;
@@ -46,6 +47,8 @@ route::put('AlterarEstado/{id}/{estadoId}', PsicologoController::class . '@Alter
 route::get('getPsiDetails/{id}', PsicologoController::class . '@getPsychologistDetails');
 
 route::get('getEspecialidade', EspecialidadeController::class . '@getEspecialidade');
+
+route::get('getProblems', ProblemaController::class . '@getProblems');
 
 route::group(['middleware' => ['apijwt']], function () {
 });

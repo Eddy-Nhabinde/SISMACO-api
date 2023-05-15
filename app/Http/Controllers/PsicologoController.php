@@ -78,6 +78,7 @@ class PsicologoController extends Controller
                 ->join('users', 'users.id', '=', 'psicologos.user_id')
                 ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
                 ->select('psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'estado')
+                ->where('users.acesso', 'psicologo')
                 ->get();
 
             $utils = new PsicologosUtils();
