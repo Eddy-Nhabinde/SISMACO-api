@@ -46,7 +46,7 @@ class ConsultaController extends Controller
                 "problema_id" => 1,
                 "descricaoProblema" => "testando",
                 "estado_id" => 1,
-                "data" => Carbon::parse($request->data)->format('Y-m-d'),
+                "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
                 "hora" => $request->hora
             ]);
         } else {
@@ -55,7 +55,7 @@ class ConsultaController extends Controller
                 "problema_id" => 1,
                 "descricaoProblema" => "testando",
                 "estado_id" => 1,
-                "data" => Carbon::parse($request->data)->format('Y-m-d'),
+                "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
                 "hora" => $request->hora,
                 "nome" => $request->nome,
                 "apelido" => $request->apelido,
@@ -83,7 +83,7 @@ class ConsultaController extends Controller
 
             Consulta::where('id', $request->id)
                 ->update([
-                    'data' => Carbon::parse($request->data)->format('Y-m-d'),
+                    'data' => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
                     'hora' => $request->hora
                 ]);
 
@@ -160,9 +160,11 @@ class ConsultaController extends Controller
         }
     }
 
-    function getDashBoardData($id = null)
+    function getDashBoardData($year = null, $id = null)
     {
         try {
+            $year == null && $year = date("Y");
+
             $data = DB::table('consultas')
                 ->join('estados', 'estados.id', '=', 'consultas.estado_id')
                 ->when($this->acesso || $id, function ($query, $id) {
@@ -181,6 +183,7 @@ class ConsultaController extends Controller
                         return $query->where('psicologos.id', $id);
                     }
                 })
+                ->where(DB::raw('YEAR(consultas.created_at)'), '=', $year)
                 ->groupBy('estado')
                 ->groupBy('estados.nome')
                 ->get();
@@ -203,6 +206,7 @@ class ConsultaController extends Controller
                         return $query->where('psicologos.id', $id);
                     }
                 })
+                ->where(DB::raw('YEAR(consultas.created_at)'), '=', $year)
                 ->groupby('month')
                 ->groupBy('estado')
                 ->groupBy('estados.nome')

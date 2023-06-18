@@ -65,7 +65,7 @@ class PsicologoController extends Controller
                 ->get();
 
             $consCont = new ConsultaController();
-            return response(["psicologo" => $psicologo, "contactos" => $cont, "consultas" => $consCont->getDashBoardData($psicologo[0]->id)->original]);
+            return response(["psicologo" => $psicologo, "contactos" => $cont, "consultas" => $consCont->getDashBoardData(date('Y'), $psicologo[0]->id)->original]);
         } catch (Exception $th) {
             return response(['error' => "Erro Inesperado"], 200);
         }
@@ -128,7 +128,7 @@ class PsicologoController extends Controller
             $schedule = DB::table('consultas')
                 ->leftJoin('users', 'users.id', '=', 'consultas.paciente_id')
                 ->join('problemas', 'problemas.id', '=', 'consultas.problema_id')
-                ->select('users.nome', 'data', 'hora', 'problemas.nome as problema')
+                ->select('psicologo_id', 'consultas.id', 'users.nome', 'data', 'hora', 'problemas.nome as problema')
                 ->where('psicologo_id', $psiID[0]->psiId)
                 ->get();
 

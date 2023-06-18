@@ -3,12 +3,10 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ConsultaController;
-use App\Http\Controllers\EncomendasController;
 use App\Http\Controllers\EspecialidadeController;
 use App\Http\Controllers\ProblemaController;
-use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\PsicologoController;
-use App\Http\Controllers\VendasController;
+use App\Http\Controllers\Utils\ConsultasUtils;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +32,7 @@ route::put('closeAppointment/{id}', ConsultaController::class . '@CloseAppointme
 
 route::put('cancelAppointment/{id}', ConsultaController::class . '@cancelAppointment');
 
-route::get('getDashBoardData', ConsultaController::class . '@getDashBoardData');
+route::get('getDashBoardData/{year?}', ConsultaController::class . '@getDashBoardData');
 
 route::post('Reschedule', ConsultaController::class . '@Reschedule');
 
@@ -49,6 +47,8 @@ route::get('getPsiDetails/{id}', PsicologoController::class . '@getPsychologistD
 route::get('getEspecialidade', EspecialidadeController::class . '@getEspecialidade');
 
 route::get('getProblems', ProblemaController::class . '@getProblems');
+
+route::get('getBusySchedules', ConsultasUtils::class . '@getBusySchedules');
 
 route::group(['middleware' => ['apijwt']], function () {
 });

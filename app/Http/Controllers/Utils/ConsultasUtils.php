@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Utils;
 
+use Exception;
+use Illuminate\Support\Facades\DB;
+
 class ConsultasUtils
 {
     function organizeChartDataByEstado($chartData)
@@ -57,5 +60,18 @@ class ConsultasUtils
         });
 
         return $filtered;
+    }
+    
+    function getBusySchedules()
+    {
+        try {
+            $data = DB::table('consultas')
+                ->select('psicologo_id', 'hora', 'data')
+                ->get();
+
+            return response(['busySchedules' => $data]);
+        } catch (Exception $th) {
+            return response(['error' => 'Ocorreu um erro na busca ']);
+        }
     }
 }
