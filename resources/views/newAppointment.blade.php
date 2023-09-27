@@ -196,7 +196,8 @@
 
                                                             <h3
                                                                 style="margin: 0px; color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 23px; ">
-                                                                Nova Consulta Marcada</h3>
+                                                                {{ $subject }}
+                                                            </h3>
 
                                                         </td>
                                                     </tr>
@@ -216,7 +217,7 @@
 
 
 
-                    <div class="u-row-container"
+                    {{-- <div class="u-row-container"
                         style="padding: 0px;background-image: url('%20');background-repeat: no-repeat;background-position: center top;background-color: transparent">
                         <div class="u-row"
                             style="Margin: 0 auto;min-width: 320px;max-width: 550px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #3598db;">
@@ -270,7 +271,7 @@
                                 <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
 
 
@@ -416,7 +417,8 @@
                                                                             style="font-family: Montserrat, sans-serif; font-size: 16px; line-height: 22.4px; color: #7db00e;"><strong>
                                                                                 {{ $dataNova }} as
                                                                                 {{ $horaNova }}
-                                                                            </strong></span></p>
+                                                                            </strong></span>
+                                                                    </p>
                                                                 </div>
 
                                                             </td>
