@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Utils;
 
+use Exception;
+use Illuminate\Support\Facades\DB;
+
 class PsicologosUtils
 {
     function renameStatus($data)
@@ -16,5 +19,19 @@ class PsicologosUtils
             }
         }
         return $data;
+    }
+
+    function getPsicologId($userId)
+    {
+        try {
+            $id = DB::table('psicologos')
+                ->where('psicologos.user_id', $userId)
+                ->select('id')
+                ->get();
+
+            return $id[0]->id;
+        } catch (Exception $th) {
+            return 0;
+        }
     }
 }

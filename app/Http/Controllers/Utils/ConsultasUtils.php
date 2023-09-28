@@ -7,44 +7,48 @@ use Illuminate\Support\Facades\DB;
 
 class ConsultasUtils
 {
-    function organizeChartDataByEstado($chartData)
+    // function organizeChartDataByEstado($chartData)
+    // {
+    //     $cancelada = [];
+    //     $pendente = [];
+    //     $realizada = [];
+
+    //     foreach ($chartData as $key) {
+    //         switch ($key->estado) {
+    //             case 'Pendente':
+    //                 array_push($pendente, $key);
+    //                 break;
+    //             case 'Cancelada':
+    //                 array_push($cancelada, $key);
+    //                 break;
+    //             case 'Realizada':
+    //                 array_push($realizada, $key);
+    //                 break;
+    //         }
+    //     }
+
+    //     return [
+    //         "canceladas" => $this->organizeDataByMonth($cancelada),
+    //         "pendentes" => $this->organizeDataByMonth($pendente),
+    //         "realizadas" => $this->organizeDataByMonth($realizada),
+    //     ];
+    // }
+
+    function organizeDataByMonth($arrayData, $object)
     {
-        $cancelada = [];
-        $pendente = [];
-        $realizada = [];
-
-        foreach ($chartData as $key) {
-            switch ($key->estado) {
-                case 'Pendente':
-                    array_push($pendente, $key);
-                    break;
-                case 'Cancelada':
-                    array_push($cancelada, $key);
-                    break;
-                case 'Realizada':
-                    array_push($realizada, $key);
-                    break;
-            }
-        }
-
-        return [
-            "canceladas" => $this->organizeDataByMonth($cancelada),
-            "pendentes" => $this->organizeDataByMonth($pendente),
-            "realizadas" => $this->organizeDataByMonth($realizada),
-        ];
-    }
-
-    function organizeDataByMonth($arrayData)
-    {
+        // dd($arrayData);
         $data = [];
-        for ($i = 0; $i < 12; $i++) {
-            $monthData = 0;
+        $object == 'month' ? $object = 30 : $object = 12;
+        for ($i = 0; $i < $object; $i++) {
+            $organizedData = 0;
             for ($index = 0; $index < sizeof($arrayData); $index++) {
-                if ($arrayData[$index]->month == $i) {
-                    $monthData = $arrayData[$index]->data;
+                if (isset($arrayData[$index]->month) && $arrayData[$index]->month == $i + 1) {
+                    $organizedData = $arrayData[$index]->data;
+                } else if (isset($arrayData[$index]->day) && $arrayData[$index]->day == $i + 1) {
+                    $organizedData = $arrayData[$index]->data;
                 }
             }
-            array_push($data, $monthData);
+            array_push($data, $organizedData);
         }
         return $data;
     }
@@ -61,7 +65,7 @@ class ConsultasUtils
 
         return $filtered;
     }
-    
+
     function getBusySchedules()
     {
         try {

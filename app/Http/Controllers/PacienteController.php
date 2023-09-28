@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Paciente;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Http\Request;
 
 class PacienteController extends Controller
 {
@@ -38,13 +37,12 @@ class PacienteController extends Controller
             $request->validate([
                 'ocupacao' => 'exclude_if:paciente,false|required',
                 'estadoCivil' => 'exclude_if:paciente,false|required',
-                // 'dataNasc' => 'exclude_if:paciente,false|required',
+                'dataNasc' => 'exclude_if:paciente,false|required',
                 'sexo' => 'required',
                 'contacto1' => 'required',
             ]);
             return true;
         } catch (\Illuminate\Validation\ValidationException $th) {
-            dd($th->getMessage());
             return false;
         }
     }

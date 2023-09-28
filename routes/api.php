@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ConsultaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EspecialidadeController;
 use App\Http\Controllers\ProblemaController;
 use App\Http\Controllers\PsicologoController;
@@ -32,7 +33,7 @@ route::put('closeAppointment/{id}', ConsultaController::class . '@CloseAppointme
 
 route::put('cancelAppointment/{id}', ConsultaController::class . '@cancelAppointment');
 
-route::get('getDashBoardData/{year?}', ConsultaController::class . '@getDashBoardData');
+route::get('getDashBoardData/{year?}', DashboardController::class . '@getDashBoardData');
 
 route::post('Reschedule', ConsultaController::class . '@Reschedule');
 

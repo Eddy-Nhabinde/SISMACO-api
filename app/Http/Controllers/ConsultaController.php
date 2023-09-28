@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Utils\Common;
 use App\Http\Controllers\Utils\ConsultasUtils;
+use App\Http\Controllers\Utils\PsicologosUtils;
 use App\Models\Consulta;
 use Carbon\Carbon;
 use Exception;
@@ -21,20 +22,6 @@ class ConsultaController extends Controller
         $user = new Common();
         $this->userId = $user->getUserId();
         $this->acesso = $user->getAcesso();
-    }
-
-    function getPsicologId()
-    {
-        try {
-            $id = DB::table('psicologos')
-                ->where('psicologos.user_id', $this->userId)
-                ->select('id')
-                ->get();
-
-            return $id[0]->id;
-        } catch (Exception $th) {
-            return 0;
-        }
     }
 
     function novaConsulta(Request $request)
@@ -157,71 +144,6 @@ class ConsultaController extends Controller
             return response(['consultas' => $utils->organizeAppointmentsArray($data)]);
         } catch (Exception $th) {
             return response(["error" => "Erro inesperado!"]);
-        }
-    }
-
-    function getDashBoardData($year = null, $id = null)
-    {
-        try {
-            $year == null && $year = date("Y");
-
-            $data = DB::table('consultas')
-                ->join('estados', 'estados.id', '=', 'consultas.estado_id')
-                ->when($this->acesso || $id, function ($query, $id) {
-                    if ($this->acesso == 'psicologo' || $id != null) {
-                        return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
-                    }
-                })
-                ->select('estados.nome as estado', DB::raw('COUNT(estado_id) as total'))
-                ->when($this->acesso, function ($query) {
-                    if ($this->acesso == 'psicologo') {
-                        return $query->where('psicologos.id', $this->getPsicologId());
-                    }
-                })
-                ->when($id, function ($query, $id) {
-                    if ($id != null) {
-                        return $query->where('psicologos.id', $id);
-                    }
-                })
-                ->where(DB::raw('YEAR(consultas.created_at)'), '=', $year)
-                ->groupBy('estado')
-                ->groupBy('estados.nome')
-                ->get();
-
-            $chartData = DB::table('consultas')
-                ->join('estados', 'estados.id', '=', 'consultas.estado_id')
-                ->when($this->acesso || $id, function ($query, $id) {
-                    if ($this->acesso == 'psicologo' || $id != null) {
-                        return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
-                    }
-                })
-                ->select('estados.nome as estado', DB::raw('count(consultas.id) as `data`'),  DB::raw('MONTH(data) month'))
-                ->when($this->acesso, function ($query) {
-                    if ($this->acesso == 'psicologo') {
-                        return $query->where('psicologos.id', $this->getPsicologId());
-                    }
-                })
-                ->when($id, function ($query, $id) {
-                    if ($id != null) {
-                        return $query->where('psicologos.id', $id);
-                    }
-                })
-                ->where(DB::raw('YEAR(consultas.created_at)'), '=', $year)
-                ->groupby('month')
-                ->groupBy('estado')
-                ->groupBy('estados.nome')
-                ->get();
-
-            $utils = new ConsultasUtils();
-
-            if ($this->acesso != 'psicologo') {
-                $user = new UserController();
-                return response(["dashData" => ['consultas' => $data, "users" => $user->getPacientesCount(), "chartData" => $utils->organizeChartDataByEstado($chartData)]]);
-            }
-
-            return response(["dashData" => ['consultas' => $data, "chartData" => $utils->organizeChartDataByEstado($chartData)]]);
-        } catch (Exception $th) {
-            return response(["error" => "Erro inesperado!" . $th]);
         }
     }
 
