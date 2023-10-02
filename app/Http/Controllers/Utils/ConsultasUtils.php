@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Utils;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -34,23 +35,51 @@ class ConsultasUtils
     //     ];
     // }
 
+    function getLast30Days()
+    {
+        $startDate = Carbon::now()->subDays(30); // Start 30 days ago
+        $endDate = Carbon::now(); // Today
+
+        $days = [];
+        while ($startDate->lte($endDate)) {
+            $days[] = $startDate->day;
+            $startDate->addDay();
+        }
+
+        return $days;
+    }
+
+    function getLast12Months()
+    {
+        $endDate = Carbon::now(); // Current date
+        $startDate = Carbon::now()->subMonths(12); // 12 months ago
+
+        $months = [];
+        while ($startDate->lte($endDate)) {
+            $months[] = $startDate->month; // Format the date as "Month Year"
+            $startDate->addMonth();
+        }
+
+        return $months;
+    }
+
     function organizeDataByMonth($arrayData, $object)
     {
-        // dd($arrayData);
+
         $data = [];
-        $object == 'month' ? $object = 30 : $object = 12;
-        for ($i = 0; $i < $object; $i++) {
+        $object == 'month' ? $object = $this->getLast30Days() : $object = $this->getLast12Months();
+        for ($i = 0; $i < sizeof($object); $i++) {
             $organizedData = 0;
             for ($index = 0; $index < sizeof($arrayData); $index++) {
-                if (isset($arrayData[$index]->month) && $arrayData[$index]->month == $i + 1) {
+                if (isset($arrayData[$index]->month) && $arrayData[$index]->month == $object[$i]) {
                     $organizedData = $arrayData[$index]->data;
-                } else if (isset($arrayData[$index]->day) && $arrayData[$index]->day == $i + 1) {
+                } else if (isset($arrayData[$index]->day) && $arrayData[$index]->day == $object[$i]) {
                     $organizedData = $arrayData[$index]->data;
                 }
             }
             array_push($data, $organizedData);
         }
-        return $data;
+        return ["data" => $data, "monthsOrDays" => $object];
     }
 
     function organizeAppointmentsArray($arrayData)

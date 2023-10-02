@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Utils\Common;
 use App\Http\Controllers\Utils\ConsultasUtils;
 use App\Http\Controllers\Utils\PsicologosUtils;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +26,7 @@ class DashboardController extends Controller
 
     function getDashBoardData($year = null, $id = null)
     {
+        // dd(Carbon::now()->subDays(30));
         try {
             $year == null && $year = date("Y");
 
