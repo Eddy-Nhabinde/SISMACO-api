@@ -8,32 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class ConsultasUtils
 {
-    // function organizeChartDataByEstado($chartData)
-    // {
-    //     $cancelada = [];
-    //     $pendente = [];
-    //     $realizada = [];
-
-    //     foreach ($chartData as $key) {
-    //         switch ($key->estado) {
-    //             case 'Pendente':
-    //                 array_push($pendente, $key);
-    //                 break;
-    //             case 'Cancelada':
-    //                 array_push($cancelada, $key);
-    //                 break;
-    //             case 'Realizada':
-    //                 array_push($realizada, $key);
-    //                 break;
-    //         }
-    //     }
-
-    //     return [
-    //         "canceladas" => $this->organizeDataByMonth($cancelada),
-    //         "pendentes" => $this->organizeDataByMonth($pendente),
-    //         "realizadas" => $this->organizeDataByMonth($realizada),
-    //     ];
-    // }
 
     function getLast30Days()
     {
@@ -84,15 +58,14 @@ class ConsultasUtils
 
     function organizeAppointmentsArray($arrayData)
     {
-        $filtered = collect(json_decode($arrayData, true))->map(function ($array) {
-            if (!$array['paciente']) {
-                $array['paciente'] = $array['nome'];
+        for ($i = 0; $i < sizeof($arrayData); $i++) {
+            if (!$arrayData[$i]->paciente) {
+                $arrayData[$i]->paciente =  $arrayData[$i]->nome;;
             }
-            unset($array['nome']);
-            return $array;
-        });
+            unset($arrayData[$i]->nome);
+        }
 
-        return $filtered;
+        return $arrayData;
     }
 
     function getBusySchedules()

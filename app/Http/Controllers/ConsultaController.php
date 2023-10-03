@@ -138,10 +138,10 @@ class ConsultaController extends Controller
                     }
                 })
                 ->where('estados.id', $estado)
-                ->get();
+                ->paginate(10);
 
             $utils = new ConsultasUtils();
-            return response(['consultas' => $utils->organizeAppointmentsArray($data)]);
+            return response(['consultas' => $utils->organizeAppointmentsArray($data->items()), "total" => $data->total()]);
         } catch (Exception $th) {
             return response(["error" => "Erro inesperado!"]);
         }

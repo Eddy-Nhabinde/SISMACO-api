@@ -79,10 +79,10 @@ class PsicologoController extends Controller
                 ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
                 ->select('psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'estado')
                 ->where('users.acesso', 'psicologo')
-                ->get();
+                ->paginate(10);
 
             $utils = new PsicologosUtils();
-            return response($this->getDisponibilidade($utils->renameStatus($psicologos)));
+            return response(["data" => $this->getDisponibilidade($utils->renameStatus($psicologos->items())), "total" => $psicologos->total()]);
         } catch (Exception $th) {
             return response(['error' => "Erro Inesperado"], 200);
         }
