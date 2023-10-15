@@ -34,7 +34,7 @@ route::put('closeAppointment/{id}', ConsultaController::class . '@CloseAppointme
 
 route::put('cancelAppointment/{id}', ConsultaController::class . '@cancelAppointment');
 
-route::get('getDashBoardData/{year?}', DashboardController::class . '@getDashBoardData');
+route::get('getDashBoardData', DashboardController::class . '@getDashBoardData');
 
 route::post('Reschedule', ConsultaController::class . '@Reschedule');
 

@@ -45,7 +45,7 @@ class PacienteController extends Controller
 
             return response(['history' => $data->items(), "total" => $data->total()]);
         } catch (Exception $ex) {
-            dd($ex);
+            return response(["error" => "Erro inesperado"]);
         }
     }
 

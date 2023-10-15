@@ -9,6 +9,7 @@ use App\Http\Controllers\Utils\PsicologosUtils;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -24,11 +25,12 @@ class DashboardController extends Controller
         $this->acesso = $user->getAcesso();
     }
 
-    function getDashBoardData($year = null, $id = null)
+    function getDashBoardData(Request $request)
     {
         // dd(Carbon::now()->subDays(30));
         try {
-            $year == null && $year = date("Y");
+            $year = null;
+            $request->year == null && $year = date("Y");
 
             $yearlySelect = [DB::raw('count(consultas.id) as `data`'),  DB::raw('MONTH(consultas.created_at) month')];
             $monthlySelect = [DB::raw('count(consultas.id) as `data`'),  DB::raw('DAY(consultas.created_at) day')];
@@ -41,21 +43,21 @@ class DashboardController extends Controller
             if ($this->acesso != 'psicologo') {
                 $user = new UserController();
                 return response(["dashData" => [
-                    'allAppointments' => $this->getAppointmentCount($id, null),
-                    'thisYearAppointments' => $this->getAppointmentCount($id, $yearly),
-                    'thisMonthAppointments' => $this->getAppointmentCount($id, $monthly),
+                    'allAppointments' => $this->getAppointmentCount($request->user_id, null),
+                    'thisYearAppointments' => $this->getAppointmentCount($request->user_id, $yearly),
+                    'thisMonthAppointments' => $this->getAppointmentCount($request->user_id, $monthly),
                     "users" => $user->getPacientesCount(),
-                    "thisMonth" => $utils->organizeDataByMonth($this->getChartData($id, $monthly, $monthlySelect, 'day'), 'day'),
-                    "thisYear" => $utils->organizeDataByMonth($this->getChartData($id, $yearly, $yearlySelect, 'month'), 'month')
+                    "thisMonth" => $utils->organizeDataByMonth($this->getChartData($request->user_id, $monthly, $monthlySelect, 'day'), 'month'),
+                    "thisYear" => $utils->organizeDataByMonth($this->getChartData($request->user_id, $yearly, $yearlySelect, 'month'), 'year')
                 ]]);
             }
 
             return response(["dashData" => [
-                'allAppointments' => $this->getAppointmentCount($id, null),
-                'thisYearAppointments' => $this->getAppointmentCount($id, $yearly),
-                'thisMonthAppointments' => $this->getAppointmentCount($id, $monthly),
-                "thisMonth" => $utils->organizeDataByMonth($this->getChartData($id, $monthly, $monthlySelect, 'day'), 'month'),
-                "thisYear" => $utils->organizeDataByMonth($this->getChartData($id, $yearly, $yearlySelect, 'month'), 'year')
+                'allAppointments' => $this->getAppointmentCount($request->user_id, null),
+                'thisYearAppointments' => $this->getAppointmentCount($request->user_id, $yearly),
+                'thisMonthAppointments' => $this->getAppointmentCount($request->user_id, $monthly),
+                "thisMonth" => $utils->organizeDataByMonth($this->getChartData($request->user_id, $monthly, $monthlySelect, 'day'), 'month'),
+                "thisYear" => $utils->organizeDataByMonth($this->getChartData($request->user_id, $yearly, $yearlySelect, 'month'), 'year')
             ]]);
         } catch (Exception $th) {
             return response(["error" => "Erro inesperado!" . $th]);
