@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Utils\Common;
 use App\Http\Controllers\Utils\ConsultasUtils;
 use App\Http\Controllers\Utils\PsicologosUtils;
@@ -130,8 +129,9 @@ class ConsultaController extends Controller
             $data = DB::table('consultas')
                 ->join('estados', 'estados.id', '=', 'consultas.estado_id')
                 ->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id')
+                ->join('problemas', 'problemas.id', '=', 'consultas.problema_id')
                 ->leftJoin('users', 'users.id', '=', 'consultas.paciente_id')
-                ->select('consultas.id', 'users.nome as paciente', 'hora', 'data', 'estados.nome as estado', DB::raw("CONCAT(consultas.nome,' ',consultas.apelido) AS nome"))
+                ->select('consultas.paciente_id', 'users.id as user_id', 'problemas.nome as problema', 'consultas.psicologo_id', 'consultas.id', 'users.nome as paciente', 'hora', 'data', 'estados.nome as estado', DB::raw("CONCAT(consultas.nome,' ',consultas.apelido) AS nome"))
                 ->when($this->acesso, function ($query) {
                     if ($this->acesso == 'psicologo') {
                         return $query->where('psicologos.user_id', $this->userId);
@@ -143,6 +143,7 @@ class ConsultaController extends Controller
             $utils = new ConsultasUtils();
             return response(['consultas' => $utils->organizeAppointmentsArray($data->items()), "total" => $data->total()]);
         } catch (Exception $th) {
+            dd($th);
             return response(["error" => "Erro inesperado!"]);
         }
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Paciente;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class PacienteController extends Controller
 {
@@ -28,6 +29,23 @@ class PacienteController extends Controller
             }
         } catch (Exception $th) {
             return 0;
+        }
+    }
+
+    function historico($paciente_id)
+    {
+        try {
+            $data = DB::table('consultas')
+                ->join('estados', 'estados.id', '=', 'consultas.estado_id')
+                ->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id')
+                ->leftJoin('users', 'users.id', '=', 'psicologos.user_id')
+                ->select('users.nome as psicologo', 'hora', 'data')
+                ->where('consultas.paciente_id', $paciente_id)
+                ->paginate(5);
+
+            return response(['history' => $data->items(), "total" => $data->total()]);
+        } catch (Exception $ex) {
+            dd($ex);
         }
     }
 

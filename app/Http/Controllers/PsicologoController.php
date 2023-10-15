@@ -64,9 +64,10 @@ class PsicologoController extends Controller
                 ->where('user_id', $psicologo[0]->user)
                 ->get();
 
-            $consCont = new ConsultaController();
+            $consCont = new DashboardController();
             return response(["psicologo" => $psicologo, "contactos" => $cont, "consultas" => $consCont->getDashBoardData(date('Y'), $psicologo[0]->id)->original]);
         } catch (Exception $th) {
+            dd($th);
             return response(['error' => "Erro Inesperado"], 200);
         }
     }

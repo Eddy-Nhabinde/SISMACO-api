@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ConsultaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EspecialidadeController;
+use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\ProblemaController;
 use App\Http\Controllers\PsicologoController;
 use App\Http\Controllers\Utils\ConsultasUtils;
@@ -36,6 +37,8 @@ route::put('cancelAppointment/{id}', ConsultaController::class . '@cancelAppoint
 route::get('getDashBoardData/{year?}', DashboardController::class . '@getDashBoardData');
 
 route::post('Reschedule', ConsultaController::class . '@Reschedule');
+
+route::get('historico/{paciente_id}', PacienteController::class . '@historico');
 
 route::get('getPsychologist', PsicologoController::class . '@getPsicologos');
 
