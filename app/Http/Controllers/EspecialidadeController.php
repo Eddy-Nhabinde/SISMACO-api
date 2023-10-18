@@ -12,7 +12,7 @@ class EspecialidadeController extends Controller
     {
         try {
             $especialidades = DB::table('especialidades')
-                ->select('id', 'nome')
+                ->select('id as value', 'nome as label')
                 ->get();
 
             return response(['especialidades' => $especialidades]);

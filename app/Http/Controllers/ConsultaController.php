@@ -123,7 +123,7 @@ class ConsultaController extends Controller
         }
     }
 
-    function getAppointments($estado)
+    function getAppointments(Request $request, $estado)
     {
         try {
             $data = DB::table('consultas')
@@ -138,7 +138,7 @@ class ConsultaController extends Controller
                     }
                 })
                 ->where('estados.id', $estado)
-                ->paginate(10);
+                ->paginate($request->paging == 'false' ? 1000000000000 : 10);
 
             $utils = new ConsultasUtils();
             return response(['consultas' => $utils->organizeAppointmentsArray($data->items()), "total" => $data->total()]);

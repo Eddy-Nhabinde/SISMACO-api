@@ -11,7 +11,7 @@ class ProblemaController extends Controller
     {
         try {
             $problemas = DB::table('problemas')
-                ->select('id', 'nome')
+                ->select('id as value', 'nome as label')
                 ->get();
 
             return  response(["problemas" => $problemas]);

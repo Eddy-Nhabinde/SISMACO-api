@@ -23,19 +23,16 @@ return new class extends Migration
         DB::table('especialidades')->insert(
             array(
                 [
-                    'nome' => 'Clinica (Adulto)',
+                    'nome' => 'Terapia Familiar',
                 ],
                 [
-                    'nome' => 'Clinica (Crianca)',
+                    'nome' => 'Terapia Clinica',
                 ],
                 [
-                    'nome' => 'Clinica (Laboral)',
+                    'nome' => "Terapia de Oriantação",
                 ],
                 [
-                    'nome' => 'Familia',
-                ],
-                [
-                    'nome' => 'Trabalho',
+                    'nome' => 'N/A',
                 ],
                 [
                     'nome' => 'Outra',

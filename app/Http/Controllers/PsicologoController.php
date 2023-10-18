@@ -72,7 +72,7 @@ class PsicologoController extends Controller
         }
     }
 
-    function getPsicologos()
+    function getPsicologos(Request $request)
     {
         try {
             $psicologos = DB::table('psicologos')
@@ -80,25 +80,31 @@ class PsicologoController extends Controller
                 ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
                 ->select('psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'estado')
                 ->where('users.acesso', 'psicologo')
-                ->paginate(10);
+                ->paginate($request->paging == 'false' ? 1000000000000 : 10);
 
             $utils = new PsicologosUtils();
-            return response(["data" => $this->getDisponibilidade($utils->renameStatus($psicologos->items())), "total" => $psicologos->total()]);
+            $updatedKeys = $utils->renameStatus($psicologos->items());
+
+            for ($i = 0; $i < sizeof($updatedKeys); $i++) {
+                $updatedKeys[$i]->disponibilidade = $this->getDisponibilidade($updatedKeys[$i]->id);
+            }
+
+            return response(["data" => $updatedKeys, "total" => $psicologos->total()]);
         } catch (Exception $th) {
             return response(['error' => "Erro Inesperado"], 200);
         }
     }
 
 
-    function getDisponibilidade($psicologos)
+    function getDisponibilidade($id)
     {
-        if (isset($psicologos[0])) {
-            $psicologos[0]->disponibilidade =  DB::table('disponibilidades')
+        if (isset($id)) {
+            $disponibilidade =  DB::table('disponibilidades')
                 ->select('diaDaSemana', 'inicio', 'fim')
-                ->where('psicologo_id', $psicologos[0]->id)
+                ->where('psicologo_id', $id)
                 ->get();
 
-            return ['psicologos' => $psicologos];
+            return $disponibilidade;
         } else {
             return ['warning' => "Nao ha psicologos registados!"];
         }

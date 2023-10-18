@@ -13,22 +13,29 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    private $userId = 0;
+    private $psicologoId = 0;
+    private $psiUtils = null;
     private $acesso = 0;
     private $psicologoUtils = null;
 
     public function __construct()
     {
-        $user = new Common();
+        $userUtils = new Common();
+        $this->psiUtils = new PsicologosUtils();
         $this->psicologoUtils = new PsicologosUtils();
-        $this->userId = $user->getUserId();
-        $this->acesso = $user->getAcesso();
+        $this->acesso = $userUtils->getAcesso();
     }
 
     function getDashBoardData(Request $request)
     {
-        // dd(Carbon::now()->subDays(30));
         try {
+            $userUtils = new Common();
+
+            if ($this->acesso == 'admin' && $request->user_id != null)
+                $this->psicologoId = $this->psiUtils->getPsicologId($request->user_id);
+            else if ($this->acesso == 'psicologo')
+                $this->psicologoId = $this->psiUtils->getPsicologId($userUtils->getUserId());
+
             $year = null;
             $request->year == null && $year = date("Y");
 
@@ -57,7 +64,8 @@ class DashboardController extends Controller
                 'thisYearAppointments' => $this->getAppointmentCount($request->user_id, $yearly),
                 'thisMonthAppointments' => $this->getAppointmentCount($request->user_id, $monthly),
                 "thisMonth" => $utils->organizeDataByMonth($this->getChartData($request->user_id, $monthly, $monthlySelect, 'day'), 'month'),
-                "thisYear" => $utils->organizeDataByMonth($this->getChartData($request->user_id, $yearly, $yearlySelect, 'month'), 'year')
+                "thisYear" => $utils->organizeDataByMonth($this->getChartData($request->user_id, $yearly, $yearlySelect, 'month'), 'year'),
+                $this->psicologoId
             ]]);
         } catch (Exception $th) {
             return response(["error" => "Erro inesperado!" . $th]);
@@ -68,20 +76,15 @@ class DashboardController extends Controller
     {
         $data = DB::table('consultas')
             ->join('estados', 'estados.id', '=', 'consultas.estado_id')
-            ->when($this->acesso || $id, function ($query, $id) {
-                if ($this->acesso == 'psicologo' || $id != null) {
+            ->when($this->acesso || $id, function ($query) {
+                if ($this->psicologoId != null) {
                     return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
                 }
             })
             ->select('estados.nome as estado', DB::raw('COUNT(estado_id) as total'))
-            ->when($this->acesso, function ($query) {
-                if ($this->acesso == 'psicologo') {
-                    return $query->where('psicologos.id', $this->psicologoUtils->getPsicologId($this->userId));
-                }
-            })
-            ->when($id, function ($query, $id) {
-                if ($id != null) {
-                    return $query->where('psicologos.id', $id);
+            ->when($this->psicologoId, function ($query) {
+                if ($this->psicologoId != null) {
+                    return $query->where('psicologos.id', $this->psicologoId);
                 }
             })
             ->when($where, function ($query, $where) {
@@ -101,14 +104,14 @@ class DashboardController extends Controller
         $data =  DB::table('consultas')
             ->join('estados', 'estados.id', '=', 'consultas.estado_id')
             ->when($this->acesso || $id, function ($query, $id) {
-                if ($this->acesso == 'psicologo' || $id != null) {
+                if ($this->psicologoId != null) {
                     return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
                 }
             })
             ->select($select)
             ->when($this->acesso, function ($query) {
-                if ($this->acesso == 'psicologo') {
-                    return $query->where('psicologos.id', $this->psicologoUtils->getPsicologId($this->userId));
+                if ($this->psicologoId != null) {
+                    return $query->where('psicologos.id', $this->psicologoId);
                 }
             })
 
