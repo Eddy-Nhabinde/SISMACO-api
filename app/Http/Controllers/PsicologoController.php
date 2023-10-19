@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Utils\Common;
 use App\Http\Controllers\Utils\PsicologosUtils;
+use App\Http\Requests\PsychologistRequest;
 use App\Models\Psicologo;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,33 +22,46 @@ class PsicologoController extends Controller
         $this->userId = $user->getUserId();
     }
 
-    function store($userid, $request, $password)
+    function store(PsychologistRequest $request)
     {
         try {
-            if ($this->validating($request)) {
-                $psicologo = Psicologo::create([
-                    'user_id' => $userid,
-                    'especialidade_id' => $request->especialidade
-                ]);
+            $createUSer = new UserController();
+            $dispo = new DisponibilidadeController();
+            $checkAvailability = $dispo->validateAvailability($request->disponibilidade);
 
-                $contacts = new ContactosController();
-                $contacts->store($request, $userid);
+            if ($checkAvailability == 'true') {
+                $userId = $createUSer->store($request);
 
-                $dispo = new DisponibilidadeController();
-                $dispo->store($request->disponibilidade,  $psicologo->id);
+                if ($userId != false) {
+                    $psicologo = Psicologo::create([
+                        'user_id' => $userId['id'],
+                        'especialidade_id' => $request->especialidade
+                    ]);
 
-                $mail = new MailController();
-                if (!$mail->newPsicologo($request->email, $request->nome, $password)) {
-                    return 0;
-                } else {
-                    return 1;
-                }
-            } else {
-                return 0;
-            }
-            return 1;
+                    $contacts = new ContactosController();
+                    $contacts->store($request, $userId);
+
+                    $dispo->store($request->disponibilidade,  $psicologo->id);
+
+                    $mail = new MailController();
+                    if (!$mail->newPsicologo($request->email, $request->nome, $userId['password']))
+                        return ['error' => 'Ocorreu um erro ao enviar email ao psicólogo!'];
+                    return ['success' => 'Psicólogo registado com sucesso'];
+
+                } else return response(['error' => 'Erro inesperado!']);
+            } else return response(['warning' => $checkAvailability]);
         } catch (Exception $th) {
-            return 0;
+            dd($th);
+        }
+    }
+
+    function RollBack($user_id)
+    {
+        try {
+            User::where('id', $user_id)->delete();
+            return true;
+        } catch (Exception $th) {
+            return false;
         }
     }
 
@@ -67,7 +83,6 @@ class PsicologoController extends Controller
             $consCont = new DashboardController();
             return response(["psicologo" => $psicologo, "contactos" => $cont, "consultas" => $consCont->getDashBoardData(date('Y'), $psicologo[0]->id)->original]);
         } catch (Exception $th) {
-            dd($th);
             return response(['error' => "Erro Inesperado"], 200);
         }
     }

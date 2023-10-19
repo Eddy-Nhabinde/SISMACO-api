@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Utils\Common;
 use App\Http\Controllers\Utils\ConsultasUtils;
-use App\Http\Controllers\Utils\PsicologosUtils;
+use App\Http\Requests\NewAppRequest;
 use App\Models\Consulta;
 use Carbon\Carbon;
 use Exception;
@@ -23,8 +23,9 @@ class ConsultaController extends Controller
         $this->acesso = $user->getAcesso();
     }
 
-    function novaConsulta(Request $request)
+    function novaConsulta(NewAppRequest $request)
     {
+        dd($request);
         if (!$request->admin) {
             $cons = Consulta::create([
                 "psicologo_id" => $request->psicologo,
@@ -39,7 +40,6 @@ class ConsultaController extends Controller
             $cons = Consulta::create([
                 "psicologo_id" => $request->psicologo,
                 "problema_id" => 1,
-                "descricaoProblema" => "testando",
                 "estado_id" => 1,
                 "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
                 "hora" => $request->hora,

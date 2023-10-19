@@ -31,44 +31,25 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($request)
     {
-        if ($this->validating($request)) {
-            try {
-                $password = $this->getOrGenetatePAssword($request);
-                $user = User::create([
-                    'nome' => $request->nome . ' ' . $request->apelido,
-                    'email' => $request->email,
-                    'acesso' => $this->getAcesso($request),
-                    'password' => Hash::make($password),
-                    'novo' => $request->paciente == true ? 0 : 1
-                ]);
+        try {
+            $password = $this->getOrGenetatePAssword($request);
 
-                if ($this->insertUserOrPsi($request, $user->id, $password) == 1) {
-                    return response(['success' =>  'Registo feito com sucesso']);
-                } else {
-                    return response(['error' => 'Ocorreu um erro no registo!']);
-                }
-            } catch (Exception $th) {
-                return response(['error' => 'Erro inesperado!']);
-            }
-        } else {
-            return response(['warning' => 'Preencha os dados correctamente!']);
+            $user = User::create([
+                'nome' => $request->nome . ' ' . $request->apelido,
+                'email' => $request->email,
+                'acesso' => $this->getAcesso($request),
+                'password' => Hash::make($password),
+                'novo' => $request->paciente == true ? 0 : 1
+            ]);
+
+            return ["password"=>$password, "id"=>$user->id];
+
+        } catch (Exception $th) {
+            return false;
         }
     }
-
-
-    function insertUserOrPsi($request, $user_id, $password)
-    {
-        if ($request->paciente) {
-            $paciente = new PacienteController();
-            return $paciente->store($request, $user_id);
-        } else {
-            $psicologo = new PsicologoController();
-            return $psicologo->store($user_id, $request, $password);
-        }
-    }
-
 
     function getAcesso($request)
     {

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Api\UserController;
+use App\Http\Requests\UserRegisterRequest;
 use App\Models\Paciente;
 use Carbon\Carbon;
 use Exception;
@@ -9,12 +11,15 @@ use Illuminate\Support\Facades\DB;
 
 class PacienteController extends Controller
 {
-    function store($request, $userID)
+    function store(UserRegisterRequest $request)
     {
         try {
-            if ($this->validating($request)) {
+            $createUSer = new UserController();
+            $userId = $createUSer->store($request);
+
+            if ($userId != false) {
                 Paciente::create([
-                    'user_id' => $userID,
+                    'user_id' => $$userId['id'],
                     'ocupacao' => $request->ocupacao,
                     'estadoCivil' => $request->estadoCivil,
                     'dataNasc' => Carbon::parse($request->dataNasc)->format('Y-m-d'),
@@ -22,13 +27,12 @@ class PacienteController extends Controller
                 ]);
 
                 $contacts = new ContactosController();
-                $contacts->store($request, $userID);
-                return 1;
-            } else {
-                return 0;
-            }
+                $contacts->store($request, $userId['id']);
+
+                return response(['error' => 'Erro inesperado!']);
+            } else return response(['error' => 'Erro inesperado!']);
         } catch (Exception $th) {
-            return 0;
+            return response(['error' => 'Erro inesperado!']);
         }
     }
 
@@ -46,22 +50,6 @@ class PacienteController extends Controller
             return response(['history' => $data->items(), "total" => $data->total()]);
         } catch (Exception $ex) {
             return response(["error" => "Erro inesperado"]);
-        }
-    }
-
-    function validating($request)
-    {
-        try {
-            $request->validate([
-                'ocupacao' => 'exclude_if:paciente,false|required',
-                'estadoCivil' => 'exclude_if:paciente,false|required',
-                'dataNasc' => 'exclude_if:paciente,false|required',
-                'sexo' => 'required',
-                'contacto1' => 'required',
-            ]);
-            return true;
-        } catch (\Illuminate\Validation\ValidationException $th) {
-            return false;
         }
     }
 }

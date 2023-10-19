@@ -22,7 +22,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-route::post('saveuser', UserController::class . '@store');
+route::post('newPatient', PacienteController::class . '@store');
+
+route::post('newPsychologist', PsicologoController::class . '@store');
 
 route::post('newAppointment', ConsultaController::class . '@novaConsulta');
 
