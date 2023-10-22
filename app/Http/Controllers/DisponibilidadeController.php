@@ -58,9 +58,9 @@ class DisponibilidadeController extends Controller
             if (isset($availability[$dias[$i]]['Inicio']) && isset($availability[$dias[$i]]['Fim'])) {
                 $begin = array_search($availability[$dias[$i]]['Inicio'], $inicio);
                 $end = array_search($availability[$dias[$i]]['Fim'], $fim);
-                if ($begin != false && $end != false) {
+                if (gettype($begin) != "boolean" && gettype($end) != "boolean") {
                     if ($begin > $end) return "A hora de início não pode ser maior que a hora do fim na " . $days[$i];
-                }return "Horas inválidas " . $days[$i];
+                } else return "Horas inválidas na " . $days[$i];
             } else return "Por favor, selecione o Inicio e/ou Fim da " . $days[$i];
         }
         return 'true';

@@ -34,4 +34,18 @@ class PsicologosUtils
             return 0;
         }
     }
+
+    function getUserId($id)
+    {
+        try {
+            $id = DB::table('psicologos')
+                ->where('id', $id)
+                ->select('user_id')
+                ->get();
+
+            return $id[0]->user_id;
+        } catch (Exception $th) {
+            return 0;
+        }
+    }
 }

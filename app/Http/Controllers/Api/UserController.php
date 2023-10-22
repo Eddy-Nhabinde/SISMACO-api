@@ -39,24 +39,14 @@ class UserController extends Controller
             $user = User::create([
                 'nome' => $request->nome . ' ' . $request->apelido,
                 'email' => $request->email,
-                'acesso' => $this->getAcesso($request),
+                'acesso' => $request->acesso,
                 'password' => Hash::make($password),
                 'novo' => $request->paciente == true ? 0 : 1
             ]);
 
-            return ["password"=>$password, "id"=>$user->id];
-
+            return ["password" => $password, "id" => $user->id];
         } catch (Exception $th) {
             return false;
-        }
-    }
-
-    function getAcesso($request)
-    {
-        if (gettype($request->paciente) == 'boolean') {
-            return $request->paciente == true ? 'paciente' : 'psicologo';
-        } else {
-            return 'admin';
         }
     }
 

@@ -13,16 +13,15 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    private $psicologoId = 0;
+    private $psicologoId = null;
     private $psiUtils = null;
     private $acesso = 0;
-    private $psicologoUtils = null;
+    private $contacts = null;
 
     public function __construct()
     {
         $userUtils = new Common();
         $this->psiUtils = new PsicologosUtils();
-        $this->psicologoUtils = new PsicologosUtils();
         $this->acesso = $userUtils->getAcesso();
     }
 
@@ -31,9 +30,12 @@ class DashboardController extends Controller
         try {
             $userUtils = new Common();
 
-            if ($this->acesso == 'admin' && $request->user_id != null)
-                $this->psicologoId = $this->psiUtils->getPsicologId($request->user_id);
-            else if ($this->acesso == 'psicologo')
+            if ($this->acesso == 'admin' && $request->psicologo_id != 'null') {
+
+                $this->psicologoId = $request->psicologo_id;
+                $psiUtils = new PsicologosUtils();
+                $this->contacts =  $userUtils->getContacts($psiUtils->getUserId($request->psicologo_id));
+            } else if ($this->acesso == 'psicologo')
                 $this->psicologoId = $this->psiUtils->getPsicologId($userUtils->getUserId());
 
             $year = null;
@@ -50,33 +52,33 @@ class DashboardController extends Controller
             if ($this->acesso != 'psicologo') {
                 $user = new UserController();
                 return response(["dashData" => [
-                    'allAppointments' => $this->getAppointmentCount($request->user_id, null),
-                    'thisYearAppointments' => $this->getAppointmentCount($request->user_id, $yearly),
-                    'thisMonthAppointments' => $this->getAppointmentCount($request->user_id, $monthly),
+                    'allAppointments' => $this->getAppointmentCount(null),
+                    'thisYearAppointments' => $this->getAppointmentCount($yearly),
+                    'thisMonthAppointments' => $this->getAppointmentCount($monthly),
                     "users" => $user->getPacientesCount(),
-                    "thisMonth" => $utils->organizeDataByMonth($this->getChartData($request->user_id, $monthly, $monthlySelect, 'day'), 'month'),
-                    "thisYear" => $utils->organizeDataByMonth($this->getChartData($request->user_id, $yearly, $yearlySelect, 'month'), 'year')
+                    "thisMonth" => $utils->organizeDataByMonth($this->getChartData($monthly, $monthlySelect, 'day'), 'month'),
+                    "thisYear" => $utils->organizeDataByMonth($this->getChartData($yearly, $yearlySelect, 'month'), 'year'),
+                    "contactos" => $this->contacts
                 ]]);
             }
 
             return response(["dashData" => [
-                'allAppointments' => $this->getAppointmentCount($request->user_id, null),
-                'thisYearAppointments' => $this->getAppointmentCount($request->user_id, $yearly),
-                'thisMonthAppointments' => $this->getAppointmentCount($request->user_id, $monthly),
-                "thisMonth" => $utils->organizeDataByMonth($this->getChartData($request->user_id, $monthly, $monthlySelect, 'day'), 'month'),
-                "thisYear" => $utils->organizeDataByMonth($this->getChartData($request->user_id, $yearly, $yearlySelect, 'month'), 'year'),
-                $this->psicologoId
+                'allAppointments' => $this->getAppointmentCount(null),
+                'thisYearAppointments' => $this->getAppointmentCount($yearly),
+                'thisMonthAppointments' => $this->getAppointmentCount($monthly),
+                "thisMonth" => $utils->organizeDataByMonth($this->getChartData($monthly, $monthlySelect, 'day'), 'month'),
+                "thisYear" => $utils->organizeDataByMonth($this->getChartData($yearly, $yearlySelect, 'month'), 'year'),
             ]]);
         } catch (Exception $th) {
             return response(["error" => "Erro inesperado!" . $th]);
         }
     }
 
-    function getAppointmentCount($id, $where)
+    function getAppointmentCount($where)
     {
         $data = DB::table('consultas')
             ->join('estados', 'estados.id', '=', 'consultas.estado_id')
-            ->when($this->acesso || $id, function ($query) {
+            ->when($this->acesso, function ($query) {
                 if ($this->psicologoId != null) {
                     return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
                 }
@@ -99,11 +101,11 @@ class DashboardController extends Controller
         return $data;
     }
 
-    function getChartData($id, $where, $select, $groupBy)
+    function getChartData($where, $select, $groupBy)
     {
         $data =  DB::table('consultas')
             ->join('estados', 'estados.id', '=', 'consultas.estado_id')
-            ->when($this->acesso || $id, function ($query, $id) {
+            ->when($this->acesso, function ($query) {
                 if ($this->psicologoId != null) {
                     return $query->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id');
                 }
@@ -115,8 +117,8 @@ class DashboardController extends Controller
                 }
             })
 
-            ->when($id, function ($query, $id) {
-                if ($id != null) {
+            ->when($this->psicologoId, function ($query, $id) {
+                if ($this->psicologoId != null) {
                     return $query->where('psicologos.id', $id);
                 }
             })

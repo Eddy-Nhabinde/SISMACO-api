@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Utils;
 
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Common
@@ -25,5 +27,19 @@ class Common
             mt_rand(0, 0xffff),
             mt_rand(0, 0xffff),
         );
+    }
+
+    function getContacts($id)
+    {
+        try {
+            $contactos = DB::table('contactos')
+                ->select('contacto', 'principal')
+                ->where('user_id', $id)
+                ->get();
+
+            return $contactos;
+        } catch (Exception $th) {
+            dd($th);
+        }
     }
 }

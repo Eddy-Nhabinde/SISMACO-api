@@ -55,7 +55,7 @@ class ConsultaController extends Controller
             return response(["error" => "Erro inesperado!"]);
         } else {
             return response(["success" => "Consulta marcada com sucesso!"]);
-        }
+        } 
     }
 
     function Reschedule(Request $request)

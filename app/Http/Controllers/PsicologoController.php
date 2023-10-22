@@ -47,7 +47,6 @@ class PsicologoController extends Controller
                     if (!$mail->newPsicologo($request->email, $request->nome, $userId['password']))
                         return ['error' => 'Ocorreu um erro ao enviar email ao psicólogo!'];
                     return ['success' => 'Psicólogo registado com sucesso'];
-
                 } else return response(['error' => 'Erro inesperado!']);
             } else return response(['warning' => $checkAvailability]);
         } catch (Exception $th) {
@@ -65,35 +64,15 @@ class PsicologoController extends Controller
         }
     }
 
-    function getPsychologistDetails($id)
-    {
-        try {
-            $psicologo = DB::table('psicologos')
-                ->join('users', 'users.id', '=', 'psicologos.user_id')
-                ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
-                ->select('users.id as user', 'psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'email', 'estado')
-                ->where('psicologos.id', $id)
-                ->get();
-
-            $cont = DB::table('contactos')
-                ->select('contacto', 'principal')
-                ->where('user_id', $psicologo[0]->user)
-                ->get();
-
-            $consCont = new DashboardController();
-            return response(["psicologo" => $psicologo, "contactos" => $cont, "consultas" => $consCont->getDashBoardData(date('Y'), $psicologo[0]->id)->original]);
-        } catch (Exception $th) {
-            return response(['error' => "Erro Inesperado"], 200);
-        }
-    }
-
     function getPsicologos(Request $request)
     {
         try {
+            $user = new Common();
+
             $psicologos = DB::table('psicologos')
                 ->join('users', 'users.id', '=', 'psicologos.user_id')
                 ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
-                ->select('psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'estado')
+                ->select('users.id as user_id', 'psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'estado', 'email')
                 ->where('users.acesso', 'psicologo')
                 ->paginate($request->paging == 'false' ? 1000000000000 : 10);
 
@@ -102,6 +81,7 @@ class PsicologoController extends Controller
 
             for ($i = 0; $i < sizeof($updatedKeys); $i++) {
                 $updatedKeys[$i]->disponibilidade = $this->getDisponibilidade($updatedKeys[$i]->id);
+                $updatedKeys[$i]->contactos = $user->getContacts($updatedKeys[$i]->user_id);
             }
 
             return response(["data" => $updatedKeys, "total" => $psicologos->total()]);
