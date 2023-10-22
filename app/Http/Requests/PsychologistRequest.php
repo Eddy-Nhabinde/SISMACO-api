@@ -23,9 +23,8 @@ class PsychologistRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success'   => false,
-            'message'   => 'Validation errors',
-            'data'      => $validator->errors()
+            "validation" => true,
+            'warning' => $validator->errors()
         ]));
     }
     /**
@@ -39,7 +38,7 @@ class PsychologistRequest extends FormRequest
         return [
             "nome" => 'required|string',
             "apelido" => 'required|string',
-            "email" => 'required|email',
+            "email" => 'required|email|unique:users,email',
             "especialidade" => 'required|integer',
             "disponibilidade" => 'required',
             "contacto1" => "required|string|min:9|max:9",

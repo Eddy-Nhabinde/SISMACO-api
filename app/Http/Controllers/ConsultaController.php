@@ -55,7 +55,7 @@ class ConsultaController extends Controller
             return response(["error" => "Erro inesperado!"]);
         } else {
             return response(["success" => "Consulta marcada com sucesso!"]);
-        } 
+        }
     }
 
     function Reschedule(Request $request)
@@ -135,6 +135,9 @@ class ConsultaController extends Controller
                 ->when($this->acesso, function ($query) {
                     if ($this->acesso == 'psicologo') {
                         return $query->where('psicologos.user_id', $this->userId);
+                    } else if ($this->acesso == 'paciente') {
+                        $paciente = new Common();
+                        return $query->where('consultas.paciente_id', $paciente->getPacienteId($this->userId));
                     }
                 })
                 ->where('estados.id', $estado)

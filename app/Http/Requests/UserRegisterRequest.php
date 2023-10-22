@@ -21,9 +21,8 @@ class UserRegisterRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success'   => false,
-            'message'   => 'Validation errors',
-            'data'      => $validator->errors()
+            "validation" => true,
+            'warning' => $validator->errors()
         ]));
     }
 
@@ -38,9 +37,9 @@ class UserRegisterRequest extends FormRequest
             "paciente" => 'required|boolean',
             "nome" => 'required|string',
             "apelido" => 'required|string',
-            "email" => 'required|email',
+            "email" => 'required|email|unique:users,email',
             "estadoCivil" => 'required|string',
-            "ocupacao" =>'required|string',
+            "ocupacao" => 'required|string',
             "dataNasc" => 'required|date',
             "sexo" => 'required|string',
             "contacto1" => "required|string|min:9|max:9",

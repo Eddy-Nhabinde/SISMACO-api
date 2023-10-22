@@ -29,6 +29,20 @@ class Common
         );
     }
 
+    function getPacienteId($id)
+    {
+        try {
+            $pID = DB::table('pacientes')
+                ->select('id')
+                ->where('user_id', $id)
+                ->get();
+
+            return $pID[0]->id;
+        } catch (Exception $th) {
+            dd($th);
+        }
+    }
+
     function getContacts($id)
     {
         try {

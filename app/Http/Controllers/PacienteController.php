@@ -14,12 +14,12 @@ class PacienteController extends Controller
     function store(UserRegisterRequest $request)
     {
         try {
-            $createUSer = new UserController();
-            $userId = $createUSer->store($request);
+            $createUser = new UserController();
+            $userId = $createUser->store($request);
 
             if ($userId != false) {
                 Paciente::create([
-                    'user_id' => $$userId['id'],
+                    'user_id' => $userId['id'],
                     'ocupacao' => $request->ocupacao,
                     'estadoCivil' => $request->estadoCivil,
                     'dataNasc' => Carbon::parse($request->dataNasc)->format('Y-m-d'),
@@ -29,7 +29,7 @@ class PacienteController extends Controller
                 $contacts = new ContactosController();
                 $contacts->store($request, $userId['id']);
 
-                return response(['error' => 'Erro inesperado!']);
+                return response(['newUser' => 1]);
             } else return response(['error' => 'Erro inesperado!']);
         } catch (Exception $th) {
             return response(['error' => 'Erro inesperado!']);
