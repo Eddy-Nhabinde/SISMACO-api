@@ -147,6 +147,11 @@ class ConsultaController extends Controller
                         return $query->whereIn('psicologos.id', $ids);
                     }
                 })
+                ->when($request, function ($query, $request) {
+                    if (isset($request->name)) {
+                        return $query->where('users.nome', 'like',  '%' . $request->name . '%');
+                    }
+                })
                 ->where('estados.id', $estado)
                 ->paginate($request->paging == 'false' ? 1000000000000 : 10);
 

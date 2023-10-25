@@ -78,6 +78,11 @@ class PsicologoController extends Controller
                 ->join('users', 'users.id', '=', 'psicologos.user_id')
                 ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
                 ->select('users.id as user_id', 'psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'estado', 'email')
+                ->when($request, function ($query, $request) {
+                    if (isset($request->name)) {
+                        return $query->where('users.nome', 'like',  '%' . $request->name . '%');
+                    }
+                })
                 ->where('users.acesso', 'psicologo')
                 ->paginate($request->paging == 'false' ? 1000000000000 : 10);
 
