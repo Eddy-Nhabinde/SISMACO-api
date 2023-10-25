@@ -80,4 +80,26 @@ class ConsultasUtils
             return response(['error' => 'Ocorreu um erro na busca ']);
         }
     }
+
+    function getPsychologist($apppointments)
+    {
+        try {
+            $nomes = DB::table('users')
+                ->join('psicologos', 'psicologos.user_id', '=', 'users.id')
+                ->select('nome', 'psicologos.id')
+                ->get();
+
+            for ($i = 0; $i < sizeof($apppointments); $i++) {
+                for ($j = 0; $j < sizeof($nomes); $j++) {
+                    if ($nomes[$j]->id == $apppointments[$i]->psicologo_id) {
+                        $apppointments[$i]->psicologo = $nomes[$j]->nome;
+                    }
+                }
+            }
+
+            return $apppointments;
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Utils\Common;
 use App\Http\Controllers\Utils\ConsultasUtils;
+use App\Http\Controllers\Utils\PsicologosUtils;
 use App\Http\Requests\NewAppRequest;
 use App\Models\Consulta;
 use Carbon\Carbon;
@@ -140,11 +141,20 @@ class ConsultaController extends Controller
                         return $query->where('consultas.paciente_id', $paciente->getPacienteId($this->userId));
                     }
                 })
+                ->when($request, function ($query, $request) {
+                    $ids = explode(",", $request->ids);
+                    if (sizeof($ids) > 0 && isset($request->ids)) {
+                        return $query->whereIn('psicologos.id', $ids);
+                    }
+                })
                 ->where('estados.id', $estado)
                 ->paginate($request->paging == 'false' ? 1000000000000 : 10);
 
+            $psicologos = new ConsultasUtils();
+            $organizedData = $psicologos->getPsychologist($data);
+
             $utils = new ConsultasUtils();
-            return response(['consultas' => $utils->organizeAppointmentsArray($data->items()), "total" => $data->total()]);
+            return response(['consultas' => $utils->organizeAppointmentsArray($organizedData->items()), "total" => $organizedData->total()]);
         } catch (Exception $th) {
             dd($th);
             return response(["error" => "Erro inesperado!"]);

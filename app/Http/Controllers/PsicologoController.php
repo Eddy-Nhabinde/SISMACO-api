@@ -54,13 +54,18 @@ class PsicologoController extends Controller
         }
     }
 
-    function RollBack($user_id)
+    function getPsychoNames()
     {
         try {
-            User::where('id', $user_id)->delete();
-            return true;
-        } catch (Exception $th) {
-            return false;
+            $names = DB::table('users')
+                ->join('psicologos', 'psicologos.user_id', '=', 'users.id')
+                ->select('nome', 'psicologos.id')
+                ->where('estado', 1)
+                ->get();
+
+            return response(["nomes" => $names]);
+        } catch (\Throwable $th) {
+            return response(['error' => 'Erro inesperado!']);
         }
     }
 
@@ -130,7 +135,7 @@ class PsicologoController extends Controller
             $schedule = DB::table('consultas')
                 ->leftJoin('users', 'users.id', '=', 'consultas.paciente_id')
                 ->join('problemas', 'problemas.id', '=', 'consultas.problema_id')
-                ->select('psicologo_id', 'consultas.id', 'users.nome', 'data', 'hora', 'problemas.nome as problema')
+                ->select('psicologo_id', 'consultas.id', 'users.nome', 'data', 'hora', 'problemas.nome as problema', 'estado_id')
                 ->where('psicologo_id', $psiID[0]->psiId)
                 ->get();
 

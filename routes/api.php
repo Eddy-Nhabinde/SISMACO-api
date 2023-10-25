@@ -26,6 +26,8 @@ route::post('newPatient', PacienteController::class . '@store');
 
 route::post('newPsychologist', PsicologoController::class . '@store');
 
+route::get('getPsychoNames', PsicologoController::class . '@getPsychoNames');
+
 route::post('newAppointment', ConsultaController::class . '@novaConsulta');
 
 route::get('getAppointments/{estado}', ConsultaController::class . '@getAppointments');

@@ -40,7 +40,7 @@ class UserRegisterRequest extends FormRequest
             "email" => 'required|email|unique:users,email',
             "estadoCivil" => 'required|string',
             "ocupacao" => 'required|string',
-            "dataNasc" => 'required|date',
+            "dataNasc" => 'required|date|before:-17 years',
             "sexo" => 'required|string',
             "contacto1" => "required|string|min:9|max:9",
             "password" => "required|string",
