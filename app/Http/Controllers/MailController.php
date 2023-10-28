@@ -21,21 +21,25 @@ class MailController extends Controller
         return true;
     }
 
-    function RescheduleAppointment($data, $request)
+    function RescheduleAppointment($data, $request, $paciente)
     {
         $object[] = ['key' => 'subject', 'value' => "Consulta Remarcada"];
         $object[] = ['key' => 'recipient', 'value' => $data[0]->email];
+        $object[] = ['key' => 'nome', 'value' => 'Prezado ' . $data[0]->nome];
         $object[] = ['key' => 'dataNova', 'value' => Carbon::parse($request->data)->format('Y-m-d')];
         $object[] = ['key' => 'data', 'value' => $request->prevDate];
         $object[] = ['key' => 'hora', 'value' => $request->prevTime];
         $object[] = ['key' => 'horaNova', 'value' => $request->hora];
-        $object[] = ['key' => 'nome', 'value' => 'Sr(a). ' . $data[0]->nome];
         $object[] = ['key' => 'reschedule', 'value' => true];
 
-        if (!$this->sendEmail($this->getMailData($object), 'newAppointment')) {
-            return false;
+        if ($this->sendEmail($this->getMailData($object), 'newAppointment') == 1) {
+            $object[] = ['key' => 'recipient', 'value' => $paciente[0]->email];
+            $object[] = ['key' => 'nome', 'value' => 'Prezado/a ' . $paciente[0]->nome];
+
+            $this->sendEmail($this->getMailData($object), 'newAppointment');
+            return true;
         }
-        return true;
+        return false;
     }
 
     function sendPassword($email, $cod)
@@ -65,7 +69,7 @@ class MailController extends Controller
         }
     }
 
-    function cancelAppointment($data)
+    function cancelAppointment($data, $psyData)
     {
         $object[] = ['key' => 'subject', 'value' => "Consulta Cancelada"];
         $object[] = ['key' => 'recipient', 'value' => $data[0]->email];
@@ -75,10 +79,13 @@ class MailController extends Controller
         $object[] = ['key' => 'cancel', 'value' => true];
 
         if ($this->sendEmail($this->getMailData($object), 'newAppointment') == 1) {
+            $object[] = ['key' => 'recipient', 'value' => $psyData[0]->email];
+            $object[] = ['key' => 'nome', 'value' => 'Prezado/a ' . $psyData[0]->nome];
+
+            $this->sendEmail($this->getMailData($object), 'newAppointment');
             return 1;
-        } else {
-            return 0;
         }
+        return 0;
     }
 
     function getMailData($data)

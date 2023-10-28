@@ -26,39 +26,48 @@ class ConsultaController extends Controller
 
     function novaConsulta(NewAppRequest $request)
     {
-        $cUtils = new ConsultasUtils();
-        if ($cUtils->checkIfUserHasPendentApp($this->userId) != true && $this->acesso != 'admin') {
-            if ($this->acesso != 'admin') {
-                $cons = Consulta::create([
-                    "psicologo_id" => $request->psicologo,
-                    "paciente_id" =>  $this->userId,
-                    "problema_id" => $request->problema,
-                    "estado_id" => 1,
-                    "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
-                    "hora" => $request->hora
-                ]);
-            } else {
-                $cons = Consulta::create([
-                    "psicologo_id" => $request->psicologo,
-                    "problema_id" => $request->problema,
-                    "estado_id" => 1,
-                    "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
-                    "hora" => $request->hora,
-                    "nome" => $request->nome,
-                    "apelido" => $request->apelido,
-                    "email" => $request->email,
-                    "contacto1" => $request->contacto1,
-                    "contacto2" => $request->contacto2
-                ]);
-            }
-            if ($this->sendMail($request, Carbon::parse($request->data)->format('Y-m-d')) == 0) {
-                Consulta::where('id', $cons->id)->delete();
-                return response(["error" => "Erro inesperado!"]);
-            } else {
+        try {
+            $cUtils = new ConsultasUtils();
+            if ($cUtils->checkIfUserHasPendentApp($this->userId) != true && $this->acesso != 'admin') {
+                if ($this->acesso != 'admin') {
+                    $cons = Consulta::create([
+                        "psicologo_id" => $request->psicologo,
+                        "paciente_id" =>  $this->userId,
+                        "problema_id" => $request->problema,
+                        "estado_id" => 1,
+                        "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
+                        "hora" => $request->hora
+                    ]);
+                } else {
+                    $cons = Consulta::create([
+                        "psicologo_id" => $request->psicologo,
+                        "problema_id" => $request->problema,
+                        "estado_id" => 1,
+                        "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
+                        "hora" => $request->hora,
+                        "nome" => $request->nome,
+                        "apelido" => $request->apelido,
+                        "email" => $request->email,
+                        "contacto1" => $request->contacto1,
+                        "contacto2" => $request->contacto2
+                    ]);
+                }
+                if ($this->acesso == 'paciente') {
+                    $email = DB::table('users')
+                        ->select('email')
+                        ->where('id', $this->userId)
+                        ->get();
+
+                    $this->sendMail($request, Carbon::parse($request->data)->format('Y-m-d'), $email[0]->email);
+                } else {
+                    $this->sendMail($request, Carbon::parse($request->data)->format('Y-m-d'), $request->email);
+                }
                 return response(["success" => "Consulta marcada com sucesso!"]);
+            } else {
+                return response(["warning" => "Não pode marcar consulta enquanto tiver uma consulta pendente!"]);
             }
-        } else {
-            return response(["warning" => "Não pode marcar consulta enquanto tiver uma consulta pendente!"]);
+        } catch (Exception $th) {
+            return response(["error" => "Erro inesperado!"]);
         }
     }
 
@@ -82,17 +91,10 @@ class ConsultaController extends Controller
     function Reschedule(Request $request)
     {
         try {
-            $psyData = null;
             if (isset($request->segmento) && $request->segmento == true) {
                 $row = $this->CloseAppointment($request->id, true);
                 $this->ConsultaDeSegmento($row, $request);
             } else {
-                $psyData = DB::table('consultas')
-                    ->join('users', 'users.id', '=', 'consultas.psicologo_id')
-                    ->select('users.nome', 'users.email')
-                    ->where('consultas.id', $request->id)
-                    ->get();
-
                 Consulta::where('id', $request->id)
                     ->update([
                         'data' => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
@@ -100,26 +102,41 @@ class ConsultaController extends Controller
                     ]);
             }
 
+            $paciente = DB::table('consultas')
+                ->join('pacientes', 'pacientes.id', '=', 'consultas.paciente_id')
+                ->join('users', 'users.id', '=', 'pacientes.user_id')
+                ->select('users.nome', 'users.email')
+                ->where('consultas.id', $request->id)
+                ->get();
+
+            $psyData = DB::table('consultas')
+                ->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id')
+                ->join('users', 'users.id', '=', 'psicologos.user_id')
+                ->select('users.nome', 'users.email')
+                ->where('consultas.id', $request->id)
+                ->get();
+
             $mail = new MailController();
-            if ($mail->RescheduleAppointment($psyData, $request) == 1) {
-                return response(["success" => "Consulta remarcada com sucesso!"]);
+            if ($mail->RescheduleAppointment($psyData, $request, $paciente) == 1) {
+                if ($request->segmento == true)
+                    return response(["success" => "Próxima consulta marcada com sucesso!"]);
+                else return response(["success" => "Consulta remarcada com sucesso!"]);
             } else {
                 return response(["error" => "Erro inesperado"]);
             }
 
-            // return response(["success" => "Consulta remarcada com sucesso!"]);
         } catch (Exception $th) {
-            return response(['error' => $th . "dddd"]);
+            return response(['error' => "Erro inesprado!"]);
         }
     }
 
     function CloseAppointment($id, $segmento = false)
     {
         try {
-            // Consulta::where('id', $id)
-            //     ->update([
-            //         'estado_id' => 3,
-            //     ]);
+            Consulta::where('id', $id)
+                ->update([
+                    'estado_id' => 3,
+                ]);
 
             if ($segmento == true) {
                 $row = DB::table('consultas')
@@ -133,18 +150,25 @@ class ConsultaController extends Controller
         }
     }
 
-
     function cancelAppointment($id)
     {
         try {
             $appointmentData = DB::table('consultas')
-                ->join('users', 'users.id', '=', 'consultas.paciente_id')
+                ->join('pacientes', 'pacientes.id', '=', 'consultas.paciente_id')
+                ->join('users', 'users.id', '=', 'pacientes.user_id')
                 ->select('users.nome', 'hora', 'data', 'users.email')
                 ->where('consultas.id', $id)
                 ->get();
-            $mail = new MailController();
 
-            if ($mail->cancelAppointment($appointmentData) == 1) {
+            $psyData = DB::table('consultas')
+                ->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id')
+                ->join('users', 'users.id', '=', 'psicologos.user_id')
+                ->select('users.nome', 'users.email')
+                ->where('consultas.id', $id)
+                ->get();
+
+            $mail = new MailController();
+            if ($mail->cancelAppointment($appointmentData, $psyData) == 1) {
                 Consulta::where('id', $id)
                     ->update([
                         'estado_id' => 2,
@@ -195,7 +219,6 @@ class ConsultaController extends Controller
             $utils = new ConsultasUtils();
             return response(['consultas' => $utils->organizeAppointmentsArray($organizedData->items()), "total" => $organizedData->total(), "perpage" => $organizedData->perPage()]);
         } catch (Exception $th) {
-            dd($th);
             return response(["error" => "Erro inesperado!"]);
         }
     }
@@ -217,7 +240,7 @@ class ConsultaController extends Controller
         }
     }
 
-    function sendMail($request, $data)
+    function sendMail($request, $data, $paciente)
     {
         try {
             $email = DB::table('users')
