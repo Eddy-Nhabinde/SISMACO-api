@@ -47,7 +47,7 @@ class PacienteController extends Controller
                 ->where('consultas.paciente_id', $paciente_id)
                 ->paginate(5);
 
-            return response(['history' => $data->items(), "total" => $data->total()]);
+            return response(['history' => $data->items(), "total" => $data->total(), "perpage" => $data->perPage()]);
         } catch (Exception $ex) {
             return response(["error" => "Erro inesperado"]);
         }

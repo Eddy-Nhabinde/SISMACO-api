@@ -89,16 +89,31 @@ class ConsultasUtils
                 ->select('nome', 'psicologos.id')
                 ->get();
 
-            for ($i = 0; $i < sizeof($apppointments); $i++) {
-                for ($j = 0; $j < sizeof($nomes); $j++) {
+            for ($i = 0; $i < sizeof($apppointments); $i++)
+                for ($j = 0; $j < sizeof($nomes); $j++)
                     if ($nomes[$j]->id == $apppointments[$i]->psicologo_id) {
                         $apppointments[$i]->psicologo = $nomes[$j]->nome;
                     }
-                }
-            }
 
             return $apppointments;
-        } catch (\Throwable $th) {
+        } catch (Exception $th) {
+            dd($th);
+        }
+    }
+
+    function checkIfUserHasPendentApp($id)
+    {
+        try {
+            $app = DB::table('consultas')
+                ->select('id')
+                ->where('paciente_id', $id)
+                ->where('estado_id', 1)
+                ->orderBy('id', 'desc')
+                ->limit(1)
+                ->get();
+
+            return sizeof($app) > 0;
+        } catch (Exception $th) {
             dd($th);
         }
     }

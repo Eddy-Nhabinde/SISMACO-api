@@ -26,36 +26,40 @@ class ConsultaController extends Controller
 
     function novaConsulta(NewAppRequest $request)
     {
-        dd($request);
-        if (!$request->admin) {
-            $cons = Consulta::create([
-                "psicologo_id" => $request->psicologo,
-                "paciente_id" =>  $this->userId,
-                "problema_id" => 1,
-                "descricaoProblema" => "testando",
-                "estado_id" => 1,
-                "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
-                "hora" => $request->hora
-            ]);
+        $cUtils = new ConsultasUtils();
+        if ($cUtils->checkIfUserHasPendentApp($this->userId) != true && $this->acesso != 'admin') {
+            if ($this->acesso != 'admin') {
+                $cons = Consulta::create([
+                    "psicologo_id" => $request->psicologo,
+                    "paciente_id" =>  $this->userId,
+                    "problema_id" => $request->problema,
+                    "descricaoProblema" => "testando",
+                    "estado_id" => 1,
+                    "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
+                    "hora" => $request->hora
+                ]);
+            } else {
+                $cons = Consulta::create([
+                    "psicologo_id" => $request->psicologo,
+                    "problema_id" => $request->problema,
+                    "estado_id" => 1,
+                    "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
+                    "hora" => $request->hora,
+                    "nome" => $request->nome,
+                    "apelido" => $request->apelido,
+                    "email" => $request->email,
+                    "contacto1" => $request->contacto1,
+                    "contacto2" => $request->contacto2
+                ]);
+            }
+            if ($this->sendMail($request, Carbon::parse($request->data)->format('Y-m-d')) == 0) {
+                Consulta::where('id', $cons->id)->delete();
+                return response(["error" => "Erro inesperado!"]);
+            } else {
+                return response(["success" => "Consulta marcada com sucesso!"]);
+            }
         } else {
-            $cons = Consulta::create([
-                "psicologo_id" => $request->psicologo,
-                "problema_id" => 1,
-                "estado_id" => 1,
-                "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
-                "hora" => $request->hora,
-                "nome" => $request->nome,
-                "apelido" => $request->apelido,
-                "email" => $request->email,
-                "contacto1" => $request->contacto1,
-                "contacto2" => $request->contacto2
-            ]);
-        }
-        if ($this->sendMail($request, Carbon::parse($request->data)->format('Y-m-d')) == 0) {
-            Consulta::where('id', $cons->id)->delete();
-            return response(["error" => "Erro inesperado!"]);
-        } else {
-            return response(["success" => "Consulta marcada com sucesso!"]);
+            return response(["warning" => "Não pode marcar consulta enquanto tiver uma consulta pendente!"]);
         }
     }
 
@@ -148,7 +152,7 @@ class ConsultaController extends Controller
                     }
                 })
                 ->when($request, function ($query, $request) {
-                    if (isset($request->name)) {
+                    if (isset($request->name) && $request->name != "undefined") {
                         return $query->where('users.nome', 'like',  '%' . $request->name . '%');
                     }
                 })
@@ -159,7 +163,7 @@ class ConsultaController extends Controller
             $organizedData = $psicologos->getPsychologist($data);
 
             $utils = new ConsultasUtils();
-            return response(['consultas' => $utils->organizeAppointmentsArray($organizedData->items()), "total" => $organizedData->total()]);
+            return response(['consultas' => $utils->organizeAppointmentsArray($organizedData->items()), "total" => $organizedData->total(), "perpage" => $organizedData->perPage()]);
         } catch (Exception $th) {
             dd($th);
             return response(["error" => "Erro inesperado!"]);

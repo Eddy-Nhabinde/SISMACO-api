@@ -64,7 +64,7 @@ class PsicologoController extends Controller
                 ->get();
 
             return response(["nomes" => $names]);
-        } catch (\Throwable $th) {
+        } catch (Exception $th) {
             return response(['error' => 'Erro inesperado!']);
         }
     }
@@ -79,7 +79,7 @@ class PsicologoController extends Controller
                 ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
                 ->select('users.id as user_id', 'psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'estado', 'email')
                 ->when($request, function ($query, $request) {
-                    if (isset($request->name)) {
+                    if (isset($request->name) && $request->name != "undefined") {
                         return $query->where('users.nome', 'like',  '%' . $request->name . '%');
                     }
                 })
@@ -94,7 +94,7 @@ class PsicologoController extends Controller
                 $updatedKeys[$i]->contactos = $user->getContacts($updatedKeys[$i]->user_id);
             }
 
-            return response(["data" => $updatedKeys, "total" => $psicologos->total()]);
+            return response(["data" => $updatedKeys, "total" => $psicologos->total(), "perpage" => $psicologos->perPage()]);
         } catch (Exception $th) {
             return response(['error' => "Erro Inesperado"], 200);
         }
@@ -125,6 +125,28 @@ class PsicologoController extends Controller
             return ['success' => $estadoId == 1 ? 'Psicologo activado com sucesso' : 'Psicologo desativado com sucesso!'];
         } catch (Exception $th) {
             return ['error' => "Erro inesperado!"];
+        }
+    }
+
+    function getPsychologistDetails($id)
+    {
+        try {
+            $psicologo = DB::table('psicologos')
+                ->join('users', 'users.id', '=', 'psicologos.user_id')
+                ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
+                ->select('users.id as user', 'psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'email', 'estado')
+                ->where('psicologos.id', $id)
+                ->get();
+
+            $cont = DB::table('contactos')
+                ->select('contacto', 'principal')
+                ->where('user_id', $psicologo[0]->user)
+                ->get();
+
+            $consCont = new DashboardController();
+            return response(["psicologo" => $psicologo, "contactos" => $cont]);
+        } catch (Exception $th) {
+            return response(['error' => "Erro Inesperado"], 200);
         }
     }
 
