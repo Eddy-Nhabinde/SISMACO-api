@@ -33,7 +33,6 @@ class ConsultaController extends Controller
                     "psicologo_id" => $request->psicologo,
                     "paciente_id" =>  $this->userId,
                     "problema_id" => $request->problema,
-                    "descricaoProblema" => "testando",
                     "estado_id" => 1,
                     "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
                     "hora" => $request->hora
@@ -63,20 +62,43 @@ class ConsultaController extends Controller
         }
     }
 
+    function ConsultaDeSegmento($dados, $request)
+    {
+        Consulta::create([
+            "paciente_id" =>  $dados[0]->paciente_id,
+            "psicologo_id" => $request->psicologo,
+            "problema_id" => $dados[0]->problema_id,
+            "estado_id" => 1,
+            "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
+            "hora" => $request->hora,
+            "nome" => $dados[0]->nome,
+            "apelido" => $dados[0]->apelido,
+            "email" => $dados[0]->email,
+            "contacto1" => $dados[0]->contacto,
+            "contacto2" => $dados[0]->contacto2
+        ]);
+    }
+
     function Reschedule(Request $request)
     {
         try {
-            $psyData = DB::table('consultas')
-                ->join('users', 'users.id', '=', 'consultas.psicologo_id')
-                ->select('users.nome', 'users.email')
-                ->where('consultas.id', $request->id)
-                ->get();
+            $psyData = null;
+            if (isset($request->segmento) && $request->segmento == true) {
+                $row = $this->CloseAppointment($request->id, true);
+                $this->ConsultaDeSegmento($row, $request);
+            } else {
+                $psyData = DB::table('consultas')
+                    ->join('users', 'users.id', '=', 'consultas.psicologo_id')
+                    ->select('users.nome', 'users.email')
+                    ->where('consultas.id', $request->id)
+                    ->get();
 
-            Consulta::where('id', $request->id)
-                ->update([
-                    'data' => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
-                    'hora' => $request->hora
-                ]);
+                Consulta::where('id', $request->id)
+                    ->update([
+                        'data' => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
+                        'hora' => $request->hora
+                    ]);
+            }
 
             $mail = new MailController();
             if ($mail->RescheduleAppointment($psyData, $request) == 1) {
@@ -84,20 +106,28 @@ class ConsultaController extends Controller
             } else {
                 return response(["error" => "Erro inesperado"]);
             }
-            return response(['success' => 'Consulta Remarcada com sucesso !']);
+
+            // return response(["success" => "Consulta remarcada com sucesso!"]);
         } catch (Exception $th) {
-            return response(['error' => $th]);
+            return response(['error' => $th . "dddd"]);
         }
     }
 
-    function CloseAppointment($id)
+    function CloseAppointment($id, $segmento = false)
     {
         try {
-            Consulta::where('id', $id)
-                ->update([
-                    'estado_id' => 3,
-                ]);
-            return response(["success" => "Consulta concluida com sucesso!"]);
+            // Consulta::where('id', $id)
+            //     ->update([
+            //         'estado_id' => 3,
+            //     ]);
+
+            if ($segmento == true) {
+                $row = DB::table('consultas')
+                    ->where('id', $id)
+                    ->get();
+
+                return $row;
+            } else return response(["success" => "Consulta concluida com sucesso!"]);
         } catch (Exception $th) {
             return response(["error" => "Erro inesperado"]);
         }

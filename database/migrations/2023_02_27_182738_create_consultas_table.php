@@ -26,7 +26,6 @@ return new class extends Migration
             $table->string("email")->nullable();
             $table->string("contacto")->nullable();
             $table->string("contacto2")->nullable();
-            $table->text('descricaoProblema')->nullable();
             $table->integer('estado_id')->default(1);
             $table->date('data');
             $table->string("hora");

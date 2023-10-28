@@ -11,7 +11,7 @@ class ConsultasUtils
 
     function getLast30Days()
     {
-        $startDate = Carbon::now()->subDays(30); // Start 30 days ago
+        $startDate = Carbon::now()->subDays(29); // Start 30 days ago
         $endDate = Carbon::now(); // Today
 
         $days = [];

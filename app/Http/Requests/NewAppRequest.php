@@ -37,7 +37,7 @@ class NewAppRequest extends FormRequest
         $user = new Common();
         $access = $user->getAcesso();
 
-        if ($access == 'admin')
+        if ($access != 'paciente')
             return [
                 'nome' => 'required|string',
                 'apelido' => 'required|string',
