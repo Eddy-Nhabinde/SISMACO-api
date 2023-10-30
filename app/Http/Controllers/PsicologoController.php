@@ -34,6 +34,7 @@ class PsicologoController extends Controller
 
                 if ($userId != false) {
                     $psicologo = Psicologo::create([
+                        'estado' => 0,
                         'user_id' => $userId['id'],
                         'especialidade_id' => $request->especialidade
                     ]);
@@ -50,7 +51,21 @@ class PsicologoController extends Controller
                 } else return response(['error' => 'Erro inesperado!']);
             } else return response(['warning' => $checkAvailability]);
         } catch (Exception $th) {
-            dd($th);
+            return response(['error' => 'Erro inesperado!']);
+        }
+    }
+
+    function Deactivate($id)
+    {
+        try {
+            Psicologo::where('id', $id)
+                ->update([
+                    'estado' => 0,
+                ]);
+
+            return response(['success' => 'Psicólogo desactivado com sucesso']);
+        } catch (Exception $th) {
+            return response(['error' => 'Erro inesperado!']);
         }
     }
 

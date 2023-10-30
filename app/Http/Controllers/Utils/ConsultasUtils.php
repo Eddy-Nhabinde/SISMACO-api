@@ -39,7 +39,6 @@ class ConsultasUtils
 
     function organizeDataByMonth($arrayData, $object)
     {
-
         $data = [];
         $object == 'month' ? $object = $this->getLast30Days() : $object = $this->getLast12Months();
         for ($i = 0; $i < sizeof($object); $i++) {
@@ -86,7 +85,7 @@ class ConsultasUtils
         try {
             $nomes = DB::table('users')
                 ->join('psicologos', 'psicologos.user_id', '=', 'users.id')
-                ->select('nome', 'psicologos.id')
+                ->select('nome', 'psicologos.id', 'psicologos.estado')
                 ->get();
 
             for ($i = 0; $i < sizeof($apppointments); $i++)

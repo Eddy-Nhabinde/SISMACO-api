@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MailController;
+use App\Models\Psicologo;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -130,6 +131,13 @@ class AuthController extends Controller
                             'password' => Hash::make($request->password),
                             'novo' => '0'
                         ]);
+
+                    if ($user->acesso == 'psicologo') {
+                        Psicologo::where('user_id', $user->id)
+                            ->update([
+                                'activo' => 1
+                            ]);
+                    }
 
                     return response(['success' => 'Atualizacao feita com sucesso!']);
                 } catch (Exception $th) {
