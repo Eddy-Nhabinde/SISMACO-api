@@ -55,12 +55,15 @@ class PsicologoController extends Controller
         }
     }
 
-    function Deactivate($id)
+    function Deactivate($id, $estado)
     {
         try {
+            if ($estado == 1) $estado = 0;
+            else $estado = 1;
+
             Psicologo::where('id', $id)
                 ->update([
-                    'estado' => 0,
+                    'estado' => $estado,
                 ]);
 
             return response(['success' => 'Psicólogo desactivado com sucesso']);
@@ -97,6 +100,11 @@ class PsicologoController extends Controller
                     if (isset($request->name) && $request->name != "undefined") {
                         return $query->where('users.nome', 'like',  '%' . $request->name . '%');
                     }
+                })
+                ->when($request, function ($query, $request) {
+                    if (isset($request->estado) && $request->estado != "undefined" && $request->estado !=  null) {
+                        return $query->where('estado', $request->estado);
+                    } else return $query->where('estado', 1);
                 })
                 ->where('users.acesso', 'psicologo')
                 ->paginate($request->paging == 'false' ? 1000000000000 : 10);
