@@ -85,16 +85,19 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update($request)
     {
-        //
+        try {
+            User::where('id', $request->user_id)
+                ->update([
+                    "nome" => $request->nome . " " . $request->apelido,
+                    "email" => $request->email
+                ]);
+
+            return 1;
+        } catch (Exception $th) {
+            return 0;
+        }
     }
 
     function validating($request)

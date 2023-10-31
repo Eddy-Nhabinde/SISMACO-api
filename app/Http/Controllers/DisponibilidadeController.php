@@ -4,24 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Models\Disponibilidade;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DisponibilidadeController extends Controller
 {
-    function store($dispo, $user_id)
+    function store($dispo, $psicologo_id)
     {
         try {
             $dias = array_keys($dispo);
             $disponibilidade = [];
 
             for ($i = 0; $i < sizeof($dias); $i++) {
-                $disponibilidade[] = ["diaDaSemana" => $dias[$i], "inicio" => $dispo[$dias[$i]]['Inicio'], "fim" => $dispo[$dias[$i]]['Fim'], "psicologo_id" => $user_id];
+                $disponibilidade[] = ["diaDaSemana" => $dias[$i], "inicio" => $dispo[$dias[$i]]['Inicio'], "fim" => $dispo[$dias[$i]]['Fim'], "psicologo_id" => $psicologo_id];
             }
 
             Disponibilidade::insert($disponibilidade);
             return true;
         } catch (Exception $th) {
             return false;
+        }
+    }
+
+    function update($request)
+    {
+        try {
+            $this->delete($request->id);
+            $this->store($request->disponibilidade, $request->id);
+            return 1;
+        } catch (Exception $th) {
+            return 0;
+        }
+    }
+    function delete($psicologo_id)
+    {
+        try {
+            DB::table('disponibilidades')
+                ->where('psicologo_id', $psicologo_id)
+                ->delete();
+
+            return 1;
+        } catch (Exception $th) {
+            return 0;
         }
     }
 

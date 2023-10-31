@@ -55,6 +55,23 @@ class PsicologoController extends Controller
         }
     }
 
+    function update(PsychologistRequest $request)
+    {
+        try {
+            $dispo = new DisponibilidadeController();
+            $checkAvailability = $dispo->validateAvailability($request->disponibilidade);
+            if ($checkAvailability == 'true') {
+                $user = new UserController();
+                if ($user->update($request) == 1) {
+                    if ($dispo->update($request)) return response(['success' => "Psicólogo actualizado com sucesso"]);
+                    else  return response(['error' => "Ocorreu um erro inesperado"]);
+                } else return response(['error' => "Ocorreu um erro inesperado"]);
+            } else return response(['warning' => $checkAvailability]);
+        } catch (Exception $th) {
+            return response(['error' => "Ocorreu um erro inesperado"]);
+        }
+    }
+
     function Deactivate($id, $estado)
     {
         try {

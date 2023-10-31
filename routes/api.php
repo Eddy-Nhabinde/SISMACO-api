@@ -28,6 +28,8 @@ route::post('newPsychologist', PsicologoController::class . '@store');
 
 route::put('deactivate/{id}/{estado}', PsicologoController::class . '@Deactivate');
 
+route::put('updatePsycho', PsicologoController::class . '@update');
+
 route::get('getPsychoNames', PsicologoController::class . '@getPsychoNames');
 
 route::post('newAppointment', ConsultaController::class . '@novaConsulta');
