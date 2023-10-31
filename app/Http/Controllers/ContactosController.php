@@ -30,16 +30,4 @@ class ContactosController extends Controller
 
         return $contactos;
     }
-
-    function validating($request)
-    {
-        try {
-            $request->validate([
-                'contacto1' => 'required',
-            ]);
-            return true;
-        } catch (\Illuminate\Validation\ValidationException $th) {
-            return false;
-        }
-    }
 }

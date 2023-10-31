@@ -42,7 +42,7 @@ class NewAppRequest extends FormRequest
                 'nome' => 'required|string',
                 'apelido' => 'required|string',
                 'email' => 'required|email',
-                'contacto1' => 'required|string|min:9|max:9',
+                'contacto1' => 'required|string|min:9|max:13',
                 'problema' => 'required|integer',
                 'data' => 'required|date',
                 'psicologo' => 'required|integer',

@@ -108,7 +108,6 @@ class ConsultasUtils
                 ->where('paciente_id', $id)
                 ->where('estado_id', 1)
                 ->orderBy('id', 'desc')
-                ->limit(1)
                 ->get();
 
             return sizeof($app) > 0;

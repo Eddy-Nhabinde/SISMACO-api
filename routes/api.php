@@ -8,6 +8,7 @@ use App\Http\Controllers\EspecialidadeController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\ProblemaController;
 use App\Http\Controllers\PsicologoController;
+use App\Http\Controllers\Utils\Common;
 use App\Http\Controllers\Utils\ConsultasUtils;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 route::post('newPatient', PacienteController::class . '@store');
 
 route::post('newPsychologist', PsicologoController::class . '@store');
+
+route::get('getContacts/{id}', Common::class . '@getContacts');
 
 route::put('deactivate/{id}/{estado}', PsicologoController::class . '@Deactivate');
 
@@ -68,6 +71,8 @@ route::group(['middleware' => ['apijwt']], function () {
 Route::post('passwordRequest', AuthController::class . '@requestPassword');
 
 Route::post('login', AuthController::class . '@login');
+
+Route::post('logout', AuthController::class . '@logout');
 
 Route::post('passwordUpdate', AuthController::class . '@passwordUpdate');
 

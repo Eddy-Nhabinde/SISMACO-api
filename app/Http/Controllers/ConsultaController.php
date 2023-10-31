@@ -28,9 +28,9 @@ class ConsultaController extends Controller
     {
         try {
             $cUtils = new ConsultasUtils();
-            if ($cUtils->checkIfUserHasPendentApp($this->userId) != true && $this->acesso != 'admin') {
+            if ($cUtils->checkIfUserHasPendentApp($this->userId) == false && $this->acesso != 'admin') {
                 if ($this->acesso != 'admin') {
-                    $cons = Consulta::create([
+                    Consulta::create([
                         "psicologo_id" => $request->psicologo,
                         "paciente_id" =>  $this->userId,
                         "problema_id" => $request->problema,
@@ -39,7 +39,7 @@ class ConsultaController extends Controller
                         "hora" => $request->hora
                     ]);
                 } else {
-                    $cons = Consulta::create([
+                    Consulta::create([
                         "psicologo_id" => $request->psicologo,
                         "problema_id" => $request->problema,
                         "estado_id" => 1,
@@ -124,7 +124,6 @@ class ConsultaController extends Controller
             } else {
                 return response(["error" => "Erro inesperado"]);
             }
-
         } catch (Exception $th) {
             return response(['error' => "Erro inesprado!"]);
         }
