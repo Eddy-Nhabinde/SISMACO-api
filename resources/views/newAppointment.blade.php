@@ -217,7 +217,7 @@
 
 
 
-                    {{-- <div class="u-row-container"
+                     <div class="u-row-container"
                         style="padding: 0px;background-image: url('%20');background-repeat: no-repeat;background-position: center top;background-color: transparent">
                         <div class="u-row"
                             style="Margin: 0 auto;min-width: 320px;max-width: 550px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #3598db;">
@@ -248,7 +248,7 @@
                                                                         align="center">
 
                                                                         <img align="center" border="0"
-                                                                            src="images/image-4.png" alt="Calendar"
+                                                                            src="https://i.ibb.co/hsNTs2R/image-4.png" alt="Calendar"
                                                                             title="Calendar"
                                                                             style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 100%;max-width: 550px;"
                                                                             width="550" />
@@ -271,7 +271,7 @@
                                 <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
                             </div>
                         </div>
-                    </div> --}}
+                    </div> 
 
 
 
@@ -299,7 +299,7 @@
                                                             align="left">
 
                                                             <h3
-                                                                style="margin: 0px; color: #293c4b; line-height: 140%; text-align: left; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 18px; ">
+                                                                style="margin: 15px 0 0 0; color: #293c4b; line-height: 140%; text-align: left; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 18px; ">
                                                                 <strong>{{ $nome }},</strong>
                                                             </h3>
 
@@ -487,89 +487,6 @@
                                                     <tr>
                                                         <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;"
                                                             align="left">
-
-                                                            <div align="center">
-                                                                <div style="display: table; max-width:125px;">
-                                                                    <!--[if (mso)|(IE)]><table width="125" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-collapse:collapse;" align="center"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; mso-table-lspace: 0pt;mso-table-rspace: 0pt; width:125px;"><tr><![endif]-->
-
-
-                                                                    <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 10px;" valign="top"><![endif]-->
-                                                                    <table align="left" border="0"
-                                                                        cellspacing="0" cellpadding="0"
-                                                                        width="32" height="32"
-                                                                        style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 10px">
-                                                                        <tbody>
-                                                                            <tr style="vertical-align: top">
-                                                                                <td align="left" valign="middle"
-                                                                                    style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                                                                    <a href="https://twitter.com/"
-                                                                                        title="Twitter"
-                                                                                        target="_blank">
-                                                                                        <img src="images/image-3.png"
-                                                                                            alt="Twitter"
-                                                                                            title="Twitter"
-                                                                                            width="32"
-                                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
-                                                                                    </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                    <!--[if (mso)|(IE)]></td><![endif]-->
-
-                                                                    <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 10px;" valign="top"><![endif]-->
-                                                                    <table align="left" border="0"
-                                                                        cellspacing="0" cellpadding="0"
-                                                                        width="32" height="32"
-                                                                        style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 10px">
-                                                                        <tbody>
-                                                                            <tr style="vertical-align: top">
-                                                                                <td align="left" valign="middle"
-                                                                                    style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                                                                    <a href="https://linkedin.com/"
-                                                                                        title="LinkedIn"
-                                                                                        target="_blank">
-                                                                                        <img src="images/image-1.png"
-                                                                                            alt="LinkedIn"
-                                                                                            title="LinkedIn"
-                                                                                            width="32"
-                                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
-                                                                                    </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                    <!--[if (mso)|(IE)]></td><![endif]-->
-
-                                                                    <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 0px;" valign="top"><![endif]-->
-                                                                    <table align="left" border="0"
-                                                                        cellspacing="0" cellpadding="0"
-                                                                        width="32" height="32"
-                                                                        style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 0px">
-                                                                        <tbody>
-                                                                            <tr style="vertical-align: top">
-                                                                                <td align="left" valign="middle"
-                                                                                    style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                                                                    <a href="https://instagram.com/"
-                                                                                        title="Instagram"
-                                                                                        target="_blank">
-                                                                                        <img src="images/image-2.png"
-                                                                                            alt="Instagram"
-                                                                                            title="Instagram"
-                                                                                            width="32"
-                                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
-                                                                                    </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                    <!--[if (mso)|(IE)]></td><![endif]-->
-
-
-                                                                    <!--[if (mso)|(IE)]></tr></table></td></tr></table><![endif]-->
-                                                                </div>
-                                                            </div>
-
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -620,8 +537,8 @@
 
                                                             <div
                                                                 style="color: #7e8c8d; line-height: 140%; text-align: center; word-wrap: break-word;">
-                                                                <p style="font-size: 14px; line-height: 140%;">&copy;
-                                                                    20XX CEAP. Todos Direitos Reservados.
+                                                                <p style="font-size: 14px; line-height: 140%;">
+                                                                     Edmilson Nhabinde &copy; Todos Direitos Reservados.
                                                                 </p>
                                                             </div>
 

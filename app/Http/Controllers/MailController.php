@@ -44,8 +44,9 @@ class MailController extends Controller
 
     function sendPassword($email, $cod)
     {
-        $object[] = ['key' => 'cod', 'value' => $cod];
+        $object[] = ['key' => 'password', 'value' => $cod];
         $object[] = ['key' => 'recipient', 'value' => $email];
+        $object[] = ['key' => 'subject', 'value' => "Reposicao da Senha"];
 
         if ($this->sendEmail($this->getMailData($object), 'new_request') == 1) {
             return 1;

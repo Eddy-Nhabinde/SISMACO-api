@@ -23,20 +23,14 @@ return new class extends Migration
         DB::table('especialidades')->insert(
             array(
                 [
+                    'nome' => 'Orientação escolar e profissional',
+                ],
+                [
                     'nome' => 'Terapia Familiar',
                 ],
                 [
-                    'nome' => 'Terapia Clinica',
+                    'nome' => "Terapia Individua",
                 ],
-                [
-                    'nome' => "Terapia de Oriantação",
-                ],
-                [
-                    'nome' => 'N/A',
-                ],
-                [
-                    'nome' => 'Outra',
-                ]
             )
         );
     }

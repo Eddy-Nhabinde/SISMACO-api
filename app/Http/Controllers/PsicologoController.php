@@ -27,6 +27,8 @@ class PsicologoController extends Controller
         try {
             $createUSer = new UserController();
             $dispo = new DisponibilidadeController();
+            $utils = new PsicologosUtils();
+
             $checkAvailability = $dispo->validateAvailability($request->disponibilidade);
 
             if ($checkAvailability == 'true') {
@@ -36,7 +38,7 @@ class PsicologoController extends Controller
                     $psicologo = Psicologo::create([
                         'estado' => 0,
                         'user_id' => $userId['id'],
-                        'especialidade_id' => $request->especialidade
+                        'especialidade_id' => $utils->formstSpecility($request->especialidade)
                     ]);
 
                     $contacts = new ContactosController();
@@ -51,6 +53,7 @@ class PsicologoController extends Controller
                 } else return response(['error' => 'Erro inesperado!']);
             } else return response(['warning' => $checkAvailability]);
         } catch (Exception $th) {
+            dd($th);
             return response(['error' => 'Erro inesperado!']);
         }
     }

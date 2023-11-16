@@ -35,7 +35,7 @@ class ConsultaController extends Controller
                         "paciente_id" =>  $this->userId,
                         "problema_id" => $request->problema,
                         "estado_id" => 1,
-                        "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
+                        "data" => Carbon::parse($request->data)->format('Y-m-d'),
                         "hora" => $request->hora
                     ]);
                 } else {
@@ -43,7 +43,7 @@ class ConsultaController extends Controller
                         "psicologo_id" => $request->psicologo,
                         "problema_id" => $request->problema,
                         "estado_id" => 1,
-                        "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
+                        "data" => Carbon::parse($request->data)->format('Y-m-d'),
                         "hora" => $request->hora,
                         "nome" => $request->nome,
                         "apelido" => $request->apelido,
@@ -78,7 +78,7 @@ class ConsultaController extends Controller
             "psicologo_id" => $request->psicologo,
             "problema_id" => $dados[0]->problema_id,
             "estado_id" => 1,
-            "data" => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
+            "data" => Carbon::parse($request->data)->format('Y-m-d'),
             "hora" => $request->hora,
             "nome" => $dados[0]->nome,
             "apelido" => $dados[0]->apelido,
@@ -97,7 +97,7 @@ class ConsultaController extends Controller
             } else {
                 Consulta::where('id', $request->id)
                     ->update([
-                        'data' => Carbon::parse($request->data)->addDay()->format('Y-m-d'),
+                        'data' => Carbon::parse($request->data)->format('Y-m-d'),
                         'hora' => $request->hora
                     ]);
             }
@@ -167,16 +167,19 @@ class ConsultaController extends Controller
                 ->get();
 
             $mail = new MailController();
-            if ($mail->cancelAppointment($appointmentData, $psyData) == 1) {
+            // $cancel = $mail->cancelAppointment($appointmentData, $psyData);
+
+            // if ($cancel == 1) {
                 Consulta::where('id', $id)
                     ->update([
                         'estado_id' => 2,
                     ]);
-            } else {
-                return response(["error" => "Erro inesperado"]);
-            }
+            // } else {
+            //     return response(["error" => "Erro inesperado"]);
+            // }
             return response(["success" => "Consulta cancelada com sucesso!"]);
         } catch (Exception $th) {
+            dd($th);
             return response(["error" => "Erro inesperado"]);
         }
     }

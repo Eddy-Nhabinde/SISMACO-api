@@ -1,5 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<!DOCTYPE HTML
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
     <!--[if gte mso 9]>
@@ -138,15 +140,19 @@
 
 
     <!--[if !mso]><!-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet"
+        type="text/css">
     <!--<![endif]-->
 
 </head>
 
-<body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #f9f9f9;color: #000000">
+<body class="clean-body u_body"
+    style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #f9f9f9;color: #000000">
     <!--[if IE]><div class="ie-container"><![endif]-->
     <!--[if mso]><div class="mso-container"><![endif]-->
-    <table id="u_body" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #f9f9f9;width:100%" cellpadding="0" cellspacing="0">
+    <table id="u_body"
+        style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #f9f9f9;width:100%"
+        cellpadding="0" cellspacing="0">
         <tbody>
             <tr style="vertical-align: top">
                 <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
@@ -154,23 +160,32 @@
 
 
                     <div class="u-row-container" style="padding: 0px;background-color: transparent">
-                        <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #000000;">
-                            <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
+                        <div class="u-row"
+                            style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #000000;">
+                            <div
+                                style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                                 <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #000000;"><![endif]-->
 
                                 <!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-                                <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-                                    <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                <div class="u-col u-col-100"
+                                    style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
+                                    <div
+                                        style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                         <!--[if (!mso)&(!IE)]><!-->
-                                        <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                        <div
+                                            style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                             <!--<![endif]-->
 
-                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation"
+                                                cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;" align="left">
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
 
-                                                            <div class="v-font-size" style="font-size: 39px; color: #fcfcfc; line-height: 140%; text-align: center; word-wrap: break-word;">
+                                                            <div class="v-font-size"
+                                                                style="font-size: 39px; color: #fcfcfc; line-height: 140%; text-align: center; word-wrap: break-word;">
                                                                 <p style="line-height: 140%;">
                                                                     <em><strong><sub>SISMACO</sub></strong></em>
                                                                 </p>
@@ -195,27 +210,45 @@
 
 
                     <div class="u-row-container" style="padding: 0px;background-color: transparent">
-                        <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-                            <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
+                        <div class="u-row"
+                            style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
+                            <div
+                                style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                                 <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
 
                                 <!--[if (mso)|(IE)]><td align="center" width="600" style="background-color: #fffefe;width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-                                <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-                                    <div style="background-color: #fffefe;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                <div class="u-col u-col-100"
+                                    style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
+                                    <div
+                                        style="background-color: #fffefe;height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                         <!--[if (!mso)&(!IE)]><!-->
-                                        <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                        <div
+                                            style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                             <!--<![endif]-->
 
-                                            <table id="u_content_image_3" style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table id="u_content_image_3" style="font-family:'Montserrat',sans-serif;"
+                                                role="presentation" cellpadding="0" cellspacing="0" width="100%"
+                                                border="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:55px 10px 10px;font-family:'Montserrat',sans-serif;" align="left">
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:55px 10px 10px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
 
-                                                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                                            <table width="100%" cellpadding="0" cellspacing="0"
+                                                                border="0">
                                                                 <tr>
-                                                                    <td style="padding-right: 0px;padding-left: 0px;" align="center">
-
-                                                                        <img align="center" border="0" src="images/image-5.png" alt="Tick Icon" title="Tick Icon" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 14%;max-width: 81.2px;" width="81.2" class="v-src-width v-src-max-width" />
+                                                                    <td style="padding-right: 0px;padding-left: 0px;"
+                                                                        align="center">
+                                                                        <a href=""><img
+                                                                                src="https://i.ibb.co/GHh6wJw/image-5.png"
+                                                                                alt="Tick Icon" title="Tick Icon"
+                                                                                style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 14%;max-width: 81.2px;"
+                                                                                width="81.2"
+                                                                                class="v-src-width v-src-max-width"
+                                                                                border="0">
+                                                                        </a>
+                                                                        {{-- <img align="center" border="0" src="https://freeimage.host/i/JBqmoXt" alt="Tick Icon" title="Tick Icon" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 14%;max-width: 81.2px;" width="81.2" class="v-src-width v-src-max-width" /> --}}
 
                                                                     </td>
                                                                 </tr>
@@ -226,12 +259,17 @@
                                                 </tbody>
                                             </table>
 
-                                            <table id="u_content_heading_3" style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table id="u_content_heading_3"
+                                                style="font-family:'Montserrat',sans-serif;" role="presentation"
+                                                cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 55px;font-family:'Montserrat',sans-serif;" align="left">
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:10px 55px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
 
-                                                            <h1 class="v-font-size" style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 33px; ">
+                                                            <h1 class="v-font-size"
+                                                                style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 33px; ">
                                                                 <strong>Aviso de Registo</strong>
                                                             </h1>
 
@@ -240,21 +278,31 @@
                                                 </tbody>
                                             </table>
 
-                                            <table id="u_content_text_3" style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table id="u_content_text_3" style="font-family:'Montserrat',sans-serif;"
+                                                role="presentation" cellpadding="0" cellspacing="0" width="100%"
+                                                border="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 60px 50px;font-family:'Montserrat',sans-serif;" align="left">
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:10px 60px 50px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
 
-                                                            <div class="v-font-size" style="color: #444444; line-height: 170%; text-align: center; word-wrap: break-word;">
-                                                                <p style="font-size: 14px; line-height: 170%;"><span style="font-size: 16px; line-height: 27.2px;">Saudacoes!</span>
+                                                            <div class="v-font-size"
+                                                                style="color: #444444; line-height: 170%; text-align: center; word-wrap: break-word;">
+                                                                <p style="font-size: 14px; line-height: 170%;"><span
+                                                                        style="font-size: 16px; line-height: 27.2px;">Saudacoes!</span>
                                                                 </p>
-                                                                <p style="font-size: 14px; line-height: 170%;"><span style="font-size: 16px; line-height: 27.2px;">Vimos
+                                                                <p style="font-size: 14px; line-height: 170%;"><span
+                                                                        style="font-size: 16px; line-height: 27.2px;">Vimos
                                                                         por este meio informar que </span></p>
-                                                                <p style="font-size: 14px; line-height: 170%;"><span style="font-size: 16px; line-height: 27.2px;">foste
+                                                                <p style="font-size: 14px; line-height: 170%;"><span
+                                                                        style="font-size: 16px; line-height: 27.2px;">foste
                                                                         registado ao nosso sistema de Marcacao de
                                                                         Consultas</span></p>
-                                                                <p style="font-size: 14px; line-height: 170%;"><span style="font-size: 16px; line-height: 27.2px;">
-                                                                        Codigo de ativacao: {{$password}}</span></p>
+                                                                <p style="font-size: 14px; line-height: 170%;"><span
+                                                                        style="font-size: 16px; line-height: 27.2px;">
+                                                                        Codigo de ativacao: {{ $password }}</span>
+                                                                </p>
                                                             </div>
 
                                                         </td>
@@ -276,23 +324,33 @@
 
 
                     <div class="u-row-container" style="padding: 0px;background-color: transparent">
-                        <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;">
-                            <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
+                        <div class="u-row"
+                            style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;">
+                            <div
+                                style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                                 <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]-->
 
                                 <!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-                                <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-                                    <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                <div class="u-col u-col-100"
+                                    style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
+                                    <div
+                                        style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                         <!--[if (!mso)&(!IE)]><!-->
-                                        <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                        <div
+                                            style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                             <!--<![endif]-->
 
-                                            <table id="u_content_heading_2" style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table id="u_content_heading_2"
+                                                style="font-family:'Montserrat',sans-serif;" role="presentation"
+                                                cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:14px 55px 10px;font-family:'Montserrat',sans-serif;" align="left">
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:14px 55px 10px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
 
-                                                            <h1 class="v-font-size" style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 22px; ">
+                                                            <h1 class="v-font-size"
+                                                                style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 22px; ">
                                                                 <strong>Proximo Passo </strong>
                                                             </h1>
 
@@ -301,12 +359,16 @@
                                                 </tbody>
                                             </table>
 
-                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation"
+                                                cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:0px 60px 20px;font-family:'Montserrat',sans-serif;" align="left">
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:0px 60px 20px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
 
-                                                            <div class="v-font-size" style="color: #444444; line-height: 170%; text-align: center; word-wrap: break-word;">
+                                                            <div class="v-font-size"
+                                                                style="color: #444444; line-height: 170%; text-align: center; word-wrap: break-word;">
                                                                 <p style="line-height: 170%;">Inicie sessao e comece a
                                                                     ver a sua agenda</p>
                                                             </div>
@@ -316,16 +378,23 @@
                                                 </tbody>
                                             </table>
 
-                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation"
+                                                cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 50px;font-family:'Montserrat',sans-serif;" align="left">
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:10px 10px 50px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
 
                                                             <!--[if mso]><style>.v-button {background: transparent !important;}</style><![endif]-->
                                                             <div align="center">
                                                                 <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://unlayer.com/" style="height:45px; v-text-anchor:middle; width:188px;" arcsize="9%"  stroke="f" fillcolor="#cca250"><w:anchorlock/><center style="color:#FFFFFF;font-family:'Montserrat',sans-serif;"><![endif]-->
-                                                                <a href="https://unlayer.com/" target="_blank" class="v-button v-font-size" style="box-sizing: border-box;display: inline-block;font-family:'Montserrat',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #cca250; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
-                                                                    <span style="display:block;padding:14px 33px;line-height:120%;"><strong><span style="line-height: 16.8px;">Iniciar
+                                                                <a href="https://unlayer.com/" target="_blank"
+                                                                    class="v-button v-font-size"
+                                                                    style="box-sizing: border-box;display: inline-block;font-family:'Montserrat',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #cca250; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;font-size: 14px;">
+                                                                    <span
+                                                                        style="display:block;padding:14px 33px;line-height:120%;"><strong><span
+                                                                                style="line-height: 16.8px;">Iniciar
                                                                                 Sessao  →</span></strong></span>
                                                                 </a>
                                                                 <!--[if mso]></center></v:roundrect><![endif]-->
@@ -350,24 +419,34 @@
 
 
                     <div class="u-row-container" style="padding: 0px;background-color: transparent">
-                        <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #111114;">
-                            <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
+                        <div class="u-row"
+                            style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #111114;">
+                            <div
+                                style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                                 <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #111114;"><![endif]-->
 
                                 <!--[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;" valign="top"><![endif]-->
-                                <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-                                    <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                <div class="u-col u-col-100"
+                                    style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
+                                    <div
+                                        style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                         <!--[if (!mso)&(!IE)]><!-->
-                                        <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                                        <div
+                                            style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
                                             <!--<![endif]-->
 
-                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation"
+                                                cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:32px 10px 0px;font-family:'Montserrat',sans-serif;" align="left">
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:32px 10px 0px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
 
-                                                            <div class="v-font-size" style="color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word;">
-                                                                <p style="font-size: 14px; line-height: 140%;"><span style="font-size: 18px; line-height: 25.2px;"><strong>SISMACO</strong></span>
+                                                            <div class="v-font-size"
+                                                                style="color: #ffffff; line-height: 140%; text-align: center; word-wrap: break-word;">
+                                                                <p style="font-size: 14px; line-height: 140%;"><span
+                                                                        style="font-size: 18px; line-height: 25.2px;"><strong>SISMACO</strong></span>
                                                                 </p>
                                                             </div>
 
@@ -376,12 +455,16 @@
                                                 </tbody>
                                             </table>
 
-                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation"
+                                                cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;" align="left">
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
 
-                                                            <div class="v-font-size" style="color: #b0b1b4; line-height: 180%; text-align: center; word-wrap: break-word;">
+                                                            <div class="v-font-size"
+                                                                style="color: #b0b1b4; line-height: 180%; text-align: center; word-wrap: break-word;">
                                                                 <p style="line-height: 180%;">Universidade Eduardo
                                                                     Mondlane, Faculdade de Educacao</p>
                                                                 <p style="line-height: 180%;">CEAP</p>
@@ -392,10 +475,13 @@
                                                 </tbody>
                                             </table>
 
-                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation"
+                                                cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;" align="left">
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
 
                                                             <div align="center">
                                                                 <div style="display: table; max-width:211px;">
@@ -403,12 +489,22 @@
 
 
                                                                     <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 21px;" valign="top"><![endif]-->
-                                                                    <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 21px">
+                                                                    <table align="left" border="0"
+                                                                        cellspacing="0" cellpadding="0"
+                                                                        width="32" height="32"
+                                                                        style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 21px">
                                                                         <tbody>
                                                                             <tr style="vertical-align: top">
-                                                                                <td align="left" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                                                                    <a href="https://facebook.com/" title="Facebook" target="_blank">
-                                                                                        <img src="images/image-1.png" alt="Facebook" title="Facebook" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+                                                                                <td align="left" valign="middle"
+                                                                                    style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
+                                                                                    <a href="https://facebook.com/"
+                                                                                        title="Facebook"
+                                                                                        target="_blank">
+                                                                                        <img src="https://i.ibb.co/4KCNfYw/image-1.png"
+                                                                                            alt="Facebook"
+                                                                                            title="Facebook"
+                                                                                            width="32"
+                                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
                                                                                     </a>
                                                                                 </td>
                                                                             </tr>
@@ -417,12 +513,22 @@
                                                                     <!--[if (mso)|(IE)]></td><![endif]-->
 
                                                                     <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 21px;" valign="top"><![endif]-->
-                                                                    <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 21px">
+                                                                    <table align="left" border="0"
+                                                                        cellspacing="0" cellpadding="0"
+                                                                        width="32" height="32"
+                                                                        style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 21px">
                                                                         <tbody>
                                                                             <tr style="vertical-align: top">
-                                                                                <td align="left" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                                                                    <a href="https://twitter.com/" title="Twitter" target="_blank">
-                                                                                        <img src="images/image-3.png" alt="Twitter" title="Twitter" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+                                                                                <td align="left" valign="middle"
+                                                                                    style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
+                                                                                    <a href="https://twitter.com/"
+                                                                                        title="Twitter"
+                                                                                        target="_blank">
+                                                                                        <img src="https://i.ibb.co/G55pf2K/image-3.png"
+                                                                                            alt="Twitter"
+                                                                                            title="Twitter"
+                                                                                            width="32"
+                                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
                                                                                     </a>
                                                                                 </td>
                                                                             </tr>
@@ -431,12 +537,22 @@
                                                                     <!--[if (mso)|(IE)]></td><![endif]-->
 
                                                                     <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 21px;" valign="top"><![endif]-->
-                                                                    <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 21px">
+                                                                    <table align="left" border="0"
+                                                                        cellspacing="0" cellpadding="0"
+                                                                        width="32" height="32"
+                                                                        style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 21px">
                                                                         <tbody>
                                                                             <tr style="vertical-align: top">
-                                                                                <td align="left" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                                                                    <a href="https://instagram.com/" title="Instagram" target="_blank">
-                                                                                        <img src="images/image-2.png" alt="Instagram" title="Instagram" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+                                                                                <td align="left" valign="middle"
+                                                                                    style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
+                                                                                    <a href="https://instagram.com/"
+                                                                                        title="Instagram"
+                                                                                        target="_blank">
+                                                                                        <img src="https://i.ibb.co/1M61R11/image-2.png"
+                                                                                            alt="Instagram"
+                                                                                            title="Instagram"
+                                                                                            width="32"
+                                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
                                                                                     </a>
                                                                                 </td>
                                                                             </tr>
@@ -445,12 +561,22 @@
                                                                     <!--[if (mso)|(IE)]></td><![endif]-->
 
                                                                     <!--[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 0px;" valign="top"><![endif]-->
-                                                                    <table align="left" border="0" cellspacing="0" cellpadding="0" width="32" height="32" style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 0px">
+                                                                    <table align="left" border="0"
+                                                                        cellspacing="0" cellpadding="0"
+                                                                        width="32" height="32"
+                                                                        style="width: 32px !important;height: 32px !important;display: inline-block;border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;margin-right: 0px">
                                                                         <tbody>
                                                                             <tr style="vertical-align: top">
-                                                                                <td align="left" valign="middle" style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-                                                                                    <a href="https://linkedin.com/" title="LinkedIn" target="_blank">
-                                                                                        <img src="images/image-4.png" alt="LinkedIn" title="LinkedIn" width="32" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
+                                                                                <td align="left" valign="middle"
+                                                                                    style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
+                                                                                    <a href="https://linkedin.com/"
+                                                                                        title="LinkedIn"
+                                                                                        target="_blank">
+                                                                                        <img src="https://i.ibb.co/12mtTzN/image-4.png"
+                                                                                            alt="LinkedIn"
+                                                                                            title="LinkedIn"
+                                                                                            width="32"
+                                                                                            style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: none;height: auto;float: none;max-width: 32px !important">
                                                                                     </a>
                                                                                 </td>
                                                                             </tr>
@@ -468,15 +594,21 @@
                                                 </tbody>
                                             </table>
 
-                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation"
+                                                cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;" align="left">
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
 
-                                                            <table height="0px" align="center" border="0" cellpadding="0" cellspacing="0" width="82%" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #9495a7;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+                                                            <table height="0px" align="center" border="0"
+                                                                cellpadding="0" cellspacing="0" width="82%"
+                                                                style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;border-top: 1px solid #9495a7;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
                                                                 <tbody>
                                                                     <tr style="vertical-align: top">
-                                                                        <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
+                                                                        <td
+                                                                            style="word-break: break-word;border-collapse: collapse !important;vertical-align: top;font-size: 0px;line-height: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
                                                                             <span>&#160;</span>
                                                                         </td>
                                                                     </tr>
@@ -488,14 +620,18 @@
                                                 </tbody>
                                             </table>
 
-                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                            <table style="font-family:'Montserrat',sans-serif;" role="presentation"
+                                                cellpadding="0" cellspacing="0" width="100%" border="0">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:0px 10px 13px;font-family:'Montserrat',sans-serif;" align="left">
+                                                        <td class="v-container-padding-padding"
+                                                            style="overflow-wrap:break-word;word-break:break-word;padding:0px 10px 13px;font-family:'Montserrat',sans-serif;"
+                                                            align="left">
 
-                                                            <div class="v-font-size" style="color: #b0b1b4; line-height: 180%; text-align: center; word-wrap: break-word;">
-                                                                <p style="font-size: 14px; line-height: 180%;">Eddy ©
-                                                                    2023  All Rights Reserved</p>
+                                                            <div class="v-font-size"
+                                                                style="color: #b0b1b4; line-height: 180%; text-align: center; word-wrap: break-word;">
+                                                                <p style="font-size: 14px; line-height: 180%;">Edmilson Nhabinde &copy;
+                                                                    Todos Direitos Reservados</p>
                                                             </div>
 
                                                         </td>

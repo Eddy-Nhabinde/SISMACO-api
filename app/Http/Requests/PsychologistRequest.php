@@ -46,7 +46,7 @@ class PsychologistRequest extends FormRequest
             "nome" => 'required|string',
             "apelido" => 'required|string',
             "email" => 'required|email|unique:users,email,' . $request->user_id,
-            "especialidade" => 'required|integer',
+            "especialidade" => 'required|array|min:1',
             "disponibilidade" => 'required',
             "contacto1" => "required|string|min:9|max:13",
         ];

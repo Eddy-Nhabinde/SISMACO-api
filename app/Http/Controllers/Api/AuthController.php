@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\Utils\PsicologosUtils;
 use App\Models\Psicologo;
 use App\Models\User;
 use Exception;
@@ -117,10 +118,10 @@ class AuthController extends Controller
     {
         try {
             $request->validate([
-                'password' => 'required',
+                'senha' => 'required',
             ]);
 
-            if (strlen($request->password) < 8) {
+            if (strlen($request->senha) < 8) {
                 return response(['warning' => 'A sua e senha muito curta!']);
             } else {
                 try {
@@ -128,19 +129,22 @@ class AuthController extends Controller
 
                     User::where('id', $user->id)
                         ->update([
-                            'password' => Hash::make($request->password),
+                            'password' => Hash::make($request->senha),
                             'novo' => '0'
                         ]);
 
+                    $utis = new PsicologosUtils();
+
                     if ($user->acesso == 'psicologo') {
-                        Psicologo::where('user_id', $user->id)
+                        Psicologo::where('user_id', $utis->getPsicologId($user->id))
                             ->update([
-                                'activo' => 1
+                                'estado' => 1
                             ]);
                     }
 
                     return response(['success' => 'Atualizacao feita com sucesso!']);
                 } catch (Exception $th) {
+                    dd($th);
                     return response(['error' => 'Erro inesperado']);
                 }
             }

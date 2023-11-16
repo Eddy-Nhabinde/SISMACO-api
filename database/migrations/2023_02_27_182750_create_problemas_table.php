@@ -32,6 +32,9 @@ return new class extends Migration
                     'nome' => 'Laboral',
                 ],
                 [
+                    'nome' => 'Academico',
+                ],
+                [
                     'nome' => 'Outro',
                 ]
             )

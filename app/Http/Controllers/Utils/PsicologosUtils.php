@@ -35,6 +35,15 @@ class PsicologosUtils
         }
     }
 
+    function formstSpecility($speciality)
+    {
+        $response = "";
+        for ($i = 0; $i < sizeof($speciality); $i++) {
+            $response = $response . "" . $speciality[$i] . ",";
+        }
+        return $response;
+    }
+
     function getUserId($id)
     {
         try {

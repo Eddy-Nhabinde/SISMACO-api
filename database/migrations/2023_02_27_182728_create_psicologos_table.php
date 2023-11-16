@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('psicologos', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->foreignIdFor(especialidade::class);
+            $table->string("especialidade_id");
             $table->timestamps();
         });
     }
