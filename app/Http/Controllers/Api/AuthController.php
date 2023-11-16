@@ -104,7 +104,7 @@ class AuthController extends Controller
                         ]);
                     return response(['success' => 'Foi enviado um codigo no seu email para a reposicao da senha!']);
                 } else {
-                    return response(['error' => 'Erro inesperado']);
+                    return response(['error' => 'Ocorreu um Erro Inesperado']);
                 }
             } else {
                 return response(['error' => 'Email invalido']);
@@ -145,7 +145,7 @@ class AuthController extends Controller
                     return response(['success' => 'Atualizacao feita com sucesso!']);
                 } catch (Exception $th) {
                     dd($th);
-                    return response(['error' => 'Erro inesperado']);
+                    return response(['error' => 'Ocorreu um Erro Inesperado']);
                 }
             }
         } catch (\Illuminate\Validation\ValidationException $th) {

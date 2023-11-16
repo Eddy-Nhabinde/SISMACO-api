@@ -70,7 +70,7 @@ class DashboardController extends Controller
                 "thisYear" => $utils->organizeDataByMonth($this->getChartData($yearly, $yearlySelect, 'month'), 'year'),
             ]]);
         } catch (Exception $th) {
-            return response(["error" => "Erro inesperado!" . $th]);
+            return response(["error" => "Ocorreu um Erro Inesperado!" . $th]);
         }
     }
 

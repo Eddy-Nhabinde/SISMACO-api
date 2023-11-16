@@ -50,11 +50,11 @@ class PsicologoController extends Controller
                     if (!$mail->newPsicologo($request->email, $request->nome, $userId['password']))
                         return ['error' => 'Ocorreu um erro ao enviar email ao psicólogo!'];
                     return ['success' => 'Psicólogo registado com sucesso'];
-                } else return response(['error' => 'Erro inesperado!']);
+                } else return response(['error' => 'Ocorreu um Erro Inesperado!']);
             } else return response(['warning' => $checkAvailability]);
         } catch (Exception $th) {
             dd($th);
-            return response(['error' => 'Erro inesperado!']);
+            return response(['error' => 'Ocorreu um Erro Inesperado!']);
         }
     }
 
@@ -67,11 +67,11 @@ class PsicologoController extends Controller
                 $user = new UserController();
                 if ($user->update($request) == 1) {
                     if ($dispo->update($request)) return response(['success' => "Psicólogo actualizado com sucesso"]);
-                    else  return response(['error' => "Ocorreu um erro inesperado"]);
-                } else return response(['error' => "Ocorreu um erro inesperado"]);
+                    else  return response(['error' => "Ocorreu um Ocorreu um Erro Inesperado"]);
+                } else return response(['error' => "Ocorreu um Ocorreu um Erro Inesperado"]);
             } else return response(['warning' => $checkAvailability]);
         } catch (Exception $th) {
-            return response(['error' => "Ocorreu um erro inesperado"]);
+            return response(['error' => "Ocorreu um Ocorreu um Erro Inesperado"]);
         }
     }
 
@@ -88,7 +88,7 @@ class PsicologoController extends Controller
 
             return response(['success' => 'Psicólogo desactivado com sucesso']);
         } catch (Exception $th) {
-            return response(['error' => 'Erro inesperado!']);
+            return response(['error' => 'Ocorreu um Erro Inesperado!']);
         }
     }
 
@@ -103,7 +103,7 @@ class PsicologoController extends Controller
 
             return response(["nomes" => $names]);
         } catch (Exception $th) {
-            return response(['error' => 'Erro inesperado!']);
+            return response(['error' => 'Ocorreu um Erro Inesperado!']);
         }
     }
 
@@ -111,11 +111,11 @@ class PsicologoController extends Controller
     {
         try {
             $user = new Common();
+            $utils = new PsicologosUtils();
 
             $psicologos = DB::table('psicologos')
                 ->join('users', 'users.id', '=', 'psicologos.user_id')
-                ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
-                ->select('users.id as user_id', 'psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'estado', 'email')
+                ->select('users.id as user_id', 'psicologos.id', 'users.nome', 'estado', 'email', 'especialidade_id')
                 ->when($request, function ($query, $request) {
                     if (isset($request->name) && $request->name != "undefined") {
                         return $query->where('users.nome', 'like',  '%' . $request->name . '%');
@@ -131,15 +131,17 @@ class PsicologoController extends Controller
 
             $utils = new PsicologosUtils();
             $updatedKeys = $utils->renameStatus($psicologos->items());
+            $withSpeciality = $utils->formatPsychoList($updatedKeys);
 
             for ($i = 0; $i < sizeof($updatedKeys); $i++) {
                 $updatedKeys[$i]->disponibilidade = $this->getDisponibilidade($updatedKeys[$i]->id);
                 $updatedKeys[$i]->contactos = $user->getContacts($updatedKeys[$i]->user_id);
             }
 
-            return response(["data" => $updatedKeys, "total" => $psicologos->total(), "perpage" => $psicologos->perPage()]);
+            if ($withSpeciality != 0)  return response(["data" => $withSpeciality, "total" => $psicologos->total(), "perpage" => $psicologos->perPage()]);
+            else return response(['error' => "Ocorreu um Erro Inesperado"], 200);
         } catch (Exception $th) {
-            return response(['error' => "Erro Inesperado"], 200);
+            return response(['error' => "Ocorreu um Erro Inesperado"], 200);
         }
     }
 
@@ -167,29 +169,33 @@ class PsicologoController extends Controller
                 ]);
             return ['success' => $estadoId == 1 ? 'Psicologo activado com sucesso' : 'Psicologo desativado com sucesso!'];
         } catch (Exception $th) {
-            return ['error' => "Erro inesperado!"];
+            return ['error' => "Ocorreu um Erro Inesperado!"];
         }
     }
 
     function getPsychologistDetails($id)
     {
         try {
+            $utils = new PsicologosUtils();
+
             $psicologo = DB::table('psicologos')
                 ->join('users', 'users.id', '=', 'psicologos.user_id')
-                ->join('especialidades', 'especialidades.id', '=', 'psicologos.especialidade_id')
-                ->select('users.id as user', 'psicologos.id', 'users.nome', 'especialidades.nome as especialidade', 'email', 'estado')
+                ->select('users.id as user', 'psicologos.id', 'users.nome', 'especialidade_id', 'email', 'estado')
                 ->where('psicologos.id', $id)
                 ->get();
+
+            $withSpeciality = $utils->formatPsychoList($psicologo->toArray());
 
             $cont = DB::table('contactos')
                 ->select('contacto', 'principal')
                 ->where('user_id', $psicologo[0]->user)
                 ->get();
 
-            $consCont = new DashboardController();
-            return response(["psicologo" => $psicologo, "contactos" => $cont]);
+            if ($withSpeciality != 0) return response(["psicologo" => $withSpeciality, "contactos" => $cont]);
+            else return response(['error' => "Ocorreu um Erro Inesperado"], 200);
         } catch (Exception $th) {
-            return response(['error' => "Erro Inesperado"], 200);
+            dd($th);
+            return response(['error' => "Ocorreu um Erro Inesperado"], 200);
         }
     }
 

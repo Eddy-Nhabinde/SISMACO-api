@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Utils;
 
+use App\Http\Controllers\EspecialidadeController;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -42,6 +43,37 @@ class PsicologosUtils
             $response = $response . "" . $speciality[$i] . ",";
         }
         return $response;
+    }
+
+    function formatPsychoList($psychos)
+    {
+        try {
+            $especialidades = DB::table('especialidades')
+                ->select('id', 'nome')
+                ->get()->toArray();
+
+            foreach ($psychos as $psycho) {
+                $ids = explode(",", $psycho->especialidade_id);
+                $especilidadeLabel = "";
+
+                foreach ($ids as $id) {
+                    foreach ($especialidades as $espe) {
+                        if ((int)$id == $espe->id) {
+                            if (sizeof($ids) > 2) {
+                                $especilidadeLabel = $especilidadeLabel . "" . $espe->nome . ", ";
+                            } else {
+                                $especilidadeLabel = $espe->nome;
+                            }
+                        }
+                    }
+                }
+                $psycho->especialidade = $especilidadeLabel;
+            }
+
+            return $psychos;
+        } catch (\Throwable $th) {
+            return 0;
+        }
     }
 
     function getUserId($id)

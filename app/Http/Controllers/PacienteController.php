@@ -30,9 +30,9 @@ class PacienteController extends Controller
                 $contacts->store($request, $userId['id']);
 
                 return response(['newUser' => 1]);
-            } else return response(['error' => 'Erro inesperado!']);
+            } else return response(['error' => 'Ocorreu um Erro Inesperado!']);
         } catch (Exception $th) {
-            return response(['error' => 'Erro inesperado!']);
+            return response(['error' => 'Ocorreu um Erro Inesperado!']);
         }
     }
 
@@ -49,7 +49,7 @@ class PacienteController extends Controller
 
             return response(['history' => $data->items(), "total" => $data->total(), "perpage" => $data->perPage()]);
         } catch (Exception $ex) {
-            return response(["error" => "Erro inesperado"]);
+            return response(["error" => "Ocorreu um Erro Inesperado"]);
         }
     }
 }

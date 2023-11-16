@@ -67,7 +67,7 @@ class ConsultaController extends Controller
                 return response(["warning" => "Não pode marcar consulta enquanto tiver uma consulta pendente!"]);
             }
         } catch (Exception $th) {
-            return response(["error" => "Erro inesperado!"]);
+            return response(["error" => "Ocorreu um Erro Inesperado!"]);
         }
     }
 
@@ -122,7 +122,7 @@ class ConsultaController extends Controller
                     return response(["success" => "Próxima consulta marcada com sucesso!"]);
                 else return response(["success" => "Consulta remarcada com sucesso!"]);
             } else {
-                return response(["error" => "Erro inesperado"]);
+                return response(["error" => "Ocorreu um Erro Inesperado"]);
             }
         } catch (Exception $th) {
             return response(['error' => "Erro inesprado!"]);
@@ -145,7 +145,7 @@ class ConsultaController extends Controller
                 return $row;
             } else return response(["success" => "Consulta concluida com sucesso!"]);
         } catch (Exception $th) {
-            return response(["error" => "Erro inesperado"]);
+            return response(["error" => "Ocorreu um Erro Inesperado"]);
         }
     }
 
@@ -175,12 +175,12 @@ class ConsultaController extends Controller
                         'estado_id' => 2,
                     ]);
             // } else {
-            //     return response(["error" => "Erro inesperado"]);
+            //     return response(["error" => "Ocorreu um Erro Inesperado"]);
             // }
             return response(["success" => "Consulta cancelada com sucesso!"]);
         } catch (Exception $th) {
             dd($th);
-            return response(["error" => "Erro inesperado"]);
+            return response(["error" => "Ocorreu um Erro Inesperado"]);
         }
     }
 
@@ -221,7 +221,7 @@ class ConsultaController extends Controller
             $utils = new ConsultasUtils();
             return response(['consultas' => $utils->organizeAppointmentsArray($organizedData->items()), "total" => $organizedData->total(), "perpage" => $organizedData->perPage()]);
         } catch (Exception $th) {
-            return response(["error" => "Erro inesperado!"]);
+            return response(["error" => "Ocorreu um Erro Inesperado!"]);
         }
     }
 
@@ -238,7 +238,7 @@ class ConsultaController extends Controller
 
             return response(["consultas" => $appointments]);
         } catch (Exception $th) {
-            return response(["error" => "Erro inesperado!"]);
+            return response(["error" => "Ocorreu um Erro Inesperado!"]);
         }
     }
 

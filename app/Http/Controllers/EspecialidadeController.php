@@ -17,7 +17,7 @@ class EspecialidadeController extends Controller
 
             return response(['especialidades' => $especialidades]);
         } catch (Exception $th) {
-            return response(['error' => "Erro inesperado!"], 200);
+            return response(['error' => "Ocorreu um Erro Inesperado!"], 200);
         }
     }
 }

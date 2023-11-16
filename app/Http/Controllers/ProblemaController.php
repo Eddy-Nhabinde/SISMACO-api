@@ -16,7 +16,7 @@ class ProblemaController extends Controller
 
             return  response(["problemas" => $problemas]);
         } catch (Exception $th) {
-            return  response(["error" => "Erro inesperado!"]);
+            return  response(["error" => "Ocorreu um Erro Inesperado!"]);
         }
     }
 }
