@@ -38,7 +38,7 @@ class PsicologoController extends Controller
                     $psicologo = Psicologo::create([
                         'estado' => 0,
                         'user_id' => $userId['id'],
-                        'especialidade_id' => $utils->formstSpecility($request->especialidade)
+                        'especialidade_id' => $utils->formatSpecility($request->especialidade)
                     ]);
 
                     $contacts = new ContactosController();
@@ -53,8 +53,22 @@ class PsicologoController extends Controller
                 } else return response(['error' => 'Ocorreu um Erro Inesperado!']);
             } else return response(['warning' => $checkAvailability]);
         } catch (Exception $th) {
-            dd($th);
             return response(['error' => 'Ocorreu um Erro Inesperado!']);
+        }
+    }
+
+    function updateSpeciality($request)
+    {
+        try {
+            $utils = new PsicologosUtils();
+
+            Psicologo::where('id', $request->id)
+                ->update([
+                    'especialidade_id' => $utils->formatSpecility($request->especialidade)
+                ]);
+            return 1;
+        } catch (Exception $th) {
+            return 0;
         }
     }
 
@@ -63,14 +77,25 @@ class PsicologoController extends Controller
         try {
             $dispo = new DisponibilidadeController();
             $checkAvailability = $dispo->validateAvailability($request->disponibilidade);
+
             if ($checkAvailability == 'true') {
+
                 $user = new UserController();
                 if ($user->update($request) == 1) {
-                    if ($dispo->update($request)) return response(['success' => "Psicólogo actualizado com sucesso"]);
-                    else  return response(['error' => "Ocorreu um Ocorreu um Erro Inesperado"]);
+
+                    $contControl = new ContactosController();
+                    if ($contControl->updateContacts($request) != 0) {
+
+                        if ($this->updateSpeciality($request) != 0) {
+                            if ($dispo->update($request)) return response(['success' => "Psicólogo actualizado com sucesso"]);
+
+                            else return response(['error' => "Ocorreu um Ocorreu um Erro Inesperado"]);
+                        } else return response(['error' => "Ocorreu um Ocorreu um Erro Inesperado speci"]);
+                    } else return response(['error' => "Ocorreu um Ocorreu um Erro Inesperado cont"]);
                 } else return response(['error' => "Ocorreu um Ocorreu um Erro Inesperado"]);
             } else return response(['warning' => $checkAvailability]);
         } catch (Exception $th) {
+            dd($th);
             return response(['error' => "Ocorreu um Ocorreu um Erro Inesperado"]);
         }
     }
@@ -112,6 +137,7 @@ class PsicologoController extends Controller
         try {
             $user = new Common();
             $utils = new PsicologosUtils();
+            $dispo = new DisponibilidadeController();
 
             $psicologos = DB::table('psicologos')
                 ->join('users', 'users.id', '=', 'psicologos.user_id')
@@ -134,7 +160,7 @@ class PsicologoController extends Controller
             $withSpeciality = $utils->formatPsychoList($updatedKeys);
 
             for ($i = 0; $i < sizeof($updatedKeys); $i++) {
-                $updatedKeys[$i]->disponibilidade = $this->getDisponibilidade($updatedKeys[$i]->id);
+                $updatedKeys[$i]->disponibilidade = $dispo->getDisponibilidade($updatedKeys[$i]->id);
                 $updatedKeys[$i]->contactos = $user->getContacts($updatedKeys[$i]->user_id);
             }
 
@@ -142,34 +168,6 @@ class PsicologoController extends Controller
             else return response(['error' => "Ocorreu um Erro Inesperado"], 200);
         } catch (Exception $th) {
             return response(['error' => "Ocorreu um Erro Inesperado"], 200);
-        }
-    }
-
-
-    function getDisponibilidade($id)
-    {
-        if (isset($id)) {
-            $disponibilidade =  DB::table('disponibilidades')
-                ->select('diaDaSemana', 'inicio', 'fim')
-                ->where('psicologo_id', $id)
-                ->get();
-
-            return $disponibilidade;
-        } else {
-            return ['warning' => "Nao ha psicologos registados!"];
-        }
-    }
-
-    function AlterarEstado($id, $estadoId)
-    {
-        try {
-            Psicologo::where('id', $id)
-                ->update([
-                    'estado' => $estadoId
-                ]);
-            return ['success' => $estadoId == 1 ? 'Psicologo activado com sucesso' : 'Psicologo desativado com sucesso!'];
-        } catch (Exception $th) {
-            return ['error' => "Ocorreu um Erro Inesperado!"];
         }
     }
 
@@ -218,20 +216,6 @@ class PsicologoController extends Controller
             return response(["schedule" => $schedule]);
         } catch (Exception $th) {
             return response(["error" => $th->getMessage()]);
-        }
-    }
-
-    function validating($request)
-    {
-        try {
-            $request->validate([
-                'especialidade' => 'required',
-                'contacto1' => 'required',
-                'disponibilidade' => 'required'
-            ]);
-            return true;
-        } catch (\Illuminate\Validation\ValidationException $th) {
-            return false;
         }
     }
 }

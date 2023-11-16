@@ -36,7 +36,7 @@ class PsicologosUtils
         }
     }
 
-    function formstSpecility($speciality)
+    function formatSpecility($speciality)
     {
         $response = "";
         for ($i = 0; $i < sizeof($speciality); $i++) {
@@ -55,10 +55,12 @@ class PsicologosUtils
             foreach ($psychos as $psycho) {
                 $ids = explode(",", $psycho->especialidade_id);
                 $especilidadeLabel = "";
+                $especialidadeIds = [];
 
                 foreach ($ids as $id) {
                     foreach ($especialidades as $espe) {
                         if ((int)$id == $espe->id) {
+                            array_push($especialidadeIds, (int)$id);
                             if (sizeof($ids) > 2) {
                                 $especilidadeLabel = $especilidadeLabel . "" . $espe->nome . ", ";
                             } else {
@@ -68,10 +70,11 @@ class PsicologosUtils
                     }
                 }
                 $psycho->especialidade = $especilidadeLabel;
+                $psycho->especialidade_id = $especialidadeIds;
             }
 
             return $psychos;
-        } catch (\Throwable $th) {
+        } catch (Exception $th) {
             return 0;
         }
     }

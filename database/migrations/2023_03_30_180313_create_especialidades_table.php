@@ -29,7 +29,7 @@ return new class extends Migration
                     'nome' => 'Terapia Familiar',
                 ],
                 [
-                    'nome' => "Terapia Individua",
+                    'nome' => "Terapia Individual",
                 ],
             )
         );

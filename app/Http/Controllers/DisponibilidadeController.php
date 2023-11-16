@@ -48,6 +48,20 @@ class DisponibilidadeController extends Controller
         }
     }
 
+    function getDisponibilidade($id)
+    {
+        if (isset($id)) {
+            $disponibilidade =  DB::table('disponibilidades')
+                ->select('diaDaSemana', 'inicio', 'fim')
+                ->where('psicologo_id', $id)
+                ->get();
+
+            return $disponibilidade;
+        } else {
+            return ['warning' => "Nao ha psicologos registados!"];
+        }
+    }
+
     function validateAvailability($availability)
     {
         $dias = array_keys($availability);
