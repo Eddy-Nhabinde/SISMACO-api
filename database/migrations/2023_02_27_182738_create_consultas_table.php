@@ -29,6 +29,8 @@ return new class extends Migration
             $table->integer('estado_id')->default(1);
             $table->date('data');
             $table->string("hora");
+            $table->string("tipoConsulta");
+            $table->string("tipoPaciente");
             $table->timestamps();
         });
     }

@@ -47,6 +47,8 @@ class NewAppRequest extends FormRequest
                 'data' => 'required|date',
                 'psicologo' => 'required|integer',
                 'hora' => 'required|string|min:5|max:5',
+                "tipoConsulta" => 'requited',
+                "tipoPaciente" => 'requited'
             ];
         else if ($access == 'paciente')
             return [
@@ -54,6 +56,8 @@ class NewAppRequest extends FormRequest
                 'data' => 'required|date',
                 'psicologo' => 'required|integer',
                 'hora' => 'required|string|min:5|max:5',
+                "tipoConsulta" => 'requited',
+                "tipoPaciente" => 'requited'
             ];
     }
 }

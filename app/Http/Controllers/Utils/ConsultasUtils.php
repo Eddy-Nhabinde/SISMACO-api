@@ -72,6 +72,7 @@ class ConsultasUtils
         try {
             $data = DB::table('consultas')
                 ->select('psicologo_id', 'hora', 'data')
+                ->where('estado_id', 1)
                 ->get();
 
             return response(['busySchedules' => $data]);

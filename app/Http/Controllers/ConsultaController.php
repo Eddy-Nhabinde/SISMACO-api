@@ -36,7 +36,9 @@ class ConsultaController extends Controller
                         "problema_id" => $request->problema,
                         "estado_id" => 1,
                         "data" => Carbon::parse($request->data)->format('Y-m-d'),
-                        "hora" => $request->hora
+                        "hora" => $request->hora,
+                        "tipoConsulta" => $request->tipoConsulta,
+                        "tipoPaciente" => $request->tipoPaciente
                     ]);
                 } else {
                     Consulta::create([
@@ -49,7 +51,9 @@ class ConsultaController extends Controller
                         "apelido" => $request->apelido,
                         "email" => $request->email,
                         "contacto1" => $request->contacto1,
-                        "contacto2" => $request->contacto2
+                        "contacto2" => $request->contacto2,
+                        "tipoConsulta" => $request->tipoConsulta,
+                        "tipoPaciente" => $request->tipoPaciente
                     ]);
                 }
                 if ($this->acesso == 'paciente') {
@@ -170,10 +174,10 @@ class ConsultaController extends Controller
             // $cancel = $mail->cancelAppointment($appointmentData, $psyData);
 
             // if ($cancel == 1) {
-                Consulta::where('id', $id)
-                    ->update([
-                        'estado_id' => 2,
-                    ]);
+            Consulta::where('id', $id)
+                ->update([
+                    'estado_id' => 2,
+                ]);
             // } else {
             //     return response(["error" => "Ocorreu um Erro Inesperado"]);
             // }
