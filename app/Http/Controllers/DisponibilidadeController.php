@@ -75,11 +75,11 @@ class DisponibilidadeController extends Controller
         ];
 
         $fim = [
-            "09:50",
-            "11:20",
-            "12:50",
-            "14:20",
-            "15:50"
+            "09:30",
+            "11:00",
+            "12:30",
+            "14:00",
+            "15:30"
         ];
 
         $days = [
