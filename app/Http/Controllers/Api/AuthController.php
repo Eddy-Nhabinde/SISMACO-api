@@ -9,8 +9,8 @@ use App\Models\Psicologo;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -25,9 +25,19 @@ class AuthController extends Controller
 
         if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Email ou password invalido!'], 401);
+        } else {
+            $user = auth('api')->user();
+            if ($user->acesso == 'psicologo') {
+                $estado = DB::table('psicologos')
+                    ->select('estado')
+                    ->where('user_id', $user->id)
+                    ->get();
+                if ($estado[0]->estado != 0) return $this->respondWithToken($token);
+                else return response()->json(["warning" => "Acesso negado!"]);
+            } else {
+                return $this->respondWithToken($token);
+            }
         }
-
-        return $this->respondWithToken($token);
     }
 
     /**
