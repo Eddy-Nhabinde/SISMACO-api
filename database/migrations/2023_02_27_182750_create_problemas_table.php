@@ -26,7 +26,7 @@ return new class extends Migration
                     'nome' => 'Pessoal',
                 ],
                 [
-                    'nome' => 'Familiar',
+                    'nome' => 'Familiar/Conjugal',
                 ],
                 [
                     'nome' => 'Laboral',

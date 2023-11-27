@@ -99,20 +99,4 @@ class UserController extends Controller
             return 0;
         }
     }
-
-    function validating($request)
-    {
-        try {
-            $request->validate([
-                'email' => 'email|max:50|'/*unique:users,email,*/,
-                'nome' => 'string|required',
-                'apelido' => 'string|required',
-                'password' => 'exclude_if:paciente,false|required',
-                'paciente' => 'required',
-            ]);
-            return true;
-        } catch (\Illuminate\Validation\ValidationException $th) {
-            return false;
-        }
-    }
 }

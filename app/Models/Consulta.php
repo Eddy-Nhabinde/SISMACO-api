@@ -20,6 +20,8 @@ class Consulta extends Model
         'apelido',
         'conatacto1',
         'contacto2',
-        "hora"
+        "hora",
+        "tipoConsulta",
+        "tipoPaciente"
     ];
 }

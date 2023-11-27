@@ -102,12 +102,12 @@ class AuthController extends Controller
                             'password' => Hash::make($pass),
                             'novo' => '1'
                         ]);
-                    return response(['success' => 'Foi enviado um codigo no seu email para a reposicao da senha!']);
+                    return response(['success' => 'Foi enviado um codigo no seu email']);
                 } else {
                     return response(['error' => 'Ocorreu um Erro Inesperado']);
                 }
             } else {
-                return response(['error' => 'Email invalido']);
+                return response(['' => 'Email invalido']);
             }
         } catch (\Illuminate\Validation\ValidationException $th) {
             return response(['error' => 'Email invalido']);
@@ -144,7 +144,6 @@ class AuthController extends Controller
 
                     return response(['success' => 'Atualizacao feita com sucesso!']);
                 } catch (Exception $th) {
-                    dd($th);
                     return response(['error' => 'Ocorreu um Erro Inesperado']);
                 }
             }

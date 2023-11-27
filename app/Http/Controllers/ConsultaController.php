@@ -68,9 +68,10 @@ class ConsultaController extends Controller
                 }
                 return response(["success" => "Consulta marcada com sucesso!"]);
             } else {
-                return response(["warning" => "Não pode marcar consulta enquanto tiver uma consulta pendente!"]);
+                return response(["warning" => "Erro! Tem uma consulta pendente!"]);
             }
         } catch (Exception $th) {
+            dd($th);
             return response(["error" => "Ocorreu um Erro Inesperado!"]);
         }
     }
@@ -171,16 +172,16 @@ class ConsultaController extends Controller
                 ->get();
 
             $mail = new MailController();
-            // $cancel = $mail->cancelAppointment($appointmentData, $psyData);
+            $cancel = $mail->cancelAppointment($appointmentData, $psyData);
 
-            // if ($cancel == 1) {
-            Consulta::where('id', $id)
-                ->update([
-                    'estado_id' => 2,
-                ]);
-            // } else {
-            //     return response(["error" => "Ocorreu um Erro Inesperado"]);
-            // }
+            if ($cancel == 1) {
+                Consulta::where('id', $id)
+                    ->update([
+                        'estado_id' => 2,
+                    ]);
+            } else {
+                return response(["error" => "Ocorreu um Erro Inesperado"]);
+            }
             return response(["success" => "Consulta cancelada com sucesso!"]);
         } catch (Exception $th) {
             dd($th);

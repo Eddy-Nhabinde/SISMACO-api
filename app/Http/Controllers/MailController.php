@@ -61,7 +61,7 @@ class MailController extends Controller
         $object[] = ['key' => 'recipient', 'value' => $email];
         $object[] = ['key' => 'data', 'value' => $data];
         $object[] = ['key' => 'hora', 'value' => $hora];
-        $object[] = ['key' => 'nome', 'value' => 'Dr.'  . $nome];
+        $object[] = ['key' => 'nome', 'value' => 'Prezado/a.'  . $nome];
 
         if ($this->sendEmail($this->getMailData($object), 'newAppointment') == 1) {
             return 1;
