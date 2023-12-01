@@ -68,7 +68,7 @@ class ConsultaController extends Controller
                 }
                 return response(["success" => "Consulta marcada com sucesso!"]);
             } else {
-                return response(["warning" => "Erro! Tem uma consulta pendente!"]);
+                return response(["warning" => "Tens uma consulta pendente!"]);
             }
         } catch (Exception $th) {
             dd($th);

@@ -139,7 +139,8 @@ class AuthController extends Controller
 
                     User::where('id', $user->id)
                         ->update([
-                            'password' => Hash::make($request->senha),
+                            'password' => Hash::make($request->password
+                        ),
                             'novo' => '0'
                         ]);
 
@@ -152,7 +153,7 @@ class AuthController extends Controller
                             ]);
                     }
 
-                    return response(['success' => 'Atualizacao feita com sucesso!']);
+                    return response(['success' => 'Atualizacao feita com sucesso! Agora faça o login']);
                 } catch (Exception $th) {
                     return response(['error' => 'Ocorreu um Erro Inesperado']);
                 }

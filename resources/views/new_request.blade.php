@@ -235,25 +235,26 @@
                                                             style="overflow-wrap:break-word;word-break:break-word;padding:55px 10px 10px;font-family:'Montserrat',sans-serif;"
                                                             align="left">
 
-                                                            <table width="100%" cellpadding="0" cellspacing="0"
-                                                                border="0">
-                                                                <tr>
-                                                                    <td style="padding-right: 0px;padding-left: 0px;"
-                                                                        align="center">
-                                                                        <a href=""><img
-                                                                                src="https://i.ibb.co/GHh6wJw/image-5.png"
-                                                                                alt="Tick Icon" title="Tick Icon"
-                                                                                style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 14%;max-width: 81.2px;"
-                                                                                width="81.2"
-                                                                                class="v-src-width v-src-max-width"
-                                                                                border="0">
-                                                                        </a>
-                                                                        {{-- <img align="center" border="0" src="https://freeimage.host/i/JBqmoXt" alt="Tick Icon" title="Tick Icon" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 14%;max-width: 81.2px;" width="81.2" class="v-src-width v-src-max-width" /> --}}
+                                                            @if (!isset($recover))
+                                                                <table width="100%" cellpadding="0" cellspacing="0"
+                                                                    border="0">
+                                                                    <tr>
+                                                                        <td style="padding-right: 0px;padding-left: 0px;"
+                                                                            align="center">
+                                                                            <a href=""><img
+                                                                                    src="https://i.ibb.co/GHh6wJw/image-5.png"
+                                                                                    alt="Tick Icon" title="Tick Icon"
+                                                                                    style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 14%;max-width: 81.2px;"
+                                                                                    width="81.2"
+                                                                                    class="v-src-width v-src-max-width"
+                                                                                    border="0">
+                                                                            </a>
+                                                                            {{-- <img align="center" border="0" src="https://freeimage.host/i/JBqmoXt" alt="Tick Icon" title="Tick Icon" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: inline-block !important;border: none;height: auto;float: none;width: 14%;max-width: 81.2px;" width="81.2" class="v-src-width v-src-max-width" /> --}}
 
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -270,7 +271,13 @@
 
                                                             <h1 class="v-font-size"
                                                                 style="margin: 0px; line-height: 160%; text-align: center; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 33px; ">
-                                                                <strong>Aviso de Registo</strong>
+                                                                <strong>
+                                                                    @if (isset($recover))
+                                                                        Reposição da senha
+                                                                    @else
+                                                                        Aviso de Registo
+                                                                    @endif
+                                                                </strong>
                                                             </h1>
 
                                                         </td>
@@ -289,20 +296,45 @@
 
                                                             <div class="v-font-size"
                                                                 style="color: #444444; line-height: 170%; text-align: center; word-wrap: break-word;">
-                                                                <p style="font-size: 14px; line-height: 170%;"><span
-                                                                        style="font-size: 16px; line-height: 27.2px;">Saudacoes!</span>
-                                                                </p>
-                                                                <p style="font-size: 14px; line-height: 170%;"><span
-                                                                        style="font-size: 16px; line-height: 27.2px;">Vimos
-                                                                        por este meio informar que </span></p>
-                                                                <p style="font-size: 14px; line-height: 170%;"><span
-                                                                        style="font-size: 16px; line-height: 27.2px;">foste
-                                                                        registado ao nosso sistema de Marcacao de
-                                                                        Consultas</span></p>
-                                                                <p style="font-size: 14px; line-height: 170%;"><span
-                                                                        style="font-size: 16px; line-height: 27.2px;">
-                                                                        Codigo de ativacao: {{ $password }}</span>
-                                                                </p>
+                                                                @if (isset($recover))
+                                                                    <p style="font-size: 14px; line-height: 170%;">
+                                                                        <span
+                                                                            style="font-size: 16px; line-height: 27.2px;">Saudacoes!</span>
+                                                                    </p>
+                                                                    <p style="font-size: 14px; line-height: 170%;">
+                                                                        <span
+                                                                            style="font-size: 16px; line-height: 27.2px;">
+                                                                            Código para reposição da senha
+                                                                            </span>
+                                                                    </p>
+                                                                    <p style="font-size: 14px; line-height: 170%;">
+                                                                        <span
+                                                                            style="font-size: 16px; line-height: 27.2px;">
+                                                                            {{$password}}</span>
+                                                                    </p>
+                                                                @else
+                                                                    <p style="font-size: 14px; line-height: 170%;">
+                                                                        <span
+                                                                            style="font-size: 16px; line-height: 27.2px;">Saudacoes!</span>
+                                                                    </p>
+                                                                    <p style="font-size: 14px; line-height: 170%;">
+                                                                        <span
+                                                                            style="font-size: 16px; line-height: 27.2px;">Vimos
+                                                                            por este meio informar que </span>
+                                                                    </p>
+                                                                    <p style="font-size: 14px; line-height: 170%;">
+                                                                        <span
+                                                                            style="font-size: 16px; line-height: 27.2px;">foste
+                                                                            registado ao nosso sistema de Marcacao de
+                                                                            Consultas</span>
+                                                                    </p>
+                                                                    <p style="font-size: 14px; line-height: 170%;">
+                                                                        <span
+                                                                            style="font-size: 16px; line-height: 27.2px;">
+                                                                            Codigo de ativacao:
+                                                                            {{$password}}</span>
+                                                                    </p>
+                                                                @endif
                                                             </div>
 
                                                         </td>
@@ -322,7 +354,7 @@
                     </div>
 
 
-
+                    @if (!isset($recover))
                     <div class="u-row-container" style="padding: 0px;background-color: transparent">
                         <div class="u-row"
                             style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;">
@@ -415,7 +447,7 @@
                             </div>
                         </div>
                     </div>
-
+                    @endif
 
 
                     <div class="u-row-container" style="padding: 0px;background-color: transparent">
@@ -630,7 +662,8 @@
 
                                                             <div class="v-font-size"
                                                                 style="color: #b0b1b4; line-height: 180%; text-align: center; word-wrap: break-word;">
-                                                                <p style="font-size: 14px; line-height: 180%;">Edmilson Nhabinde &copy;
+                                                                <p style="font-size: 14px; line-height: 180%;">Edmilson
+                                                                    Nhabinde &copy;
                                                                     Todos Direitos Reservados</p>
                                                             </div>
 
