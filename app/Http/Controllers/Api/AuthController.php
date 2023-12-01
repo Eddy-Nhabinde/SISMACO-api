@@ -128,12 +128,12 @@ class AuthController extends Controller
     {
         try {
             $request->validate([
-                'senha' => 'required',
+                'password' => 'required',
             ]);
 
-            if (strlen($request->senha) < 8) {
-                return response(['warning' => 'A sua e senha muito curta!']);
-            } else {
+            // if (strlen($request->senha) < 8) {
+            //     return response(['warning' => 'A sua e senha muito curta!']);
+            // } else {
                 try {
                     $user = auth('api')->user();
 
@@ -156,7 +156,7 @@ class AuthController extends Controller
                 } catch (Exception $th) {
                     return response(['error' => 'Ocorreu um Erro Inesperado']);
                 }
-            }
+            // }
         } catch (\Illuminate\Validation\ValidationException $th) {
             return response(['error' => 'Preencha todos os campos!']);
         }

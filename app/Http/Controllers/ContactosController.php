@@ -10,14 +10,10 @@ class ContactosController extends Controller
 {
     function store($request, $user_id)
     {
-        if ($this->validating($request)) {
-            try {
-                Contactos::insert($this->getContacts($request->contacto1, $request->contacto2, $user_id));
-                return 1;
-            } catch (Exception $th) {
-                return 0;
-            }
-        } else {
+        try {
+            Contactos::insert($this->getContacts($request->contacto1, $request->contacto2, $user_id));
+            return 1;
+        } catch (Exception $th) {
             return 0;
         }
     }

@@ -29,7 +29,7 @@ class PacienteController extends Controller
                 $contacts = new ContactosController();
                 $contacts->store($request, $userId['id']);
 
-                return response(['newUser' => 1]);
+                return  response(['success' => 'Sucesso! Agora faça o login!']);
             } else return response(['error' => 'Ocorreu um Erro Inesperado!']);
         } catch (Exception $th) {
             return response(['error' => 'Ocorreu um Erro Inesperado!']);
