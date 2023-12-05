@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contactos;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ContactosController extends Controller
 {
@@ -21,19 +22,11 @@ class ContactosController extends Controller
     function updateContacts($request)
     {
         try {
-            Contactos::where('user_id', $request->user_id)
-                ->where('principal', 1)
-                ->update([
-                    "contacto" => $request->contacto1,
-                ]);
+            DB::table('contactos')
+                ->where('user_id', $request->user_id)
+                ->delete();
 
-            if (isset($request->contacto2) != null)
-                Contactos::where('user_id', $request->user_id)
-                    ->where('principal', 0)
-                    ->update([
-                        "contacto" => $request->contacto2,
-                    ]);
-
+            $this->store($request, $request->user_id);
             return 1;
         } catch (Exception $th) {
             return 0;
@@ -43,7 +36,7 @@ class ContactosController extends Controller
     function getContacts($contacto1, $contacto2, $user_id)
     {
         $contactos[] = ['user_id' => $user_id, 'principal' => 1, 'contacto' => $contacto1];
-        if (isset($contacto2))
+        if (isset($contacto2) && $contacto2 != "")
             $contactos[] = ['user_id' => $user_id, 'principal' => 0, 'contacto' => $contacto2];
 
         return $contactos;

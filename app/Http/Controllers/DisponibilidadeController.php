@@ -13,14 +13,19 @@ class DisponibilidadeController extends Controller
         try {
             $dias = array_keys($dispo);
             $disponibilidade = [];
+            $segundaAsexta = array_search(5, $dias);
 
-            for ($i = 0; $i < sizeof($dias); $i++) {
-                $disponibilidade[] = ["diaDaSemana" => $dias[$i], "inicio" => $dispo[$dias[$i]]['Inicio'], "fim" => $dispo[$dias[$i]]['Fim'], "psicologo_id" => $psicologo_id];
+            if (gettype($segundaAsexta) !== "boolean") {
+                $disponibilidade[] = ["diaDaSemana" => 0, "inicio" => $dispo[0]['Inicio'], "fim" => $dispo[0]['Fim'], "psicologo_id" => $psicologo_id];
+            } else {
+                for ($i = 0; $i < sizeof($dias); $i++)
+                    $disponibilidade[] = ["diaDaSemana" => $dias[$i], "inicio" => $dispo[$dias[$i]]['Inicio'], "fim" => $dispo[$dias[$i]]['Fim'], "psicologo_id" => $psicologo_id];
             }
 
             Disponibilidade::insert($disponibilidade);
             return true;
         } catch (Exception $th) {
+            dd($th);
             return false;
         }
     }

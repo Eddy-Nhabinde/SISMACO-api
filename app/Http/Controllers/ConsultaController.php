@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Utils\Common;
 use App\Http\Controllers\Utils\ConsultasUtils;
-use App\Http\Controllers\Utils\PsicologosUtils;
 use App\Http\Requests\NewAppRequest;
 use App\Models\Consulta;
 use Carbon\Carbon;
@@ -28,8 +27,9 @@ class ConsultaController extends Controller
     {
         try {
             $cUtils = new ConsultasUtils();
-            if ($cUtils->checkIfUserHasPendentApp($this->userId) == false && $this->acesso != 'admin') {
-                if ($this->acesso != 'admin') {
+
+            if ($this->acesso == 'paciente') {
+                if ($cUtils->checkIfUserHasPendentApp($this->userId)) {
                     Consulta::create([
                         "psicologo_id" => $request->psicologo,
                         "paciente_id" =>  $this->userId,
@@ -41,37 +41,37 @@ class ConsultaController extends Controller
                         "tipoPaciente" => $request->tipoPaciente
                     ]);
                 } else {
-                    Consulta::create([
-                        "psicologo_id" => $request->psicologo,
-                        "problema_id" => $request->problema,
-                        "estado_id" => 1,
-                        "data" => Carbon::parse($request->data)->format('Y-m-d'),
-                        "hora" => $request->hora,
-                        "nome" => $request->nome,
-                        "apelido" => $request->apelido,
-                        "email" => $request->email,
-                        "contacto1" => $request->contacto1,
-                        "contacto2" => $request->contacto2,
-                        "tipoConsulta" => $request->tipoConsulta,
-                        "tipoPaciente" => $request->tipoPaciente
-                    ]);
+                    return response(["warning" => "Tens uma consulta pendente!"]);
                 }
-                if ($this->acesso == 'paciente') {
-                    $email = DB::table('users')
-                        ->select('email')
-                        ->where('id', $this->userId)
-                        ->get();
-
-                    $this->sendMail($request, Carbon::parse($request->data)->format('Y-m-d'), $email[0]->email);
-                } else {
-                    $this->sendMail($request, Carbon::parse($request->data)->format('Y-m-d'), $request->email);
-                }
-                return response(["success" => "Consulta marcada com sucesso!"]);
             } else {
-                return response(["warning" => "Tens uma consulta pendente!"]);
+                Consulta::create([
+                    "psicologo_id" => $request->psicologo,
+                    "problema_id" => $request->problema,
+                    "estado_id" => 1,
+                    "data" => Carbon::parse($request->data)->format('Y-m-d'),
+                    "hora" => $request->hora,
+                    "nome" => $request->nome,
+                    "apelido" => $request->apelido,
+                    "email" => $request->email,
+                    "contacto1" => $request->contacto1,
+                    "contacto2" => $request->contacto2,
+                    "tipoConsulta" => $request->tipoConsulta,
+                    "tipoPaciente" => $request->tipoPaciente
+                ]);
             }
+
+            if ($this->acesso == 'paciente') {
+                $email = DB::table('users')
+                    ->select('email')
+                    ->where('id', $this->userId)
+                    ->get();
+
+                $this->sendMail($request, Carbon::parse($request->data)->format('Y-m-d'), $email[0]->email);
+            } else {
+                $this->sendMail($request, Carbon::parse($request->data)->format('Y-m-d'), $request->email);
+            }
+            return response(["success" => "Consulta marcada com sucesso!"]);
         } catch (Exception $th) {
-            dd($th);
             return response(["error" => "Ocorreu um Erro Inesperado!"]);
         }
     }
