@@ -29,7 +29,7 @@ class ConsultaController extends Controller
             $cUtils = new ConsultasUtils();
 
             if ($this->acesso == 'paciente') {
-                if ($cUtils->checkIfUserHasPendentApp($this->userId)) {
+                if (!$cUtils->checkIfUserHasPendentApp($this->userId)) {
                     Consulta::create([
                         "psicologo_id" => $request->psicologo,
                         "paciente_id" =>  $this->userId,
@@ -114,6 +114,13 @@ class ConsultaController extends Controller
                 ->where('consultas.id', $request->id)
                 ->get();
 
+            if (sizeof($paciente) === 0) {
+                $paciente = DB::table('consultas')
+                    ->select('nome', 'email')
+                    ->where('consultas.id', $request->id)
+                    ->get();
+            }
+
             $psyData = DB::table('consultas')
                 ->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id')
                 ->join('users', 'users.id', '=', 'psicologos.user_id')
@@ -163,6 +170,13 @@ class ConsultaController extends Controller
                 ->select('users.nome', 'hora', 'data', 'users.email')
                 ->where('consultas.id', $id)
                 ->get();
+
+            if (sizeof($appointmentData) === 0) {
+                $appointmentData = DB::table('consultas')
+                    ->select('nome', 'hora', 'data', 'email')
+                    ->where('consultas.id', $id)
+                    ->get();
+            }
 
             $psyData = DB::table('consultas')
                 ->join('psicologos', 'psicologos.id', '=', 'consultas.psicologo_id')
